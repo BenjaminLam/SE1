@@ -39,7 +39,7 @@ public class createTaskTest extends SampleDataSetup0 {
 			
 			String taskName="Task01";
 			
-			int taskID=employee.createTask(database, project.ID, taskName);
+			int taskID=employee.createTask(database, project, taskName);
 			
 			Task task=super.database.getTask(taskID);
 			
@@ -47,4 +47,27 @@ public class createTaskTest extends SampleDataSetup0 {
 			assertEquals(task.name,taskName);
 			assertEquals(task.projectID,project.ID);
 		}
+		
+		/*
+		 *Alternative scenario: 
+		 * employee is not project leader
+		 * the system returns an error TODO!
+		 */
+		
+		@Test
+		public void testCreateTaskAlt1(){
+			int startSizeOfTaskArray = database.tasks.size();
+			Employee employee=super.database.employees.get(1);
+			Project project=super.database.projects.get(0);
+			
+			assertFalse(project.isProjectLeader(employee));
+			
+			String taskName="Task01";
+			
+			int taskID=employee.createTask(database, project, taskName);
+						
+			assertEquals(-1,taskID);
+			assertEquals(database.tasks.size(), startSizeOfTaskArray);
+		}
+		
 }

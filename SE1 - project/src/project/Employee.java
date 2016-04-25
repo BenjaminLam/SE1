@@ -16,8 +16,11 @@ public class Employee {
 		return false;
 	}
 	
-	public int createTask (Database database, int projectID, String name) {
-		Task task=new Task (projectID, name);
+	public int createTask (Database database, Project project, String name) {
+		if(!project.isProjectLeader(this)){
+			return -1;
+		}
+		Task task=new Task (project.ID, name);
 		database.tasks.add(task);
 		return database.tasks.indexOf(task);
 	}
