@@ -13,7 +13,6 @@ public class Database {
 	public Database () {
 	}
 	
-	//not implemented testdriven
 	public Task getTask (int taskID) {
 		for (Task task:tasks){
 			if (task.ID==taskID) return task;

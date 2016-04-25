@@ -11,13 +11,13 @@ public class Employee {
 		this.ID=ID;
 	}
 	
-	//not test implemented
 	//not handling null value
 	public boolean equals (Employee employee) {
 		if (this.ID==employee.ID) return true;
 		return false;
 	}
 	
+	//not handling null name or null database
 	public int createTask (Database database, Project project, String name) throws WrongInputException {
 		if (project==null) { 
 			throw new WrongInputException("Project doesn't exist");	

@@ -13,7 +13,6 @@ public class Project {
 	}
 	
 	//not handling null value
-	//not implemented test driven
 	public boolean isProjectLeader(Employee employee) {
 		if (employee.equals(projectLeader)) return true;
 		return false;

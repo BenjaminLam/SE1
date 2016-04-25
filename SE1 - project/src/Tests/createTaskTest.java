@@ -17,9 +17,10 @@ import project.*;
 
 
 /**
- * @TODO.
- * @author m&b / m
- *
+ * Tests for user case createTask
+ * @author all group members 
+ * added two more alternative scenarios under alternate test 3
+ * new alternative scenarions are marked with *
  */
 
 public class createTaskTest extends SampleDataSetup0 {
@@ -60,9 +61,9 @@ public class createTaskTest extends SampleDataSetup0 {
 		/*
 		 *Alternative scenario1: 
 		 * employee is not project leader
-		 * employee enters name of task to create
-		 * 
-		 * 
+		 * employee tries to create task for project
+		 * exception is thrown
+		 * no task has been created
 		 */
 		
 		@Test
@@ -89,8 +90,8 @@ public class createTaskTest extends SampleDataSetup0 {
 		/*
 		 *Alternative scenario2: 
 		 * employee tries to create task for non excisting project (null)
-		 * checks method throws exception
-		 * checks no task has been added
+		 * method throws exception
+		 * no task has been added
 		 */
 		
 		@Test
@@ -103,7 +104,7 @@ public class createTaskTest extends SampleDataSetup0 {
 			
 			try {
 				employee.createTask(database, project, taskName);
-				Assert.fail();
+				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) {
 			}
 			
@@ -114,9 +115,11 @@ public class createTaskTest extends SampleDataSetup0 {
 		/*
 		 *Alternative scenario3: 
 		 * employee is project leader
+		 * *employee creates task with name already excisting under another project
+		 * *employee creates task with arbitrary name for project which already contains task 
 		 * employee tries to create task with name already existing under selected project
-		 * checks method throws exception
-		 * checks no task has been added
+		 * method throws exception
+		 * no task has been added
 		 */
 		
 		@Test
@@ -126,18 +129,29 @@ public class createTaskTest extends SampleDataSetup0 {
 			
 			assertTrue(project.isProjectLeader(employee));
 			
-			String taskName="Task01";
-			Task task=new Task (project,taskName);
-			super.database.tasks.add(task);
+			//add task to secondary project
+			super.database.tasks.add(new Task(super.database.projects.get(1),"Task"));
+			
+			//adding task with same name^ to main project
+			try {
+				employee.createTask(database, project, "Task");
+			} catch (WrongInputException e) {
+				Assert.fail();
+			}
+			
+			//adding task with new name to main project
+			try {
+				employee.createTask(database, project, "Task01");
+			} catch (WrongInputException e) {
+				Assert.fail();
+			}
 			
 			int numberOfTasks = database.tasks.size();
-			
 			try {
-				employee.createTask(database, project, taskName);
+				employee.createTask(database, project, "Task01");
 				Assert.fail();
 			} catch (WrongInputException e) {
 			}
-			
 			
 			//checks createTask hasn't created task; 
 			assertEquals(database.tasks.size(), numberOfTasks);
