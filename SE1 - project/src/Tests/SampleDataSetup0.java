@@ -3,18 +3,40 @@ package Tests;
 import java.util.ArrayList;
 import org.junit.Before;
 
-import project.Database;
-import project.Employee;
-import project.Project;
+import project.*;
 
 public class SampleDataSetup0 {
 	protected Database database=new Database();
-	
+	/*
+	 * Creates 10 employees, Employee0..Employee9
+	 * Creates 10 projects, Project0..Project9
+	 * Benjamin0 is project leader of project0
+	 * 
+	 * Creates 10 tasks, Task0..Task9. 
+	 * Task[i] is belonging to Project[i]
+	 * 
+	 * creates 10 assignments
+	 * Assignment[i] is connected to task[i] and Benjamin[i]
+	 * 
+	 * creates 10 workperiod(bookings)
+	 * workperiod[i] belongs to assignment[i]
+	 * workperiod[i] starts at 9.00 and lasts til 9.00+i
+	 * 
+	 */
 	@Before
 	public void setup() {
+		CalDay day=new CalDay(2000,2,1);
 		for (int i=0;i<10;i++){
-			database.employees.add(new Employee("Benjamin" + i,i));
-			database.projects.add(new Project ("Project" + i,i));
+			Employee tempEmp=new Employee("Employee" + i,i);
+			database.employees.add(tempEmp);
+			Project tempPro=new Project ("Project" + i,i);
+			database.projects.add(tempPro);
+			Task tempTask=new Task(tempPro,"Task" + i);
+			database.addTask(tempTask);
+			Assignment tempAss=new Assignment(tempTask,tempEmp);
+			database.assignments.add(tempAss);
+			WorkPeriod tempWP=new WorkPeriod (day,9,9+i);
+			tempAss.bookings.add(tempWP);
 		}
 		database.projects.get(0).projectLeader=database.employees.get(0);
 	}	

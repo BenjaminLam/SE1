@@ -3,8 +3,8 @@ package project;
 import Exceptions_Errors.*;
 
 public class Employee {
-	String name;
-	int ID;
+	private String name;
+	public int ID;
 	
 	public Employee (String name, int ID){
 		this.name=name;
@@ -22,18 +22,14 @@ public class Employee {
 		if (project==null) { 
 			throw new WrongInputException("Project doesn't exist");	
 		}
-		
 		if(!project.isProjectLeader(this)) {
 			throw new WrongInputException("You are not the project leader of the selected project");
 		}
-		for (Task task:database.tasks) {
-			if (task.name==name && task.projectID==project.ID){
-				throw new WrongInputException("The task already exists in this project");
-				
-			}
+		if (database.taskExists(project.ID, name)) {
+			throw new WrongInputException("The task already exists in this project");
 		}
-		Task task=new Task (project, name);
-		database.tasks.add(task);
-		return database.tasks.indexOf(task);
+		return database.addTask(new Task (project, name));
 	}
+
+	
 }

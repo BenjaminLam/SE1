@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Assignment {
 	private int taskID;
-	private int employeeID;
-	private List<WorkPeriod> bookings=new ArrayList<WorkPeriod>();
+	public int employeeID;
+	public List<WorkPeriod> bookings=new ArrayList<WorkPeriod>();
 	private List<WorkPeriod> timeRegisters=new ArrayList<WorkPeriod>();
 	
-	public Assignment (int taskID, int employeeID) {
-		this.taskID=taskID;
-		this.employeeID=employeeID;
+	public Assignment (Task task, Employee employee) {
+		this.taskID=task.ID;
+		this.employeeID=employee.ID;
 	}
 }

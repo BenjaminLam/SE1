@@ -3,16 +3,12 @@ package Tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.junit.Assert;
-
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
+import org.junit.Assert;
 
 import org.junit.Test;
 
-import Exceptions_Errors.WrongInputException;
+import Exceptions_Errors.*;
 import project.*;
 
 
@@ -68,7 +64,7 @@ public class createTaskTest extends SampleDataSetup0 {
 		
 		@Test
 		public void testCreateTaskAlt1(){
-			int numberOfTasks = database.tasks.size();
+			int numberOfTasks = database.getNumberOfTasks();
 			Employee employee=super.database.employees.get(1);
 			Project project=super.database.projects.get(0);
 			
@@ -84,7 +80,7 @@ public class createTaskTest extends SampleDataSetup0 {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(database.tasks.size(), numberOfTasks);
+			assertEquals(database.getNumberOfTasks(), numberOfTasks);
 		}
 		
 		/*
@@ -96,7 +92,7 @@ public class createTaskTest extends SampleDataSetup0 {
 		
 		@Test
 		public void testCreateTaskAlt2(){
-			int numberOfTasks = database.tasks.size();
+			int numberOfTasks = database.getNumberOfTasks();
 			Employee employee=super.database.employees.get(0);
 			Project project=null;
 			
@@ -109,7 +105,7 @@ public class createTaskTest extends SampleDataSetup0 {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(database.tasks.size(), numberOfTasks);
+			assertEquals(database.getNumberOfTasks(), numberOfTasks);
 		}
 		
 		/*
@@ -130,7 +126,7 @@ public class createTaskTest extends SampleDataSetup0 {
 			assertTrue(project.isProjectLeader(employee));
 			
 			//add task to secondary project
-			super.database.tasks.add(new Task(super.database.projects.get(1),"Task"));
+			super.database.addTask(new Task(super.database.projects.get(1),"Task"));
 			
 			//adding task with same name^ to main project
 			try {
@@ -146,7 +142,8 @@ public class createTaskTest extends SampleDataSetup0 {
 				Assert.fail();
 			}
 			
-			int numberOfTasks = database.tasks.size();
+			//adding task with already excisting name in project
+			int numberOfTasks = database.getNumberOfTasks();
 			try {
 				employee.createTask(database, project, "Task01");
 				Assert.fail();
@@ -154,7 +151,7 @@ public class createTaskTest extends SampleDataSetup0 {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(database.tasks.size(), numberOfTasks);
+			assertEquals(database.getNumberOfTasks(), numberOfTasks);
 		}
 		
 		
