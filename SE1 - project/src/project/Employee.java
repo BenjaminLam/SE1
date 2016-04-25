@@ -9,12 +9,16 @@ public class Employee {
 		this.ID=ID;
 	}
 	
+	//not test implemented
+	//not handling null value
 	public boolean equals (Employee employee) {
 		if (this.ID==employee.ID) return true;
 		return false;
 	}
 	
-	public void createTask (Database database, int projectID, String name) {
-		database.tasks.add(new Task (projectID, name));
+	public int createTask (Database database, int projectID, String name) {
+		Task task=new Task (projectID, name);
+		database.tasks.add(task);
+		return database.tasks.indexOf(task);
 	}
 }

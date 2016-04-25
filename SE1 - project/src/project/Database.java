@@ -13,20 +13,11 @@ public class Database {
 	public Database () {
 	}
 	
-	public boolean isProjectLeader(Employee employee){
-		for (Project project:projects){
-			if (project.projectLeader!= null && project.projectLeader.equals(employee)) return true;
+	//not implemented testdriven
+	public Task getTask (int taskID) {
+		for (Task task:tasks){
+			if (task.ID==taskID) return task;
 		}
-		return false;
-	}
-	
-	public List<Project> leaderProjects (Employee employee) {
-		List<Project> leaderProjects = new ArrayList<Project>();
-		
-		for (Project project:projects) {
-			if (project.projectLeader.equals(employee)) leaderProjects.add(project);
-		}
-		
-		return leaderProjects;
+		return null;
 	}
 }

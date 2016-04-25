@@ -2,7 +2,7 @@ package project;
 
 public class Project {
 	private String name;
-	private int ID;
+	public int ID;
 	public Employee projectLeader;
 	private CalWeek start;
 	private CalWeek end;
@@ -11,4 +11,12 @@ public class Project {
 		this.name=name;
 		this.ID=ID;
 	}
+	
+	//not handling null value
+	//not implemented test driven
+	public boolean isProjectLeader(Employee employee) {
+		if (employee.equals(projectLeader)) return true;
+		return false;
+	}
+
 }

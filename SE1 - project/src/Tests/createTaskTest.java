@@ -9,8 +9,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import project.Employee;
-import project.Task;
+import project.*;
+
 
 /**
  * @TODO.
@@ -33,20 +33,18 @@ public class createTaskTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateTaskMain () {
 			Employee employee=super.database.employees.get(0);
+			Project project=super.database.projects.get(0);
 			
-			assertTrue(super.database.isProjectLeader(employee));
+			assertTrue(project.isProjectLeader(employee));
 			
-			int numberOfTasks=super.database.tasks.size();
-			
-			int projectID=0;
 			String taskName="Task01";
 			
-			employee.createTask(database, projectID, taskName);
+			int taskID=employee.createTask(database, project.ID, taskName);
 			
-			Task task=super.database.tasks.get(0);
+			Task task=super.database.getTask(taskID);
 			
 			assertNotNull(task);
 			assertEquals(task.name,taskName);
-			assertEquals(task.projectID,projectID);
+			assertEquals(task.projectID,project.ID);
 		}
 }
