@@ -8,6 +8,7 @@ public class Database {
 	public List<Employee> employees = new ArrayList<Employee>();
 	public List<Project> projects = new ArrayList<Project>();
 	public List<Task> tasks = new ArrayList<Task>();
+	public List<Assignment> assignments=new ArrayList<Assignment>();
 	
 	public Database () {
 	}

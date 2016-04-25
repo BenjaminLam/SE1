@@ -5,8 +5,8 @@ public class Task {
 	public int ID;
 	public int projectID;
 	public double timeBudget;
-//	calWeek start;
-//	calWeek end;
+	CalWeek start;
+	CalWeek end;
 	
 	public Task (int projectID, String name) {
 		this.name=name;

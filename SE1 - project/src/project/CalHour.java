@@ -1,8 +1,8 @@
 package project;
 
 public class CalHour {
-	public int weekDay;
-	public int hour;
+	private int weekDay;
+	private int hour;
 	
 	public CalHour (int weekDay, int hour) {
 		this.weekDay=weekDay;

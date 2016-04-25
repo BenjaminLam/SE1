@@ -9,10 +9,6 @@ public class Employee {
 		this.ID=ID;
 	}
 	
-	public boolean isProjectLeader (Database database) {
-		return database.isProjectLeader(this);
-	}
-	
 	public boolean equals (Employee employee) {
 		if (this.ID==employee.ID) return true;
 		return false;
