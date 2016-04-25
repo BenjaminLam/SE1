@@ -19,14 +19,20 @@ public class Employee {
 	}
 	
 	public int createTask (Database database, Project project, String name) throws WrongInputException {
-		if(!project.isProjectLeader(this)) {
-			throw new WrongInputException("You are not the project leader of the selected project");
-		}
 		if (project==null) { 
 			throw new WrongInputException("Project doesn't exist");	
 		}
 		
-		Task task=new Task (project.ID, name);
+		if(!project.isProjectLeader(this)) {
+			throw new WrongInputException("You are not the project leader of the selected project");
+		}
+		for (Task task:database.tasks) {
+			if (task.name==name && task.projectID==project.ID){
+				throw new WrongInputException("The task already exists in this project");
+				
+			}
+		}
+		Task task=new Task (project, name);
 		database.tasks.add(task);
 		return database.tasks.indexOf(task);
 	}

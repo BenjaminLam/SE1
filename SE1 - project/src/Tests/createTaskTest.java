@@ -26,7 +26,6 @@ public class createTaskTest extends SampleDataSetup0 {
 		/*
 		 *Main scenario: 
 		 * employee is project leader
-		 * employee enters project id for project which he is leader of 
 		 * employee enters name of task to create
 		 * system creates task with name
 		 * 		check task exists
@@ -61,9 +60,9 @@ public class createTaskTest extends SampleDataSetup0 {
 		/*
 		 *Alternative scenario1: 
 		 * employee is not project leader
-		 * no task is created
-		 * 		this is tested by making sure number of tasks in the database is the same before and after createTask method is called
-		 * the system returns an error TODO!
+		 * employee enters name of task to create
+		 * 
+		 * 
 		 */
 		
 		@Test
@@ -79,6 +78,31 @@ public class createTaskTest extends SampleDataSetup0 {
 			
 			try {
 				employee.createTask(database, project, taskName);
+				Assert.fail(); //checks exception is thrown
+			} catch (WrongInputException e) {
+			}
+			
+			//checks createTask hasn't created task; 
+			assertEquals(database.tasks.size(), numberOfTasks);
+		}
+		
+		/*
+		 *Alternative scenario2: 
+		 * employee tries to create task for non excisting project (null)
+		 * checks method throws exception
+		 * checks no task has been added
+		 */
+		
+		@Test
+		public void testCreateTaskAlt2(){
+			int numberOfTasks = database.tasks.size();
+			Employee employee=super.database.employees.get(0);
+			Project project=null;
+			
+			String taskName="Task01";
+			
+			try {
+				employee.createTask(database, project, taskName);
 				Assert.fail();
 			} catch (WrongInputException e) {
 			}
@@ -88,11 +112,38 @@ public class createTaskTest extends SampleDataSetup0 {
 		}
 		
 		/*
-		 *Alternative scenario1: 
-		 * employee is not project leader
-		 * no task is created
-		 * 		this is tested by making sure number of tasks in the database is the same before and after createTask method is called
-		 * the system returns an error TODO!
+		 *Alternative scenario3: 
+		 * employee is project leader
+		 * employee tries to create task with name already existing under selected project
+		 * checks method throws exception
+		 * checks no task has been added
 		 */
+		
+		@Test
+		public void testCreateTaskAlt3(){
+			Employee employee=super.database.employees.get(0);
+			Project project=super.database.projects.get(0);
+			
+			assertTrue(project.isProjectLeader(employee));
+			
+			String taskName="Task01";
+			Task task=new Task (project,taskName);
+			super.database.tasks.add(task);
+			
+			int numberOfTasks = database.tasks.size();
+			
+			try {
+				employee.createTask(database, project, taskName);
+				Assert.fail();
+			} catch (WrongInputException e) {
+			}
+			
+			
+			//checks createTask hasn't created task; 
+			assertEquals(database.tasks.size(), numberOfTasks);
+		}
+		
+		
+		
 		
 }

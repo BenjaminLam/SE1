@@ -8,8 +8,8 @@ public class Task {
 	CalWeek start;
 	CalWeek end;
 	
-	public Task (int projectID, String name) {
+	public Task (Project project, String name) {
 		this.name=name;
-		this.projectID=projectID;
+		this.projectID=project.ID;
 	}
 }
