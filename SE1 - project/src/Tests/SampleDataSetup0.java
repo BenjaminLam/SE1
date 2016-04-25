@@ -16,6 +16,6 @@ public class SampleDataSetup0 {
 			database.employees.add(new Employee("Benjamin" + i,i));
 			database.projects.add(new Project ("Project" + i,i));
 		}
-		database.projects.get(0).setProjectLeader(database.employees.get(0));
+		database.projects.get(0).projectLeader=database.employees.get(0);
 	}	
 }
