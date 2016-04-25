@@ -4,11 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import org.junit.Assert;
+
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import Exceptions_Errors.WrongInputException;
 import project.*;
 
 
@@ -39,7 +43,13 @@ public class createTaskTest extends SampleDataSetup0 {
 			
 			String taskName="Task01";
 			
-			int taskID=employee.createTask(database, project, taskName);
+			
+			int taskID=-1;
+			
+			try {
+				taskID = employee.createTask(database, project, taskName);
+			} catch (WrongInputException e) {
+			}
 			
 			Task task=super.database.getTask(taskID);
 			
@@ -49,25 +59,40 @@ public class createTaskTest extends SampleDataSetup0 {
 		}
 		
 		/*
-		 *Alternative scenario: 
+		 *Alternative scenario1: 
 		 * employee is not project leader
+		 * no task is created
+		 * 		this is tested by making sure number of tasks in the database is the same before and after createTask method is called
 		 * the system returns an error TODO!
 		 */
 		
 		@Test
 		public void testCreateTaskAlt1(){
-			int startSizeOfTaskArray = database.tasks.size();
+			int numberOfTasks = database.tasks.size();
 			Employee employee=super.database.employees.get(1);
 			Project project=super.database.projects.get(0);
 			
+			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(employee));
 			
 			String taskName="Task01";
 			
-			int taskID=employee.createTask(database, project, taskName);
-						
-			assertEquals(-1,taskID);
-			assertEquals(database.tasks.size(), startSizeOfTaskArray);
+			try {
+				employee.createTask(database, project, taskName);
+				Assert.fail();
+			} catch (WrongInputException e) {
+			}
+			
+			//checks createTask hasn't created task; 
+			assertEquals(database.tasks.size(), numberOfTasks);
 		}
+		
+		/*
+		 *Alternative scenario1: 
+		 * employee is not project leader
+		 * no task is created
+		 * 		this is tested by making sure number of tasks in the database is the same before and after createTask method is called
+		 * the system returns an error TODO!
+		 */
 		
 }

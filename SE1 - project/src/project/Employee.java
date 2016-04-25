@@ -1,5 +1,7 @@
 package project;
 
+import Exceptions_Errors.*;
+
 public class Employee {
 	String name;
 	int ID;
@@ -16,10 +18,14 @@ public class Employee {
 		return false;
 	}
 	
-	public int createTask (Database database, Project project, String name) {
-		if(!project.isProjectLeader(this)){
-			return -1;
+	public int createTask (Database database, Project project, String name) throws WrongInputException {
+		if(!project.isProjectLeader(this)) {
+			throw new WrongInputException("You are not the project leader of the selected project");
 		}
+		if (project==null) { 
+			throw new WrongInputException("Project doesn't exist");	
+		}
+		
 		Task task=new Task (project.ID, name);
 		database.tasks.add(task);
 		return database.tasks.indexOf(task);
