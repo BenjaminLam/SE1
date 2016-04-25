@@ -3,6 +3,9 @@ package Tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import static org.junit.Assert.assertNotNull;
 import org.junit.Assert;
 
@@ -32,21 +35,29 @@ public class getAvailableEmployeesTest extends SampleDataSetup0 {
 	
 	@Test
 	public void getAvailableEmployeesMain() {
-		Employee employee=super.database.employees.get(0);
-		Task task=super.database.getTask(0);
+		Employee employee=database.employees.get(0);
+		Task task=database.getTask(0);
+		task.start=new CalWeek(2000,1);
+		task.end=new CalWeek(2000,4);
 		
 		assertNotNull(task);
 		
 		int projectID=task.projectID;
 
-		Project project=super.database.getProject(projectID);
+		Project project=database.getProject(projectID);
 		
 		assertTrue(project.isProjectLeader(employee));
 		
 	
-		//super.database.getAvailableEmployees(employee, task);
+		List<String> employeesAvailable=database.getAvailableEmployees(employee, task);
+	
+		assertNotNull(employeesAvailable);	
+		
+		for (String string:employeesAvailable) {
+			System.out.println(string);
+		}
 	}
 	
-	
-	
+	//add scenarios: no start/end at task
+
 }

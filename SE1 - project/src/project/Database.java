@@ -62,4 +62,23 @@ public class Database {
 		}
 		return hoursBooked;
 	}
+	
+	public double availableTime (Employee employee, CalWeek start, CalWeek end) {
+		double availableTime=(end.week-start.week+1)*37.5;
+		
+		return availableTime-hoursBooked(employee,start,end);
+	}
+	
+	public List<String> getAvailableEmployees (Employee mainEmployee, Task task) {
+		List<String> employeesAvailable= new ArrayList<String>();
+		
+		for (Employee employee:employees) {
+			double availableTime=availableTime(employee,task.start,task.end);
+			if (availableTime>0) employeesAvailable.add(employee.name + " hours free: " + availableTime);
+		}
+		
+		return employeesAvailable;
+	}
+	
+	
 }

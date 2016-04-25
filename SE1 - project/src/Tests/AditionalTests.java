@@ -3,6 +3,10 @@ package Tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertNotNull;
 import org.junit.Assert;
 
@@ -20,7 +24,7 @@ public class AditionalTests extends SampleDataSetup0 {
 	 * method returns number of hours the person is booked in the interval
 	 */
 	
-	@Test void hoursBookedTestMain() {
+	@Test void hoursBookedTest() {
 		Employee employee=database.employees.get(0);
 		CalWeek start=new CalWeek(2000,1);
 		CalWeek end=new CalWeek(2000,4);
@@ -38,10 +42,18 @@ public class AditionalTests extends SampleDataSetup0 {
 		assertEquals(hoursBooked,database.hoursBooked(employee,start,end));
 	}
 	
-	
+	/*
+	 * excisting calWeek (start) is inputted
+	 * excisting calWeek (end) is inputted
+	 * method returns number of hours the person is available in the interval
+	 */
 	
 	@Test
-	public void getAvailableHoursTest() {
+	public void hoursAvailableTest() {
+		
+		
+		
+		
 		//datastructure?
 	}
 }

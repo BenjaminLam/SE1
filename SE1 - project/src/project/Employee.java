@@ -3,7 +3,7 @@ package project;
 import Exceptions_Errors.*;
 
 public class Employee {
-	private String name;
+	public String name;
 	public int ID;
 	
 	public Employee (String name, int ID){
