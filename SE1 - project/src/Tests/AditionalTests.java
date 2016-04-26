@@ -24,7 +24,8 @@ public class AditionalTests extends SampleDataSetup0 {
 	 * method returns number of hours the person is booked in the interval
 	 */
 	
-	@Test void hoursBookedTest() {
+	@Test 
+	public void hoursBookedTest() {
 		Employee employee=database.employees.get(0);
 		CalWeek start=new CalWeek(2000,1);
 		CalWeek end=new CalWeek(2000,4);
@@ -39,21 +40,21 @@ public class AditionalTests extends SampleDataSetup0 {
 				}
 			}
 		}
-		assertEquals(hoursBooked,database.hoursBooked(employee,start,end));
+		assertEquals(hoursBooked,database.hoursBooked(employee,start,end),0.1);
 	}
 	
-	/*
-	 * excisting calWeek (start) is inputted
-	 * excisting calWeek (end) is inputted
-	 * method returns number of hours the person is available in the interval
-	 */
-	
-	@Test
-	public void hoursAvailableTest() {
-		
-		
-		
-		
-		//datastructure?
-	}
+//	/*
+//	 * excisting calWeek (start) is inputted
+//	 * excisting calWeek (end) is inputted
+//	 * method returns number of hours the person is available in the interval
+//	 */
+//	
+//	@Test
+//	public void hoursAvailableTest() {
+//		
+//		
+//		
+//		
+//		//datastructure?
+//	}
 }

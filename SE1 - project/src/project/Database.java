@@ -16,10 +16,7 @@ public class Database {
 	}
 	
 	public Task getTask (int taskID) {
-		for (Task task:tasks){
-			if (task.ID==taskID) return task;
-		}
-		return null;
+		return tasks.get(taskID);
 	}
 	
 	public Project getProject (int projectID) {
@@ -69,7 +66,16 @@ public class Database {
 		return availableTime-hoursBooked(employee,start,end);
 	}
 	
-	public List<String> getAvailableEmployees (Employee mainEmployee, Task task) {
+	public List<String> getAvailableEmployees (Employee mainEmployee, Task task) throws WrongInputException {
+		if (task==null) throw new WrongInputException("Task doesn't excist");
+		
+		Project project=getProject(task.projectID);
+		if (!project.isProjectLeader(mainEmployee)) throw new WrongInputException("You are not the project leader for the project of the task");
+		
+		if (task.start==null)throw new WrongInputException("Task doesn't have a start date");
+		
+		if (task.end==null)throw new WrongInputException("Task doesn't have an end date");
+		
 		List<String> employeesAvailable= new ArrayList<String>();
 		
 		for (Employee employee:employees) {
