@@ -22,6 +22,7 @@ public class SampleDataSetup0 {
 	 * workperiod[i] belongs to assignment[i]
 	 * workperiod[i] starts at 9.00 and lasts til 9.00+i
 	 * 
+	 * Adds 6 workperiods to employee9, each lasting 24 hours
 	 */
 	@Before
 	public void setup() {
@@ -37,7 +38,14 @@ public class SampleDataSetup0 {
 			database.assignments.add(tempAss);
 			WorkPeriod tempWP=new WorkPeriod (day,9,9+i);
 			tempAss.bookings.add(tempWP);
+			
+			if(i==9) {
+				for (int j=0;j<6;j++) {
+					tempAss.bookings.add(new WorkPeriod(day,0,24));
+				}
+			}
 		}
 		database.projects.get(0).projectLeader=database.employees.get(0);
+		
 	}	
 }
