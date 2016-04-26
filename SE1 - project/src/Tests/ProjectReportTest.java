@@ -21,6 +21,7 @@ import project.*;
  * @author Martin 
  * added alternative scenario 1
  * old alternative scenario 1 is now alternative scenario 2
+ * added alternative scenario 3
  */
 public class ProjectReportTest extends SampleDataSetup0 {
 	/*
@@ -99,5 +100,45 @@ public class ProjectReportTest extends SampleDataSetup0 {
 		}
 		assertNull(projectReport);	
 	}
+	
+	/*
+	 *Alternative scenario3: 
+	 * project excists
+	 * employee is project leader
+	 * excisting task is created for project
+	 * task is done
+	 * employee creates report
+	 */
+	
+	@Test
+	public void projectReportTestAlt3() {
+		Project project=database.projects.get(0);
+		assertNotNull(project);
+		
+		Task testTask=new Task (project,"testTask");
+		assertNotNull(testTask);
+		
+		testTask.end=new CalWeek(2000,1);
+		try {
+			assertTrue(testTask.inPast());
+		} catch (WrongInputException e1) {
+			Assert.fail();
+		}
+		
+		database.addTask(testTask);
+		
+		Employee employee=database.employees.get(0);
+		assertTrue(project.isProjectLeader(employee));
+		
+		List<String> projectReport=null;
+		
+		try {
+			projectReport=database.getProjectReport(project, employee);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		assertNotNull(projectReport);
+	}
+	
 	
 }

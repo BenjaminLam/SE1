@@ -63,10 +63,6 @@ public class getAvailableEmployeesTest extends SampleDataSetup0 {
 		}
 	
 		assertNotNull(employeesAvailable);	
-		
-		for (String string:employeesAvailable) {
-			System.out.println(string);
-		}
 	}
 	
 	/*  
