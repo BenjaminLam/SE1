@@ -60,7 +60,7 @@ public class Database {
 		return hoursBooked;
 	}
 	
-	public double availableTime (Employee employee, CalWeek start, CalWeek end) {
+	public double hoursAvailable (Employee employee, CalWeek start, CalWeek end) {
 		double availableTime=(end.week-start.week+1)*37.5;
 		
 		return availableTime-hoursBooked(employee,start,end);
@@ -79,7 +79,7 @@ public class Database {
 		List<String> employeesAvailable= new ArrayList<String>();
 		
 		for (Employee employee:employees) {
-			double availableTime=availableTime(employee,task.start,task.end);
+			double availableTime=hoursAvailable(employee,task.start,task.end);
 			if (availableTime>0) employeesAvailable.add(employee.name + " hours free: " + availableTime);
 		}
 		
