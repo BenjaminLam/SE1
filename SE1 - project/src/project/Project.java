@@ -1,7 +1,7 @@
 package project;
 
 public class Project {
-	private String name;
+	public String name;
 	public int ID;
 	public Employee projectLeader;
 	private CalWeek start;

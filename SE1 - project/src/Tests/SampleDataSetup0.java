@@ -26,7 +26,7 @@ public class SampleDataSetup0 {
 	 */
 	@Before
 	public void setup() {
-		CalDay day=new CalDay(2000,2,1);
+		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		for (int i=0;i<10;i++){
 			Employee tempEmp=new Employee("Employee" + i,i);
 			database.employees.add(tempEmp);

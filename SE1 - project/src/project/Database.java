@@ -1,6 +1,8 @@
 package project;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,6 +19,13 @@ public class Database {
 	
 	public Task getTask (int taskID) {
 		return tasks.get(taskID);
+	}
+	
+	public Employee getEmployee (int ID) {
+		for (Employee employee:employees) {
+			if (employee.ID==ID) return employee;
+		}
+		return null;
 	}
 	
 	public Project getProject (int projectID) {
@@ -51,7 +60,7 @@ public class Database {
 		for (Assignment assignment: assignments) {
 			if (assignment.employeeID==employee.ID) {
 				for (WorkPeriod wp:assignment.bookings) {
-					if (wp.isAfter(start) && wp.isBefore(end)) {
+					if (wp.day.week.isAfter(start) && wp.day.week.isBefore(end)) {
 						hoursBooked+=wp.getLength();
 					}
 				}
@@ -86,5 +95,124 @@ public class Database {
 		return employeesAvailable;
 	}
 	
+	public List<Employee> projectEmployees (Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		
+		List<Employee> projectEmployees = new ArrayList<Employee>();
+		
+		List<Task> projectTasks=projectGetTasks(project);
+		
+		for (Task task:projectTasks) {
+			for (Assignment assignment:assignments) {
+				if (assignment.taskID==task.ID) {
+					Employee tempEmp=getEmployee(assignment.employeeID);
+					if (!projectEmployees.contains(tempEmp)) projectEmployees.add(tempEmp);
+				}
+			}
+		}
+
+		return projectEmployees;
+	}
 	
+	public double projectHoursSpent(Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException("project doesn't excist");
+		double hoursSpent=0;
+	
+		List<Task> projectTasks=projectGetTasks(project);
+		
+		for (Task task:projectTasks) {
+			for (Assignment assignment:assignments) {
+				if (assignment.taskID==task.ID) hoursSpent+=assignment.getCumulativeTimeRegisters();
+			}
+		}
+		
+		return hoursSpent;
+	}
+
+	public double projectHoursProjected (Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		double hoursProjected=0;
+		
+		for (Task task:tasks) {
+			if (task.projectID==project.ID) hoursProjected+=task.timeBudget;
+		}
+		
+		return hoursProjected;
+	}
+
+	public List<Task> projectCompletedTasks (Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException("Project doesn't excist");
+		List<Task> completedTasks=new ArrayList<Task>();
+		List<Task> projectTasks=projectGetTasks(project);
+		
+		for (Task task:projectTasks) {
+			try {
+				if(task.inPast()) completedTasks.add(task);
+			} catch (WrongInputException e) {
+				
+			}
+		}
+		
+		return completedTasks;
+	}
+
+	public List<Task> projectRemainingTasks (Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException("Project doesn't excist");
+		List<Task> projectTasks=projectGetTasks(project);
+		List<Task> completedTasks=projectCompletedTasks(project);
+		List<Task> remainingTasks=new ArrayList<Task>();
+		
+		for (Task task:projectTasks) {
+			if (!completedTasks.contains(task)) remainingTasks.add(task); 
+		}
+		
+		return remainingTasks;
+	}
+
+	private List<Task> projectGetTasks(Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		List<Task> projectTasks = new ArrayList<Task>();
+		
+		for (Task task:tasks) {
+			if (task.projectID==project.ID) projectTasks.add(task);
+		}
+		return projectTasks;
+	}
+	
+	public List<String> getProjectReport(Project project, Employee projectEmployee) throws WrongInputException {
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		if (!project.isProjectLeader(projectEmployee)) throw new WrongInputException ("You are not the project leader of this project");
+		
+		List<String> projectReport=new ArrayList<String>();
+		
+		projectReport.add(project.name);
+		
+		List<Employee> projectEmployees=projectEmployees(project);
+		
+		projectReport.add("" + projectEmployees.size());
+		for (Employee employee:projectEmployees) {
+			projectReport.add(employee.ID + " " + employee.name);
+		}
+		
+		projectReport.add("" + projectHoursProjected(project));
+		
+		projectReport.add("" + projectHoursSpent(project));
+		
+		List<Task> remainingTasks=projectRemainingTasks(project);
+		
+		for (Task task:remainingTasks) {
+			projectReport.add(task.name);
+		}
+		
+		projectReport.add("*"); //asteriks to seperate remaining tasks from completed tasks
+		
+		List<Task> completedTasks=projectCompletedTasks(project);
+		
+		for (Task task:completedTasks) {
+			projectReport.add(task.name);
+		}
+		
+		return projectReport;
+	}
+
 }

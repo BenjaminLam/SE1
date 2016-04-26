@@ -17,10 +17,10 @@ import project.*;
 
 
 /**
- * Tests for user case createTask
- * @author all group members 
- * added two more alternative scenarios under alternate test 3
- * new alternative scenarions are marked with *
+ * Tests for user case get available employees
+ * @author Martin
+ * added two more alternative scenarios:
+ * alternative3 and alternative 4
  */
 
 //Test information is correct from returned list??

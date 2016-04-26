@@ -16,8 +16,6 @@ import Exceptions_Errors.*;
 import project.*;
 
 public class AditionalTests extends SampleDataSetup0 {
-	//requires employee.getAvailableHours(start,end)
-	
 	/*
 	 * excisting calWeek (start) is inputted
 	 * excisting calWeek (end) is inputted
@@ -34,7 +32,7 @@ public class AditionalTests extends SampleDataSetup0 {
 		for (Assignment assignment:database.assignments) {
 			if (assignment.employeeID==employee.ID) {
 				for (WorkPeriod wp:assignment.bookings) {
-					if (wp.isAfter(start) && wp.isBefore(end)) {
+					if (wp.day.week.isAfter(start) && wp.day.week.isBefore(end)) {
 						hoursBooked+=wp.getLength();
 					}
 				}

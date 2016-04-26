@@ -1,12 +1,10 @@
 package project;
 
 public class CalDay {
-	public int year;
-	public int week;
+	public CalWeek week;
 	public int day;
 	
-	public CalDay (int year, int week, int day) {
-		this.year=year;
+	public CalDay (CalWeek week, int day) {
 		this.week=week;
 		this.day=day;
 	}

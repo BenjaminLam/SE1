@@ -15,17 +15,5 @@ public class WorkPeriod {
 		return end-start;
 	}
 	
-	public boolean isAfter (CalWeek week) {
-		if (week.year<this.day.year) return true;
-		if (week.year>this.day.year) return false;
-		if (week.week<=this.day.week) return true;
-		return false;
-	}
 	
-	public boolean isBefore (CalWeek week) {
-		if (week.year>this.day.year) return true;
-		if (week.year<this.day.year) return false;
-		if (week.week>=this.day.week) return true;
-		return false;
-	}
 }
