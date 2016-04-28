@@ -47,6 +47,34 @@ public class Database {
 		}
 		return false;
 	}
+		
+	//Missing test
+	public List<WorkPeriod> employeesTodaysBookings(Employee employee, CalDay day){
+		//init of lists
+		List<WorkPeriod> todaysBookings = new ArrayList<WorkPeriod>();
+		List<Assignment> employeeTotalBookings = new ArrayList<Assignment>();
+		//finds an employees total bookings
+		for(Assignment assignment:assignments){
+			if(employee.ID==assignment.employeeID){
+				employeeTotalBookings.add(assignment);
+			}
+		}
+		//Adds all todays bookings to the todaysBookings array
+		for(Assignment assignment: employeeTotalBookings){
+			for(WorkPeriod w:assignment.bookings){
+				if(w.day.equals(day)){
+					todaysBookings.add(w);
+				}
+			}
+		}
+		return todaysBookings;
+	}
+	//Missing test
+	public void registerBooking(WorkPeriod booking, Assignment assignment){
+		assignment.timeRegisters.add(booking);
+	}
+	
+	
 	
 	//not handling null input
 	public int addTask(Task task){

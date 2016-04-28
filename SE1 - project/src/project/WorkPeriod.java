@@ -15,5 +15,4 @@ public class WorkPeriod {
 		return end-start;
 	}
 	
-	
 }

@@ -7,7 +7,7 @@ public class Assignment {
 	public int taskID;
 	public int employeeID;
 	public List<WorkPeriod> bookings=new ArrayList<WorkPeriod>();
-	private List<WorkPeriod> timeRegisters=new ArrayList<WorkPeriod>();
+	public List<WorkPeriod> timeRegisters=new ArrayList<WorkPeriod>();
 	
 	public Assignment (Task task, Employee employee) {
 		this.taskID=task.ID;
@@ -23,4 +23,5 @@ public class Assignment {
 		
 		return cumulativeValue;
 	}
+	
 }

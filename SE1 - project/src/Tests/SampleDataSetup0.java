@@ -10,13 +10,13 @@ public class SampleDataSetup0 {
 	/*
 	 * Creates 10 employees, Employee0..Employee9
 	 * Creates 10 projects, Project0..Project9
-	 * Benjamin0 is project leader of project0
+	 * Employee0 is project leader of project0
 	 * 
 	 * Creates 10 tasks, Task0..Task9. 
 	 * Task[i] is belonging to Project[i]
 	 * 
 	 * creates 10 assignments
-	 * Assignment[i] is connected to task[i] and Benjamin[i]
+	 * Assignment[i] is connected to task[i] and Employee[i]
 	 * 
 	 * creates 10 workperiod(bookings)
 	 * workperiod[i] belongs to assignment[i]
