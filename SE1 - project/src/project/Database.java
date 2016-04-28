@@ -9,10 +9,6 @@ import java.util.Scanner;
 import Exceptions_Errors.WrongInputException;
 
 public class Database {
-	public static void main(String[] args) {
-		System.out.println(77%17);
-	}
-	
 	public List<Employee> employees = new ArrayList<Employee>();
 	public List<Project> projects = new ArrayList<Project>();
 	private List<Task> tasks = new ArrayList<Task>();
