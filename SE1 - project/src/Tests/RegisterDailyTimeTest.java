@@ -18,7 +18,7 @@ import project.*;
 /**
  * Test for user case RegisterDailyTime
  * @author BenjaminWrist
- *
+ * Still need to test alternative scenarios
  */
 
 public class RegisterDailyTimeTest extends SampleDataSetup0{
@@ -34,23 +34,31 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 	public void registerDailyTimeMain(){
 		Employee employee = database.employees.get(9);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
-		
+		int lastAss=database.assignments.size()-1;
 		assertNotNull(employee);
 		assertNotNull(day);
 		
 		List<WorkPeriod> todaysBookings = database.employeesTodaysBookings(employee, day);
 		for(WorkPeriod booking: todaysBookings){
-			database.registerBooking(booking,database.assignments.get(9));
-			
+			database.registerBooking(booking,database.assignments.get(lastAss));	
 		}
 		
-		assertEquals(todaysBookings.size(),database.assignments.get(9).timeRegisters.size());
-		
+		assertEquals(todaysBookings.size(),database.assignments.get(lastAss).timeRegisters.size());
 	}
 	
 	
+	/*
+	 * 
+	 */
+	
 	@Test
 	public void registerDailyTimeAlt1(){
+		Employee employee = database.employees.get(database.assignments.size()-1);
+		CalDay day = new CalDay(new CalWeek(2000,2),1);
+		
+		assertNotNull(employee);
+		assertNotNull(day);
+		
 		
 	}
 	

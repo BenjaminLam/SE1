@@ -52,7 +52,6 @@ public class Database {
 		return false;
 	}
 		
-	//Missing test
 	public List<WorkPeriod> employeesTodaysBookings(Employee employee, CalDay day){
 		//init of lists
 		List<WorkPeriod> todaysBookings = new ArrayList<WorkPeriod>();
@@ -73,12 +72,44 @@ public class Database {
 		}
 		return todaysBookings;
 	}
-	//Missing test
+	
 	public void registerBooking(WorkPeriod booking, Assignment assignment){
 		assignment.timeRegisters.add(booking);
 	}
 	
+	public void seekAssistance(WorkPeriod period,Employee coWorker,Assignment assignment) throws WrongInputException{
+		if(checkIfCoWorkerIsAvailable(period,coWorker)){
+			createBookingForCoWorker(period,coWorker,assignment);
+		}
+	}
 	
+	public boolean checkIfCoWorkerIsAvailable(WorkPeriod period,Employee coWorker){
+		if(coWorker==null){
+			return false;
+		}
+		for(WorkPeriod booking: employeesTodaysBookings(coWorker,period.day)){
+			if(booking.equals(period)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void createBooking(CalDay day, int start, int end,Assignment assignment){
+		WorkPeriod newBooking = new WorkPeriod(day,start,end);
+		addBookingToAssignment(newBooking,assignment);
+	}
+	
+	public void addBookingToAssignment(WorkPeriod period,Assignment assignment){
+		assignment.bookings.add(period);
+	}
+	
+	public void createBookingForCoWorker(WorkPeriod period,Employee coWorker, Assignment assignment) throws WrongInputException{
+		if(coWorker==null)throw new WrongInputException("Employee doen't excist");
+		Assignment coWorkerNew = new Assignment(getTask(assignment.taskID), coWorker);
+		addBookingToAssignment(period,coWorkerNew);
+		assignments.add(coWorkerNew);
+	}
 	
 	//not handling null input
 	public int addTask(Task task){

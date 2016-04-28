@@ -15,4 +15,10 @@ public class WorkPeriod {
 		return end-start;
 	}
 	
+	public boolean equals(WorkPeriod other){
+		if(this.day.equals(other.day) && this.start==other.start && this.end==other.end){
+			return true;
+		}
+		return false;
+	}
 }
