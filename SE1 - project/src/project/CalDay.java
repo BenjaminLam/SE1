@@ -8,4 +8,11 @@ public class CalDay {
 		this.week=week;
 		this.day=day;
 	}
+	
+	public boolean equals(CalDay other){
+		if((this.day==other.day)&&(this.week.equals(other.week))){
+			return true;
+		}
+		return false;
+	}
 }

@@ -22,4 +22,11 @@ public class CalWeek {
 		if (week.week>=this.week) return true;
 		return false;
 	}
+	
+	public boolean equals(CalWeek other){
+		if(this.year==other.year && this.week==other.week){
+			return true;
+		}
+		return false;
+	}
 }

@@ -39,7 +39,6 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 		assertNotNull(day);
 		
 		List<WorkPeriod> todaysBookings = database.employeesTodaysBookings(employee, day);
-		
 		for(WorkPeriod booking: todaysBookings){
 			database.registerBooking(booking,database.assignments.get(9));
 			
@@ -47,6 +46,12 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 		
 		assertEquals(todaysBookings.size(),database.assignments.get(9).timeRegisters.size());
 		
+	}
+	
+	
+	@Test
+	public void registerDailyTimeAlt1(){
 		
 	}
+	
 }
