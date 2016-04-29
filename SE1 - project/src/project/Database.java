@@ -274,4 +274,10 @@ public class Database {
 		return projectReport;
 	}
 
+	public boolean isProjectLeader (Employee employee) {
+		for (Project project:projects) {
+			if (employee.equals(project.projectLeader)) return true;
+		}
+		return false;
+	}
 }

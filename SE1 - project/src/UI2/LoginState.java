@@ -2,8 +2,9 @@ package UI2;
 
 import java.io.PrintWriter;
 
-public class LoginScreen extends Screen {
-
+public class LoginState extends Screen {
+	BindeLed bindeled;
+	
 	@Override
 	public void printMenu(PrintWriter out) {
 		System.out.println("Welcome to the tool for registration of hours and project management");
@@ -12,13 +13,7 @@ public class LoginScreen extends Screen {
 
 	@Override
 	public boolean processInput(String input, PrintWriter out) {
-		return 
-		
-		
-		switch (Integer.parseInt(input)) {
-		case 1:
-		}
-		
+		return bindeled.logIn(Integer.parseInt(input));
 	}
 
 }
