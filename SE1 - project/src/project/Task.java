@@ -30,6 +30,18 @@ public class Task {
 		
 		return new CalWeek(year,week);
 	}
+	/*
+	public void setTaskStart (CalWeek Start){
+		if (isProjectLeader(Employee)){
+			this.start = Start;
+		}
+	}
 	
+	public void setTaskEnd (CalWeek End){
+		if (Employee is projectleader){
+			this.end = End;
+		}
+	}
+	*/
 	
 }
