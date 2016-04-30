@@ -1,13 +1,17 @@
-package UI2;
+package Midlertidig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import Enum_Interfaces_AbstractClasses.Screen;
+import UI2.UIHandler;
+import UI2.LoginScreen;
+
 public class ProjectUI {
 	Screen screen;
-	BindeLed bindeled;
+	UIHandler bindeled;
 	
 	public ProjectUI () {
 		screen=new LoginScreen ();

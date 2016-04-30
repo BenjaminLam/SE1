@@ -4,17 +4,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Observable;
 import java.util.Scanner;
 
 import Exceptions_Errors.WrongInputException;
 
-public class Database {
+public class Database extends Observable {
 	public List<Employee> employees = new ArrayList<Employee>();
 	public List<Project> projects = new ArrayList<Project>();
 	private List<Task> tasks = new ArrayList<Task>();
 	public List<Assignment> assignments=new ArrayList<Assignment>();
 	
 	public Database () {
+	}
+	
+	public boolean createProject (String name, int ID) {
+		if (!(getProject(ID)==null)) return false;
+		Project project=new Project(name, ID);
+		projects.add(project);
+		this.setChanged();
+		this.notifyObservers(project);
+		return true;
 	}
 	
 	public Task getTask (int taskID) {
