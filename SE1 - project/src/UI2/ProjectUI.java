@@ -10,7 +10,7 @@ public class ProjectUI {
 	BindeLed bindeled;
 	
 	public ProjectUI () {
-		screen=new LoginState ();
+		screen=new LoginScreen ();
 	}
 	
 	

@@ -2,7 +2,7 @@ package UI2;
 
 import java.io.PrintWriter;
 
-public class LoginState extends Screen {
+public class LoginScreen extends Screen {
 	BindeLed bindeled;
 	
 	@Override

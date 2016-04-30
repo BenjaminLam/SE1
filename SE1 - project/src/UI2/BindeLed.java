@@ -1,34 +1,23 @@
 package UI2;
 
+import java.util.Observable;
+
 import project.*;
 
 
-public class BindeLed {
-	private LoginState loginState;
-	private EmployeeState employeeState;
-	private ProjectLeaderState projectLeaderState;
-	private State currentState;
-	private SubState currentSubState;
-	private int stage;
-	private boolean failed;
+public class BindeLed extends Observable {
+	private SystemState currentState;
+	private int subState;
 	
+	Database database;
 	Employee employee;
 	boolean isProjectLeader;
-	Database database;
-	
 	
 	public BindeLed () {
-		this.database=new Database();
-		this.loginState=new LoginState();
-		this.employeeState=new EmployeeState();;
-		this.projectLeaderState==new ProjectLeaderState();
-		this.
-		
+		this.currentState=SystemState.LoginState;
+		this.subState=0;
+		this.database=new Database();		
 	}
-	
-	
-	
-	
 	
 	public boolean logIn(int EmpID) {
 		Employee employee=database.getEmployee(EmpID);
@@ -37,5 +26,12 @@ public class BindeLed {
 		this.employee=employee;
 		isProjectLeader=database.isProjectLeader(employee);
 		return true;
+	}
+
+	public void init() {
+	}
+	public static void main(String[] args) {
+		BindeLed bindeled=new BindeLed();
+		bindeled.init();
 	}
 }
