@@ -31,7 +31,16 @@ public class Task {
 		return new CalWeek(year,week);
 	}
 	
-	public void setTaskStart (CalWeek start, Employee employee){
+	public void setTaskStart (CalWeek start, Employee employee) throws WrongInputException{
+		CalWeek currentWeek = getCurrentWeek();
+		if (start.isBefore(currentWeek)){
+			throw new WrongInputException ("Invalid date; Date is in the past");
+		}
+		if (this.end != null){
+			if (start.isAfter(this.end)){
+			throw new WrongInputException("Invalid date; Date is after task end date");
+			}
+		}
 		this.start = start;
 	}
 	public void setTaskEnd (CalWeek End, Employee employee){
