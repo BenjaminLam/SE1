@@ -5,26 +5,53 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 
 import Exceptions_Errors.WrongInputException;
 
 public class Database extends Observable {
-	public List<Employee> employees = new ArrayList<Employee>();
-	public List<Project> projects = new ArrayList<Project>();
-	private List<Task> tasks = new ArrayList<Task>();
-	public List<Assignment> assignments=new ArrayList<Assignment>();
+	public List<Employee> employees;
+	public List<Project> projects;
+	private List<Task> tasks;
+	public List<Assignment> assignments;
 	
 	public Database () {
+		this.employees=new ArrayList<Employee>();
+		this.projects=new ArrayList<Project>();
+		this.tasks=new ArrayList<Task>();
+		this.assignments=new ArrayList<Assignment>();
 	}
 	
-	public boolean createProject (String name, int ID) {
-		if (!(getProject(ID)==null)) return false;
-		Project project=new Project(name, ID);
+	public boolean createProject (String name) throws WrongInputException {
+		if (projectExcists(name)) return false;
+		Project project=new Project(name, projects.size());
 		projects.add(project);
-		this.setChanged();
-		this.notifyObservers(project);
+		changed(project);
+		
 		return true;
+	}
+	
+	public boolean projectExcists (String name) {
+		for (Project project:projects) {
+			if (project.name==name) return true;
+		}
+		return false;
+	}
+	
+	public boolean createEmployee (String name, int ID) throws WrongInputException {
+		if (employeeExcists(ID)) return false;
+		Employee emp=new Employee(name,ID);
+		employees.add(emp);
+		changed(emp);
+		return true;
+	}
+
+	public Assignment getAssignment (int taskID, Employee employee) {
+		for (Assignment assignment:assignments) {
+			if (assignment.taskID==taskID && employee.equals(employee)) return assignment;
+		}
+		return null;
 	}
 	
 	public Task getTask (int taskID) {
@@ -36,6 +63,11 @@ public class Database extends Observable {
 			if (employee.ID==ID) return employee;
 		}
 		return null;
+	}
+	
+	private boolean employeeExcists(int ID) {
+		if (getEmployee(ID)==null) return false;
+		return true;
 	}
 	
 	public Project getProject (int projectID) {
@@ -58,21 +90,31 @@ public class Database extends Observable {
 		return false;
 	}
 		
-	public List<WorkPeriod> employeesTodaysBookings(Employee employee, CalDay day){
-		//init of lists
-		List<WorkPeriod> todaysBookings = new ArrayList<WorkPeriod>();
-		List<Assignment> employeeTotalBookings = new ArrayList<Assignment>();
-		//finds an employees total bookings
-		for(Assignment assignment:assignments){
-			if(employee.ID==assignment.employeeID){
-				employeeTotalBookings.add(assignment);
-			}
+	public List<Assignment> getEmployeeAssignments (Employee employee) {
+		List<Assignment> empAssignments=new ArrayList<Assignment>();
+		for (Assignment assignment:assignments) {
+			if (assignment.employeeID==employee.ID) empAssignments.add(assignment);
 		}
-		//Adds all todays bookings to the todaysBookings array
-		for(Assignment assignment: employeeTotalBookings){
+		
+		return empAssignments;
+	}
+	
+	public MyMap employeesTodaysBookings(Employee employee, CalDay day){
+		//init of lists
+		MyMap todaysBookings= new MyMap();
+		List<WorkPeriod> wpBookings = new ArrayList<WorkPeriod>();
+		List<Assignment> associatedAssignments = new ArrayList<Assignment>();
+		todaysBookings.mainInfo=wpBookings;
+		todaysBookings.secondaryInfo=associatedAssignments;
+		
+		List<Assignment> empAssignments = getEmployeeAssignments(employee);
+		
+		//Adds all todays bookings and associated assignments to the MyMap
+		for(Assignment assignment: empAssignments){
 			for(WorkPeriod w:assignment.bookings){
-				if(w.day.equals(day)){
-					todaysBookings.add(w);
+				if(w.day.equals(day)) {
+					wpBookings.add(w);
+					associatedAssignments.add(assignment);
 				}
 			}
 		}
@@ -93,7 +135,9 @@ public class Database extends Observable {
 		if(coWorker==null){
 			return false;
 		}
-		for(WorkPeriod booking: employeesTodaysBookings(coWorker,period.day)){
+		for(Object booking: employeesTodaysBookings(coWorker,period.day).mainInfo){
+			booking=(WorkPeriod) booking;
+			
 			if(booking.equals(period)){
 				return false;
 			}
@@ -290,4 +334,11 @@ public class Database extends Observable {
 		}
 		return false;
 	}
+
+	public void changed(Object o) throws WrongInputException {
+		if (o==null) throw new WrongInputException("");
+		this.setChanged();
+		this.notifyObservers(o);
+	}
+
 }

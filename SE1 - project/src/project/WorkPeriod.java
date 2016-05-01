@@ -1,11 +1,11 @@
 package project;
 
-public class WorkPeriod {
+public class WorkPeriod extends Object {
 	public CalDay day;
 	private double start;
 	private double end;
 	
-	public WorkPeriod (CalDay day, int start, int end) {
+	public WorkPeriod (CalDay day, double start, double end) {
 		this.day=day;
 		this.start=start;
 		this.end=end;

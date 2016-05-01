@@ -38,7 +38,7 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 		assertNotNull(employee);
 		assertNotNull(day);
 		
-		List<WorkPeriod> todaysBookings = database.employeesTodaysBookings(employee, day);
+		List<WorkPeriod> todaysBookings = (List<WorkPeriod>) database.employeesTodaysBookings(employee, day).mainInfo;
 		for(WorkPeriod booking: todaysBookings){
 			database.registerBooking(booking,database.assignments.get(lastAss));	
 		}

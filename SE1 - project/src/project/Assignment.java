@@ -2,6 +2,7 @@ package project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 public class Assignment {
 	public int taskID;
@@ -12,6 +13,7 @@ public class Assignment {
 	public Assignment (Task task, Employee employee) {
 		this.taskID=task.ID;
 		this.employeeID=employee.ID;
+		
 	}
 	
 	public double getCumulativeTimeRegisters () {
@@ -23,5 +25,11 @@ public class Assignment {
 		
 		return cumulativeValue;
 	}
+	
+	
+	
+	
+	
+	
 	
 }
