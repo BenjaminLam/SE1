@@ -77,11 +77,16 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 		
 		assertTrue(project.isProjectLeader(employee));
 		
-		task1.setTaskEnd(calWeek1, employee);
+		try {
+			task1.setTaskEnd(calWeek1, employee);
+		} catch (WrongInputException e1) {
+		}
 		try {
 			task1.setTaskStart(wrongWeek1, employee);
 		} catch (WrongInputException e) {
 		}
+		assertNull(task1.start.year);
+		assertNull(task1.start.week);
 		assertEquals(task1.end.year,calWeek1.year);
 		assertEquals(task1.end.week,calWeek1.week);
 	}
