@@ -29,4 +29,17 @@ public class WorkPeriod extends Object {
 		}
 		return false;
 	}
+	
+	public boolean overlapse(WorkPeriod other){
+		if(!this.day.equals(other.day)){
+			return false;
+		}
+		if(this.start>other.start && this.start<other.end){
+			return true;
+		}
+		if(this.end>other.start && this.start<other.end){
+			return true;
+		}
+		return false;
+	}
 }
