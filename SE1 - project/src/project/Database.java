@@ -98,9 +98,22 @@ public class Database extends Observable {
 		return tasks.size();
 	}
 	
+	public int getNumberOfAssignments(){
+		return assignments.size();
+	}
+	
 	public boolean taskExists (int projectID, String name) {
 		for (Task task:tasks) {
 			if (task.name==name && task.projectID==projectID){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean assignmentExists(int taskID, int employeeID){
+		for(Assignment assignment: assignments){
+			if(taskID==assignment.taskID && employeeID==assignment.employeeID){
 				return true;
 			}
 		}
@@ -191,6 +204,13 @@ public class Database extends Observable {
 		task.ID=tasks.size();
 		tasks.add(task);
 		return task.ID;
+	}
+	public boolean addAssigment(Assignment assignment){
+		if(assignment==null){
+			return false;
+		}
+		assignments.add(assignment);
+		return true;
 	}
 	
 	public double hoursBooked (Employee employee, CalWeek start, CalWeek end) {
