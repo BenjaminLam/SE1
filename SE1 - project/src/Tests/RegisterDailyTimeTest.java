@@ -48,16 +48,21 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 	
 	
 	/*
-	 * 
+	 * The user tries manually register a task he/she is not working on
 	 */
 	
 	@Test
-	public void registerDailyTimeAlt1(){
+	public void registerDailyTimeAlt1() throws WrongInputException{
 		Employee employee = database.employees.get(database.assignments.size()-1);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
+		database.currentEmp=employee;
 		
 		assertNotNull(employee);
 		assertNotNull(day);
+		
+		assertFalse(database.registerWorkManually(0, 9, 11, day));
+		
+		
 		
 		
 	}
