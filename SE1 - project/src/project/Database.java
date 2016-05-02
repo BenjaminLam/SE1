@@ -58,7 +58,10 @@ public class Database extends Observable {
 		return true;
 	}
 
-	public boolean seekAssistance(Employee coWorker,int taskID,WorkPeriod period) throws WrongInputException{
+	public boolean seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
+		Employee coWorker=getEmployee(empID);
+		if (coWorker==null) return false;
+		
 		if(checkIfCoWorkerIsAvailable(period,coWorker)){
 			return createBookingForCoWorker(coWorker,taskID,period);
 		}
@@ -96,20 +99,20 @@ public class Database extends Observable {
 	
 	
 	//used by seekAssistance
-	private boolean checkIfCoWorkerIsAvailable(WorkPeriod period,Employee coWorker){
+	public boolean checkIfCoWorkerIsAvailable(WorkPeriod period,Employee coWorker){
 			if(coWorker==null){
 				return false;
 			}
 			for(Object object: employeesTodaysBookings(coWorker,period.day).mainInfo){
 				WorkPeriod booking=(WorkPeriod) object;
 				
-				if(booking.equals(period)){
+				if(booking.overlapse(period)){
 					return false;
 				}
 			}
 			return true;
 		}
-	private boolean createBookingForCoWorker(Employee coWorker, int taskID, WorkPeriod period) throws WrongInputException{
+	public boolean createBookingForCoWorker(Employee coWorker, int taskID, WorkPeriod period) throws WrongInputException{
 			if(coWorker==null)throw new WrongInputException("Employee doen't excist");
 			Task task=getTask(taskID);
 			if (task==null) throw new WrongInputException("Task doen't excist");
