@@ -5,12 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Assert;
-
 import org.junit.Test;
-
 import Exceptions_Errors.*;
 import project.*;
-
 
 /**
  * Tests for user case createAssignment
@@ -38,7 +35,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			String taskName="Task01";
 			int taskID=1;
 			
-			taskID = employee.createTask(database, project, taskName); //Jeg vil gerne have det her udenfor
+			taskID = employee.createTask(database, project, taskName); //Jeg vil gerne have det her udenfor, ellers kan den sagtens kaldes i hver test
 			
 			String assignmentName="Assignment for the task "+taskName+" for the employee "+employee;
 			int assignmentID=-1;
