@@ -43,9 +43,28 @@ public class Database extends Observable {
 		return true;
 	}
 	
+	public boolean copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment){
+		assignment.timeRegisters.add(booking);
+		changed(booking);
+		return true;
+	}
+	
+	public boolean registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
+		Assignment TempAss=getAssignment(taskID,currentEmp);
+		if(TempAss==null)return false;
+		WorkPeriod wp=new WorkPeriod(day,start,end);
+		TempAss.timeRegisters.add(wp);
+		changed(wp);
+		return true;
+	}
 
 	
+	
+	
 	//ovenstående er brugt af UI
+	
+	
+	
 	
 	
 	
@@ -150,19 +169,7 @@ public class Database extends Observable {
 		}
 		return todaysBookings;
 	}
-	
-	public void copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment){
-		assignment.timeRegisters.add(booking);
-	}
-	
-	public boolean registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
-		Assignment TempAss=getAssignment(taskID,currentEmp);
-		if(TempAss==null)return false;
-		
-		TempAss.timeRegisters.add(new WorkPeriod(day,start,end));
-		return true;
-	}
-	
+
 	public void seekAssistance(WorkPeriod period,Employee coWorker,Assignment assignment) throws WrongInputException{
 		if(checkIfCoWorkerIsAvailable(period,coWorker)){
 			createBookingForCoWorker(period,coWorker,assignment);
