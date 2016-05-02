@@ -60,7 +60,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		 */
 		
 		@Test
-		public void testCreateTaskAlt1(){
+		public void testCreateAssignmentAlt1(){
 			int numberOfAssignments = database.getNumberOfAssignments(); 
 			Employee employee=super.database.employees.get(1);
 			Project project=super.database.projects.get(0);
@@ -89,7 +89,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		 */
 		
 		@Test
-		public void testCreateTaskAlt2(){
+		public void testCreateAssignmentAlt2(){
 			int numberOfAssignments = database.getNumberOfAssignments();
 			Employee employee=super.database.employees.get(0);
 			Project project=super.database.projects.get(0);
@@ -144,7 +144,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		 */
 		
 		@Test
-		public void testCreateTaskAlt4(){
+		public void testCreateAssignmentAlt4(){
 			int numberOfAssignments = database.getNumberOfAssignments();
 			Employee employee=null;
 			
