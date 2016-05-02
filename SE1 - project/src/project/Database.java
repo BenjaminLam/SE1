@@ -58,7 +58,9 @@ public class Database extends Observable {
 		return true;
 	}
 
-	public boolean seekAssistance(Employee coWorker,int taskID,WorkPeriod period) throws WrongInputException{
+	public boolean seekAssistance(int taskID, int empID,WorkPeriod period) throws WrongInputException{
+		Employee coWorker=getEmployee(empID);
+		
 		if(checkIfCoWorkerIsAvailable(period,coWorker)){
 			return createBookingForCoWorker(coWorker,taskID,period);
 		}
