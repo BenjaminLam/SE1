@@ -33,7 +33,7 @@ public class ProjectReportTest extends SampleDataSetup0 {
 	
 	@Test
 	public void projectReportTestMain () {
-		Project project=database.projects.get(0);
+		Project project=database.projects.get(1);
 		assertNotNull(project);
 		
 		Employee employee=database.employees.get(0);
@@ -85,7 +85,7 @@ public class ProjectReportTest extends SampleDataSetup0 {
 	
 	@Test
 	public void projectReportTestAlt2() {
-		Project project=database.projects.get(0);
+		Project project=database.projects.get(1);
 		assertNotNull(project);
 		
 		Employee employee=database.employees.get(1);
@@ -112,7 +112,7 @@ public class ProjectReportTest extends SampleDataSetup0 {
 	
 	@Test
 	public void projectReportTestAlt3() {
-		Project project=database.projects.get(0);
+		Project project=database.projects.get(1);
 		assertNotNull(project);
 		
 		Task testTask=new Task (project,"testTask");

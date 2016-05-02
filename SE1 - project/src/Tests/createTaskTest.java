@@ -33,7 +33,7 @@ public class createTaskTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateTaskMain () {
 			Employee employee=super.database.employees.get(0);
-			Project project=super.database.projects.get(0);
+			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
@@ -66,7 +66,7 @@ public class createTaskTest extends SampleDataSetup0 {
 		public void testCreateTaskAlt1(){
 			int numberOfTasks = database.getNumberOfTasks();
 			Employee employee=super.database.employees.get(1);
-			Project project=super.database.projects.get(0);
+			Project project=super.database.projects.get(1);
 			
 			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(employee));
@@ -121,7 +121,7 @@ public class createTaskTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateTaskAlt3(){
 			Employee employee=super.database.employees.get(0);
-			Project project=super.database.projects.get(0);
+			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			

@@ -26,7 +26,7 @@ public class SetSickness extends SampleDataSetup0 {
 	
 	@Test
 	public void testSetSicknessMain () {
-		Employee employee=super.database.employees.get(1);
+		Employee employee=super.database.employees.get(0);
 		
 		boolean sickness=false;
 		
@@ -43,10 +43,10 @@ public class SetSickness extends SampleDataSetup0 {
 	
 	/*
 	 *Alternative scenario1: 
-	 * employee is not project leader
-	 * employee tries to create task for project
+	 * employee is already sick
+	 * employee tries to book himself as sick
 	 * exception is thrown
-	 * no task has been created
+	 * no sick assignment has been created
 	 */
 	
 	@Test

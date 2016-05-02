@@ -28,7 +28,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentMain () {
 			int numberOfAssignments = database.getNumberOfAssignments();
-			Employee employee=super.database.employees.get(1);
+			Employee employee=super.database.employees.get(0);
 			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
@@ -62,7 +62,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentAlt1(){
 			int numberOfAssignments = database.getNumberOfAssignments(); 
-			Employee employee=super.database.employees.get(2);
+			Employee employee=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
 			
 			//checks employee is not project leader
@@ -91,7 +91,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentAlt2(){
 			int numberOfAssignments = database.getNumberOfAssignments();
-			Employee employee=super.database.employees.get(1);
+			Employee employee=super.database.employees.get(0);
 			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
@@ -121,7 +121,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentAlt3(){
 			int numberOfAssignments = database.getNumberOfAssignments();
-			Employee employee=super.database.employees.get(1);
+			Employee employee=super.database.employees.get(0);
 			
 			Task task1 = super.database.getTask(0);
 			task1=null;
