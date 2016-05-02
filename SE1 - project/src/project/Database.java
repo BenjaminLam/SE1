@@ -58,9 +58,7 @@ public class Database extends Observable {
 		return true;
 	}
 
-	public boolean seekAssistance(int taskID, int empID,WorkPeriod period) throws WrongInputException{
-		Employee coWorker=getEmployee(empID);
-		
+	public boolean seekAssistance(Employee coWorker,int taskID,WorkPeriod period) throws WrongInputException{
 		if(checkIfCoWorkerIsAvailable(period,coWorker)){
 			return createBookingForCoWorker(coWorker,taskID,period);
 		}
@@ -203,6 +201,8 @@ public class Database extends Observable {
 		return false;
 	}
 	
+	
+	
 	public boolean currentEmpIsProjectLeaderFor(Project project) {
 		return project.isProjectLeader(currentEmp);
 	}
@@ -216,7 +216,20 @@ public class Database extends Observable {
 		return empAssignments;
 	}
 	
-	
+	public void initDatabase () {
+		//creates the powerful secret project
+		Project project = new Project("project0",0);
+		this.projects.add(project);
+		
+		Task sickness = new Task(project, "Sickness");
+		this.tasks.add(sickness);
+		
+		Task vacation = new Task(project, "Vacation");
+		this.tasks.add(vacation);
+		
+		Task course = new Task(project, "Course");
+		this.tasks.add(course);
+	}
 
 	
 	

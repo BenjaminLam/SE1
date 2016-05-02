@@ -10,8 +10,9 @@ public class SampleDataSetup0 {
 	protected Database database=new Database();
 	/*
 	 * Creates 10 employees, Employee0..Employee9
-	 * Creates 10 projects, Project0..Project9
+	 * Creates 10 projects, Project1..Project10
 	 * Employee0 is project leader of project0
+	 * project0 is a special project which contains tasks for sickness, vacation and courses
 	 * 
 	 * Creates 10 tasks, Task0..Task9. 
 	 * Task[i] is belonging to Project[i]
@@ -31,7 +32,7 @@ public class SampleDataSetup0 {
 		for (int i=0;i<10;i++){
 			Employee tempEmp=new Employee("Employee" + i,i);
 			database.employees.add(tempEmp);
-			Project tempPro=new Project ("Project" + i,i);
+			Project tempPro=new Project ("Project" + i+1,i+1);
 			database.projects.add(tempPro);
 			Task tempTask=new Task(tempPro,"Task" + i);
 			database.addTask(tempTask);
@@ -46,7 +47,7 @@ public class SampleDataSetup0 {
 				}
 			}
 		}
-		database.projects.get(0).projectLeader=database.employees.get(0);
+		database.projects.get(1).projectLeader=database.employees.get(0);
 		
 	}	
 }
