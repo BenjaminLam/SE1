@@ -27,6 +27,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		
 		@Test
 		public void testCreateAssignmentMain () {
+			int numberOfAssignments = database.getNumberOfAssignments();
 			Employee employee=super.database.employees.get(0);
 			Project project=super.database.projects.get(0);
 			
@@ -37,9 +38,6 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			
 			taskID = employee.createTask(database, project, taskName); //Jeg vil gerne have det her udenfor, ellers kan den sagtens kaldes i hver test
 			
-			String assignmentName="Assignment for the task "+taskName+" for the employee "+employee;
-			int assignmentID=-1;
-			
 			assertFalse(employee.isAssigned(taskID)); //Skal laves
 			
 			try {
@@ -47,12 +45,13 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			} catch (WrongInputException e) {
 			}
 			
-			Assignment assignment=super.database.getTask(assignmentID); //Ved ikke om vi skal indfører et ID for dette?
+			assertEquals(database.getNumberOfAssignments(), numberOfAssignments); //Ved ikke om vi skal indfører et ID for dette?
 			
-			assertNotNull(assignment); //Kom gerne med bedre forslag til at tjekke disse ting
-			assertEquals(assignment.name,assignmentName);
-			assertEquals(assignment.taskID,task);
-			assertEquals(assignment.employee,employeeID); //Hvorfor gør den dette? Jeg er bange... :(
+			Assignment assignment = super.database.assignments.get(numberOfAssignments+1);
+			
+			assertNotNull(assignment); 
+			assertEquals(assignment.taskID,taskID);
+			assertEquals(assignment.employeeID,employee.ID); 
 		}
 		
 		/*
@@ -81,7 +80,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			} catch (WrongInputException e) {
 			}
 			
-			//checks createTask hasn't created task; 
+			//checks createTask hasn't created assignment; 
 			assertEquals(database.getNumberOfAssignments(), numberOfAssignments);
 		}
 
