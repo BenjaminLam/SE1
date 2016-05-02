@@ -33,15 +33,12 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			
 			assertTrue(project.isProjectLeader(employee));
 			
-			String taskName="Task01";
-			int taskID=1;
+			Task task1 = super.database.getTask(0);
 			
-			taskID = employee.createTask(database, project, taskName); //Jeg vil gerne have det her udenfor, ellers kan den sagtens kaldes i hver test
-			
-			assertFalse(employee.isAssigned(taskID)); //Skal laves
+			assertFalse(employee.isAssigned(task1)); //Skal laves
 			
 			try {
-				assignmentID = employee.createAssignment(database, taskName, employee); //skal laves
+				assertTrue(employee.createAssignment(database, task1, employee)); //skal laves
 			} catch (WrongInputException e) {
 			}
 			
@@ -50,7 +47,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			Assignment assignment = super.database.assignments.get(numberOfAssignments+1);
 			
 			assertNotNull(assignment); 
-			assertEquals(assignment.taskID,taskID);
+			assertEquals(assignment.taskID,task1);
 			assertEquals(assignment.employeeID,employee.ID); 
 		}
 		
@@ -64,18 +61,17 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		
 		@Test
 		public void testCreateTaskAlt1(){
-			int numberOfAssignments = database.getNumberOfAssignments(); //Kommer vi til at indfører antal?
+			int numberOfAssignments = database.getNumberOfAssignments(); 
 			Employee employee=super.database.employees.get(1);
 			Project project=super.database.projects.get(0);
 			
 			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(employee));
 			
-			String taskName="Task01";
-			employee.createTask(database, project, taskName);
+			Task task1 = super.database.getTask(0);
 			
 			try {
-				assignmentID = employee.createAssignment(database, taskName, employee);
+				employee.createAssignment(database, task1, employee);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -100,18 +96,12 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			
 			assertTrue(project.isProjectLeader(employee));
 			
-			String taskName="Task01";
-			int taskID=1;
+			Task task1 = super.database.getTask(0);
 			
-			taskID = employee.createTask(database, project, taskName); 
-			
-			String assignmentName="Assignment for the task "+taskName+" for the employee "+employee;
-			int assignmentID=-1;
-			
-			assertTrue(employee.isAssigned(taskID));
+			assertTrue(employee.isAssigned(task1));
 			
 			try {
-				assignmentID = employee.createAssignment(database, taskName, employee);
+				employee.createAssignment(database, task1, employee);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -129,15 +119,15 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		 */
 		
 		@Test
-		public void testCreateTaskAlt3(){
+		public void testCreateAssignmentAlt3(){
 			int numberOfAssignments = database.getNumberOfAssignments();
-			Employee employee=null;
+			Employee employee=super.database.employees.get(0);
 			
-			
-			String taskName=null;
+			Task task1 = super.database.getTask(0);
+			task1=null;
 			
 			try {
-				employee.createAssignment(database, taskName, employee);
+				employee.createAssignment(database, task1, employee);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
@@ -156,13 +146,12 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateTaskAlt4(){
 			int numberOfAssignments = database.getNumberOfAssignments();
-			Employee employee=super.database.employees.get(0);
+			Employee employee=null;
 			
-			
-			String taskName="Task01";
+			Task task1 = super.database.getTask(0);
 			
 			try {
-				employee.createAssignment(database, taskName, employee);
+				employee.createAssignment(database, task1, employee);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
