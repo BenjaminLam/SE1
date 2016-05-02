@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import Exceptions_Errors.*;
 import project.*;
-/* Tests for setTaskend
+/** Tests for setTaskend
  * Author Asbjørn
  */
 public class SetTaskEndTest extends SampleDataSetup0 {

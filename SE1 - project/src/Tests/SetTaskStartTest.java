@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import Exceptions_Errors.*;
 import project.*;
-/* Tests for setTaskStart
+/** Tests for setTaskStart
  * Author Asbjørn
  */
 public class SetTaskStartTest extends SampleDataSetup0 {
