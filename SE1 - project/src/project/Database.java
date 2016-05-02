@@ -170,7 +170,9 @@ public class Database extends Observable {
 		return todaysBookings;
 	}
 
-	public void seekAssistance(WorkPeriod period,Employee coWorker,Assignment assignment) throws WrongInputException{
+	public void seekAssistance(Employee coWorker,Assignment assignment,WorkPeriod period) throws WrongInputException{
+		
+		
 		if(checkIfCoWorkerIsAvailable(period,coWorker)){
 			createBookingForCoWorker(period,coWorker,assignment);
 		}
