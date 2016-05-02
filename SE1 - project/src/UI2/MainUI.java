@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -50,9 +51,14 @@ public class MainUI implements Observer {
 			case ProjectLeaderState:
 				handleProjectLeaderScreen();
 			break;
+			case DisplayListState:
+				displayList();
 			}
 		}
 		else {
+			if (arg instanceof String) {
+				out.println(arg);
+			}
 			if (arg instanceof Project) {
 				out.println("Created project succesfully");
 				out.print("Project name: "); out.println(((Project) arg).name);
@@ -146,14 +152,13 @@ public class MainUI implements Observer {
 	}
 	private void displaySetTaskBudgetTime () {
 		out.println("Please enter task ID and budget time seperated by a space");
+		explainDoubleTime();
 	}	
 	private void displaySetTaskStart () {
-		out.println("Please enter task ID and start time seperated by a space");
-		explainDoubleTime();
+		out.println("Please enter task ID, task start year and task start week, each info seperated by a space");
 	}	
 	private void displaySetTaskEnd () {
-		out.println("Please enter task ID and end time seperated by a space");
-		explainDoubleTime();
+		out.println("Please enter task ID, task end year and task end week, each info seperated by a space");
 	}
 	private void displayEmployeesForTask () {
 		out.println("Please enter ID for task to display employees for");
@@ -161,6 +166,17 @@ public class MainUI implements Observer {
 	private void displayManTask () {
 		out.println("Please enter task id and employee id seperated by a space");
 	}
+	
+	private void displayList() {
+		List<Object> temp=(List<Object>) uiHandler.listToProces;
+		
+		for (Object object:temp) {
+			out.println(object);
+		}
+	}
+	
+	
+	
 	
 	private void explainDoubleTime() {
 		out.println("Time can include half hours: eg input 9.5 for 9.30");
