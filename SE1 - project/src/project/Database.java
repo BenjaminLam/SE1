@@ -65,6 +65,7 @@ public class Database extends Observable {
 		return false;
 	}
 	
+	
 	//ovenstående er brugt af UI
 	
 	
