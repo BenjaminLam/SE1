@@ -36,10 +36,10 @@ public class Employee {
 		if (task==null) { 
 			throw new WrongInputException("Task doesn't exist");	
 		}
-		if (database.taskExists(this.ID, task)) {
+		if (database.assignmentExists(task.ID, this.ID)) {
 			throw new WrongInputException("The assignment already exists in this project");
 		}
-		return database.addAssignment(new Assignment (this.ID, task));
+		return database.addAssignment(new Assignment (task, this));
 	}
 
 	
