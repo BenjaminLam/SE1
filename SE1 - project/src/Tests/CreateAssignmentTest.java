@@ -28,27 +28,29 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentMain () {
 			int numberOfAssignments = database.getNumberOfAssignments();
-			Employee employee=super.database.employees.get(0);
+			Employee leader=super.database.employees.get(0);
+			database.currentEmp=leader;
+			Employee worker=super.database.employees.get(2);
 			Project project=super.database.projects.get(1);
 			
-			assertTrue(project.isProjectLeader(employee));
+			assertTrue(project.isProjectLeader(leader));
 			
-			Task task1 = super.database.getTask(2);
+			Task task1 = super.database.getTask(1);
 			
-			assertFalse(employee.isAssigned(database, task1, employee)); 
+			assertFalse(worker.isAssigned(database, task1, worker)); 
 			
 			try {
-				assertTrue(employee.createAssignment(database, task1, employee)); 
+				assertTrue(leader.createAssignment(database, task1, worker)); 
 			} catch (WrongInputException e) {
 			}
 			
-			assertEquals(database.getNumberOfAssignments(), numberOfAssignments); //Ved ikke om vi skal indfører et ID for dette?
+			assertEquals(database.getNumberOfAssignments(), numberOfAssignments+1); 
 			
-			Assignment assignment = super.database.assignments.get(numberOfAssignments+1);
+			Assignment assignment = super.database.assignments.get(numberOfAssignments);
 			
 			assertNotNull(assignment); 
-			assertEquals(assignment.taskID,task1);
-			assertEquals(assignment.employeeID,employee.ID); 
+			assertEquals(assignment.taskID,task1.ID);
+			assertEquals(assignment.employeeID,worker.ID); 
 		}
 		
 		/*
@@ -62,13 +64,14 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentAlt1(){
 			int numberOfAssignments = database.getNumberOfAssignments(); 
-			Employee employee=super.database.employees.get(1);
+			Employee employee=super.database.employees.get(2);
+			database.currentEmp=employee;
 			Project project=super.database.projects.get(1);
 			
 			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(employee));
 			
-			Task task1 = super.database.getTask(0);
+			Task task1 = super.database.getTask(1);
 			
 			try {
 				employee.createAssignment(database, task1, employee);
@@ -92,6 +95,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		public void testCreateAssignmentAlt2(){
 			int numberOfAssignments = database.getNumberOfAssignments();
 			Employee employee=super.database.employees.get(0);
+			database.currentEmp=employee;
 			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
@@ -146,12 +150,14 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentAlt4(){
 			int numberOfAssignments = database.getNumberOfAssignments();
-			Employee employee=null;
+			Employee leader=super.database.employees.get(0);
+			database.currentEmp=leader;
+			Employee worker=null;
 			
-			Task task1 = super.database.getTask(0);
+			Task task1 = super.database.getTask(1);
 			
 			try {
-				employee.createAssignment(database, task1, employee);
+				leader.createAssignment(database, task1, worker);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
