@@ -67,6 +67,9 @@ public class MainUI implements Observer {
 			if (arg instanceof WorkPeriod) {
 				out.println("Information registered succesfully");
 			}
+			if (arg instanceof Employee) {
+				out.println("The bluetooth device has connected succesfully");
+			}
 		}
 		
 	}
@@ -125,7 +128,9 @@ public class MainUI implements Observer {
 		out.println("Please enter name of project and project id seperated by a space");
 	}
 	private void displaySetProjectLeader(){
-		out.println("7");
+		out.println("Please enter project ID to set project leader for");
+		out.println("Please enter employee ID for meployee to be project leader");
+		out.println("Inputs should be seperated by a space");
 	}
 	
 	private void handleProjectLeaderScreen() {

@@ -68,6 +68,23 @@ public class Database extends Observable {
 		return false;
 	}
 	
+	public boolean setProjectLeader(int projectID, int employeeID) {
+		Project project=getProject(projectID);
+		if (project==null) return false;
+		Employee emp=getEmployee(employeeID);
+		if (emp==null) return false;
+		
+		
+		if (!(project.projectLeader==null)) {
+			if (!project.projectLeader.equals(currentEmp)) {
+				return false;
+			}
+		}
+		
+		project.projectLeader=emp;
+		changed(emp);
+		return true;
+	}
 	
 	//ovenstående er brugt af UI
 	

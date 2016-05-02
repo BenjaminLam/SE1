@@ -11,6 +11,8 @@ import Exceptions_Errors.WrongInputException;
 import project.*;
 
 //notify user fail of operation
+//needs all register method in employee state
+//register work: display list with bookings
 
 public class UIHandler extends Observable {
 	public ScreenState currentState;
@@ -174,7 +176,6 @@ public class UIHandler extends Observable {
 		
 		return database.seekAssistance(taskID, empID, wp);
 	}
-	
 	private boolean registerVacation(String userInput){
 		return false;
 	}
@@ -188,7 +189,13 @@ public class UIHandler extends Observable {
 		return createProject(userInput);
 	}
 	private boolean setProjectLeader(String userInput){
-		return false;
+		String[] userInputs=splitString(userInput);
+		if (userInputs.length!=2) return false;
+
+		int projectID=Integer.parseInt(userInputs[0]);
+		int employeeID=Integer.parseInt(userInputs[1]);		
+		
+		return database.setProjectLeader(projectID, employeeID);
 	}
 
 	//Editing any of theese methods should also lead to change
