@@ -112,12 +112,12 @@ public class UIHandler extends Observable {
 		this.mapToProcess=database.employeesTodaysBookings(currentEmp, currentDay);
 	
 		switch (userInputs.length) {
-		case 1: registerWorkExcisting(userInputs); break;
-		case 3: registerWorkToday(userInputs); break;
-		case 6: registerWorkAnyDay(userInputs); break;
+		case 1: return registerWorkExcisting(userInputs); 
+		case 3: return registerWorkToday(userInputs); 
+		case 6: return registerWorkAnyDay(userInputs); 
 		}
 		
-		return true;
+		return false;
 	}
 	private boolean registerWorkExcisting(String[] userinputs) {
 		int userChoice=Integer.parseInt(userinputs[0]);

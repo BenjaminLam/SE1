@@ -48,7 +48,7 @@ public class Database extends Observable {
 		changed(booking);
 		return true;
 	}
-	
+
 	public boolean registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
 		Assignment TempAss=getAssignment(taskID,currentEmp);
 		if(TempAss==null)return false;
@@ -85,7 +85,7 @@ public class Database extends Observable {
 
 	public Assignment getAssignment (int taskID, Employee employee) {
 		for (Assignment assignment:assignments) {
-			if (assignment.taskID==taskID && employee.equals(assignment.employeeID)) return assignment;
+			if (assignment.taskID==taskID && employee.ID==assignment.employeeID) return assignment;
 		}
 		return null;
 	}
