@@ -107,6 +107,14 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 			Assert.fail();
 		} catch (WrongInputException e){}
 		assertNull(task1.start);
+		
+		CalWeek calWeek3 = new CalWeek(2016,44);
+		try {
+			task1.setTaskStart(calWeek3, employee, super.database);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertEquals(task1.start,calWeek3);
 	}
 	
 	/*
@@ -132,6 +140,13 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 			
 		}
 		assertNull(task1.start);
+		CalWeek calWeek3 = new CalWeek(2016, 41);
+		try {
+			task1.setTaskStart(calWeek3, employee, super.database);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertEquals(task1.start, calWeek3);
 	}
 	
 	/*
@@ -159,7 +174,14 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 		} catch (WrongInputException e) {
 		}
 		assertNull(task1.start);
-		assertEquals(task1.end.year,calWeek1.year);
+		assertEquals(task1.end,calWeek1);
+		CalWeek calWeek3 = new CalWeek(2016,41);
+		try {
+			task1.setTaskStart(calWeek3, employee, super.database);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertEquals(task1.start, calWeek3);
 	}
 	
 }
