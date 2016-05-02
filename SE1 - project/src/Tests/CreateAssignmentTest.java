@@ -33,12 +33,12 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			
 			assertTrue(project.isProjectLeader(employee));
 			
-			Task task1 = super.database.getTask(0);
+			Task task1 = super.database.getTask(2);
 			
-			assertFalse(employee.isAssigned(database, task1, employee)); //Skal laves
+			assertFalse(employee.isAssigned(database, task1, employee)); 
 			
 			try {
-				assertTrue(employee.createAssignment(database, task1, employee)); //skal laves
+				assertTrue(employee.createAssignment(database, task1, employee)); 
 			} catch (WrongInputException e) {
 			}
 			
