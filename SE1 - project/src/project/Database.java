@@ -70,8 +70,65 @@ public class Database extends Observable {
 	
 	
 	
+	public MyMap employeesTodaysBookings(Employee employee, CalDay day){
+		//init of lists
+		MyMap todaysBookings= new MyMap();
+		List<WorkPeriod> wpBookings = new ArrayList<WorkPeriod>();
+		List<Assignment> associatedAssignments = new ArrayList<Assignment>();
+		todaysBookings.mainInfo=wpBookings;
+		todaysBookings.secondaryInfo=associatedAssignments;
+		
+		List<Assignment> empAssignments = getEmployeeAssignments(employee);
+		
+		//Adds all todays bookings and associated assignments to the MyMap
+		for(Assignment assignment: empAssignments){
+			for(WorkPeriod w:assignment.bookings){
+				if(w.day.equals(day)) {
+					wpBookings.add(w);
+					associatedAssignments.add(assignment);
+				}
+			}
+		}
+		return todaysBookings;
+	}
+	
+	//ovenstående er hjælpemetoder brugt af UI
 	
 	
+	//used by seekAssistance
+	private boolean checkIfCoWorkerIsAvailable(WorkPeriod period,Employee coWorker){
+			if(coWorker==null){
+				return false;
+			}
+			for(Object object: employeesTodaysBookings(coWorker,period.day).mainInfo){
+				WorkPeriod booking=(WorkPeriod) object;
+				
+				if(booking.equals(period)){
+					return false;
+				}
+			}
+			return true;
+		}
+	private boolean createBookingForCoWorker(Employee coWorker, int taskID, WorkPeriod period) throws WrongInputException{
+			if(coWorker==null)throw new WrongInputException("Employee doen't excist");
+			Task task=getTask(taskID);
+			if (task==null) throw new WrongInputException("Task doen't excist");
+			
+			Assignment coWorkerNew = new Assignment(task, coWorker);
+			coWorkerNew.bookings.add(period);
+			assignments.add(coWorkerNew);
+			
+			changed(coWorkerNew);
+			return true;
+		}
+		
+	
+	
+	
+	
+	
+	
+	//ikke tjekket endnu:
 	
 	public boolean projectExcists (String name) {
 		for (Project project:projects) {
@@ -157,54 +214,8 @@ public class Database extends Observable {
 		return empAssignments;
 	}
 	
-	public MyMap employeesTodaysBookings(Employee employee, CalDay day){
-		//init of lists
-		MyMap todaysBookings= new MyMap();
-		List<WorkPeriod> wpBookings = new ArrayList<WorkPeriod>();
-		List<Assignment> associatedAssignments = new ArrayList<Assignment>();
-		todaysBookings.mainInfo=wpBookings;
-		todaysBookings.secondaryInfo=associatedAssignments;
-		
-		List<Assignment> empAssignments = getEmployeeAssignments(employee);
-		
-		//Adds all todays bookings and associated assignments to the MyMap
-		for(Assignment assignment: empAssignments){
-			for(WorkPeriod w:assignment.bookings){
-				if(w.day.equals(day)) {
-					wpBookings.add(w);
-					associatedAssignments.add(assignment);
-				}
-			}
-		}
-		return todaysBookings;
-	}
+	
 
-	//used by seekAssistance
-	private boolean checkIfCoWorkerIsAvailable(WorkPeriod period,Employee coWorker){
-		if(coWorker==null){
-			return false;
-		}
-		for(Object object: employeesTodaysBookings(coWorker,period.day).mainInfo){
-			WorkPeriod booking=(WorkPeriod) object;
-			
-			if(booking.equals(period)){
-				return false;
-			}
-		}
-		return true;
-	}
-	private boolean createBookingForCoWorker(Employee coWorker, int taskID, WorkPeriod period) throws WrongInputException{
-		if(coWorker==null)throw new WrongInputException("Employee doen't excist");
-		Task task=getTask(taskID);
-		if (task==null) throw new WrongInputException("Task doen't excist");
-		
-		Assignment coWorkerNew = new Assignment(task, coWorker);
-		coWorkerNew.bookings.add(period);
-		assignments.add(coWorkerNew);
-		
-		changed(coWorkerNew);
-		return true;
-	}
 	
 	
 // unused?	
