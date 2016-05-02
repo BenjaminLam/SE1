@@ -36,12 +36,87 @@ public class SetTaskEndTest extends SampleDataSetup0 {
 		assertEquals(task1.end.year, calWeek1.year);
 		assertEquals(task1.end.week, calWeek1.week);
 	}
+	
 	/*
 	 * Alternative scenario 1
-	 * The selected date is before current date
+	 * Employee is not projectleader
+	 * The task end date 
 	 */
 	@Test
-	public void setTaskEndAlt1() {
+	public void setTaskEndAlt1(){
+		Employee employee=super.database.employees.get(1);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
+		CalWeek calWeek1 = new CalWeek(2016,43);
+		
+		assertFalse(project.isProjectLeader(employee));
+		
+		try {
+			task1.setTaskEnd(calWeek1, employee, super.database);
+			Assert.fail();
+		} catch (WrongInputException e){}
+		assertNull(task1.end);
+	}
+	
+	/*
+	 * Alternative scenario 2a
+	 * The selected date is before task start
+	 * End date of task is not changed
+	 */
+	@Test
+	public void setTaskEndAlt2a(){
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
+		CalWeek calWeek1 = new CalWeek(2016,43);
+		CalWeek calWeek2 = new CalWeek(2016,32);
+		assertTrue(project.isProjectLeader(employee));
+		
+		try {
+			task1.setTaskStart(calWeek1, employee, super.database);		
+		} catch (WrongInputException e) { 
+			Assert.fail();
+		}	
+		try {
+			task1.setTaskEnd(calWeek2, employee, super.database);
+			Assert.fail();
+		} catch (WrongInputException e){};
+		assertNull(task1.end);
+		}
+	
+	/*
+	 * Alternative scenario 2b
+	 * Selected date is after project end week
+	 * Task end date is not changed
+	 */
+	@Test
+	public void setTaskEndAlt2b(){
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
+		CalWeek calWeek1 = new CalWeek(2016,43);
+		CalWeek calWeek2 = new CalWeek(2016,44);
+		project.end = calWeek1;
+		
+		assertTrue(project.isProjectLeader(employee));
+		assertEquals(project.end,calWeek1);
+		
+		try {
+			task1.setTaskEnd(calWeek2, employee, super.database);
+			Assert.fail();
+		} catch (WrongInputException e){}
+		
+		assertNull(task1.end);
+	}
+	
+	/*
+	 * Alternative scenario 2c
+	 * The selected date is before current date
+	 * Task end date is not changed
+	 */
+	
+	@Test
+	public void setTaskEndAlt2c() {
 		Employee employee=super.database.employees.get(0);
 		Project project=super.database.projects.get(0);
 		Task task1 = database.getTask(1);
@@ -63,55 +138,15 @@ public class SetTaskEndTest extends SampleDataSetup0 {
 		}
 		assertEquals(task1.end, calWeek1);
 		}
-	/*
-	 * Alternative scenario 3
-	 * 
-	 */
-	@Test
-	public void setTaskEndAlt2(){
-		Employee employee=super.database.employees.get(0);
-		Project project=super.database.projects.get(0);
-		Task task1 = database.getTask(1);
-		CalWeek calWeek1 = new CalWeek(2016,43);
-		CalWeek calWeek2 = new CalWeek(2016,32);
-		assertTrue(project.isProjectLeader(employee));
-		
-		try {
-			task1.setTaskStart(calWeek1, employee, super.database);		
-		} catch (WrongInputException e) { 
-			Assert.fail();
-		}	
-		try {
-			task1.setTaskEnd(calWeek2, employee, super.database);
-			Assert.fail();
-		} catch (WrongInputException e){};
-		assertNull(task1.end);
-		}
-	/*
-	 * Alternative scenario 3
-	 * Employee is not projectleader
-	 */
-	@Test
-	public void setTaskEndAlt3(){
-		Employee employee=super.database.employees.get(1);
-		Project project=super.database.projects.get(0);
-		Task task1 = database.getTask(1);
-		CalWeek calWeek1 = new CalWeek(2016,43);
-		
-		assertFalse(project.isProjectLeader(employee));
-		
-		try {
-			task1.setTaskEnd(calWeek1, employee, super.database);
-			Assert.fail();
-		} catch (WrongInputException e){}
-		assertNull(task1.end);
-	}
+	
+	
 	/* 
-	 * Alternative scenario 4
+	 * Alternative scenario 2d
 	 * Selected date is before start date of project
+	 * Task end date is not changed
 	 */
 	@Test
-	public void setTaskEndAlt4(){
+	public void setTaskEndAlt2d(){
 		Employee employee=super.database.employees.get(0);
 		Project project=super.database.projects.get(0);
 		Task task1 = database.getTask(1);
@@ -129,28 +164,6 @@ public class SetTaskEndTest extends SampleDataSetup0 {
 		assertNull(task1.end);
 	}
 	
-	/*
-	 * Alternative scenario 5
-	 * Selected date is after project end week
-	 */
-	@Test
-	public void setTaskEndAlt5(){
-		Employee employee=super.database.employees.get(0);
-		Project project=super.database.projects.get(0);
-		Task task1 = database.getTask(1);
-		CalWeek calWeek1 = new CalWeek(2016,43);
-		CalWeek calWeek2 = new CalWeek(2016,44);
-		project.end = calWeek1;
-		
-		assertTrue(project.isProjectLeader(employee));
-		assertEquals(project.end,calWeek1);
-		
-		try {
-			task1.setTaskEnd(calWeek2, employee, super.database);
-			Assert.fail();
-		} catch (WrongInputException e){}
-		
-		assertNull(task1.end);
-	}
+	
 }
 
