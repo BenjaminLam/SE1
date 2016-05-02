@@ -44,7 +44,7 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 		//since employee 2 doesn't have any booking between 13 and 15 he should be available.
 		assertTrue(database.checkIfCoWorkerIsAvailable(period, coWorker));
 		
-		database.createBookingForCoWorker(period,coWorker,database.assignments.get(1));
+		database.createBookingForCoWorker(coWorker,1,period);
 		
 		//checks that the booking is created.
 		assertNotNull(database.assignments.get(database.assignments.size()-1));
@@ -73,7 +73,7 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 		assertFalse(database.checkIfCoWorkerIsAvailable(period, coWorker));
 		
 		try{
-			database.createBookingForCoWorker(period,coWorker,database.assignments.get(1));
+			database.createBookingForCoWorker(coWorker,3,period);
 			Assert.fail();
 		} catch(WrongInputException e){
 			
@@ -93,7 +93,8 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 		WorkPeriod period = new WorkPeriod(day,13,15);
 		Assignment coWorkerAss = new Assignment(database.getTask(1),coWorker);
 		database.assignments.add(coWorkerAss);
-		database.createBooking(day, 13, 15, coWorkerAss);
+		WorkPeriod newBooking = new WorkPeriod(day,13,15);
+		coWorkerAss.bookings.add(newBooking);
 		
 		assertNotNull(employee);
 		assertNotNull(coWorker);
