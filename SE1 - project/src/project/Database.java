@@ -8,21 +8,30 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
+import Enum_Interfaces_AbstractClasses.ScreenState;
 import Exceptions_Errors.WrongInputException;
 
 public class Database extends Observable {
+	private Employee currentEmp;
+	boolean isProjectLeader;
 	public List<Employee> employees;
 	public List<Project> projects;
 	private List<Task> tasks;
 	public List<Assignment> assignments;
-	private Employee currentEmployee;
-	boolean isProjectLeader;
 	
 	public Database () {
 		this.employees=new ArrayList<Employee>();
 		this.projects=new ArrayList<Project>();
 		this.tasks=new ArrayList<Task>();
 		this.assignments=new ArrayList<Assignment>();
+	}
+	
+	public boolean logIn(int EmpID) {
+		Employee employee=getEmployee(EmpID);
+		//if (employee==null) return false;
+		currentEmp=employee;
+		isProjectLeader=isProjectLeader(employee);
+		return true;
 	}
 	
 	public boolean createProject (String name) throws WrongInputException {
@@ -33,6 +42,12 @@ public class Database extends Observable {
 		
 		return true;
 	}
+	
+
+	
+	//ovenstående er brugt af UI
+	
+	
 	
 	public boolean projectExcists (String name) {
 		for (Project project:projects) {
@@ -330,17 +345,21 @@ public class Database extends Observable {
 		return projectReport;
 	}
 
-	public boolean isProjectLeader (Employee employee) {
+	
+
+	public void changed(Object o) {
+		if (o==null) return;
+		this.setChanged();
+		this.notifyObservers(o);
+	}
+
+	
+	//hjælpemetoder
+	private boolean isProjectLeader (Employee employee) {
 		for (Project project:projects) {
 			if (employee.equals(project.projectLeader)) return true;
 		}
 		return false;
 	}
-
-	public void changed(Object o) throws WrongInputException {
-		if (o==null) throw new WrongInputException("");
-		this.setChanged();
-		this.notifyObservers(o);
-	}
-
+	
 }

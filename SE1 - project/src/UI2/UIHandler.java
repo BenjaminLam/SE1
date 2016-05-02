@@ -37,7 +37,7 @@ public class UIHandler extends Observable {
 	public boolean handleInput(String userInput) throws WrongInputException {
 		switch (currentState){
 		case LoginState:
-			return logIn(Integer.parseInt(userInput));
+			return logIn(userInput);
 		case EmployeeState:
 			return handleEmployeeState(userInput);
 		case ProjectLeaderState:
@@ -46,14 +46,11 @@ public class UIHandler extends Observable {
 		return false;
 	}
 	
-	public boolean logIn(int EmpID) {
-		Employee employee=database.getEmployee(EmpID);
-		
-		//if (employee==null) return false;
-		this.employee=employee;
-		isProjectLeader=database.isProjectLeader(employee);
-		setState(ScreenState.EmployeeState);
-		return true;
+	private boolean logIn(String userInput) {
+		int empID=Integer.parseInt(userInput);
+		Boolean succesfull=database.logIn(empID);
+		if (succesfull)setState(ScreenState.EmployeeState);
+		return succesfull;
 	}
 	
 	//Editing any of theese methods should also lead to change
