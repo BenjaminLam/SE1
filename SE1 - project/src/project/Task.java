@@ -48,6 +48,11 @@ public class Task {
 		if (End.isBefore(currentWeek)){
 			throw new WrongInputException ("Invalid date; Date is in the past");
 		}
+		if(this.start != null){
+			if (End.isBefore(this.start)){
+				throw new WrongInputException ("Invalid date; Date is before start date");
+			}
+		}
 		this.end = End;
 	}
 

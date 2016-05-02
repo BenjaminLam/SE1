@@ -31,6 +31,7 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 		try {
 			task1.setTaskStart(calWeek1, employee);
 		} catch (WrongInputException e) {
+			Assert.fail();
 		}
 		assertEquals(task1.start.week,calWeek1.week);
 		assertEquals(task1.start.year,calWeek1.year);
@@ -54,11 +55,13 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 		try {
 			task1.setTaskStart(calWeek1, employee);
 		} catch (WrongInputException e) {
+			Assert.fail();
 		}
 		assertNotNull(task1.start.year);
 		assertNotNull(task1.start.week);
 		try {
 			task1.setTaskStart(wrongWeek1, employee);
+			Assert.fail();
 		} catch (WrongInputException e) {
 		}
 		assertEquals(task1.start, calWeek1);
@@ -80,14 +83,14 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 		try {
 			task1.setTaskEnd(calWeek1, employee);
 		} catch (WrongInputException e1) {
+			Assert.fail();
 		}
 		try {
 			task1.setTaskStart(wrongWeek1, employee);
+			Assert.fail();
 		} catch (WrongInputException e) {
 		}
-		assertNull(task1.start.year);
-		assertNull(task1.start.week);
+		assertNull(task1.start);
 		assertEquals(task1.end.year,calWeek1.year);
-		assertEquals(task1.end.week,calWeek1.week);
 	}
 }
