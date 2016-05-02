@@ -15,6 +15,8 @@ public class Database extends Observable {
 	public List<Project> projects;
 	private List<Task> tasks;
 	public List<Assignment> assignments;
+	private Employee currentEmployee;
+	boolean isProjectLeader;
 	
 	public Database () {
 		this.employees=new ArrayList<Employee>();

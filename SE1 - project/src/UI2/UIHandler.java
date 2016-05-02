@@ -17,8 +17,6 @@ public class UIHandler extends Observable {
 	public int subState;
 	private Database database;
 	private MainUI mainUI;
-	private Employee employee;
-	boolean isProjectLeader;
 	List<? extends Object> listToProces;
 	MyMap mapToProcess;
 	
@@ -132,7 +130,7 @@ public class UIHandler extends Observable {
 
 	//Editing any of theese methods should also lead to change
 	//in the options displayed in project leader screen in ui
-	private boolean handleProjectLeaderState (String userInput) {
+	private boolean handleProjectLeaderState (String userInput) throws WrongInputException {
 		switch (this.subState) {
 		case 0: return selectProjectLeaderSubstate(userInput); 	
 		case 1: return setTaskBudgetTime(userInput); 
@@ -153,17 +151,56 @@ public class UIHandler extends Observable {
 		return true;
 		
 	}
-	private boolean setTaskBudgetTime(String userInput) {
-		return false;
+	private boolean setTaskBudgetTime(String userInput) throws WrongInputException {
+		//ændre metode til at bruge fizbjørns
+		String[] inputs=userInput.split(" ");
+		if (inputs.length<2) return false;
+		int taskID=Integer.parseInt(inputs[0]);
+		Task task=database.getTask(taskID);
+		if (task==null) return false;
+		double time=Double.parseDouble(inputs[1]);
+		task.timeBudget=time;
+		database.changed("Timebudget for task: " + task.name + " changed succesfully to " + time);
+		return true;
 	}
-	private boolean setTaskStart(String userInput) {
-		return false;
+	private boolean setTaskStart(String userInput) throws WrongInputException {
+		//ændre metode til at bruge fizbjørns
+		String[] inputs=userInput.split(" ");
+		if (inputs.length<3) return false;
+		int taskID=Integer.parseInt(inputs[0]);
+		Task task=database.getTask(taskID);
+		if (task==null) return false;
+		int year=Integer.parseInt(inputs[1]);
+		int week=Integer.parseInt(inputs[2]);
+		CalWeek calWeek=new CalWeek(year, week);
+		task.start=calWeek;
+		database.changed("Start time for task: " + task.name + " changed succesfully to " + calWeek );
+		return true;
 	}
-	private boolean setTaskEnd(String userInput) {
-		return false;
+	private boolean setTaskEnd(String userInput) throws WrongInputException {
+		//ændre metode til at bruge fizbjørns
+		String[] inputs=userInput.split(" ");
+		if (inputs.length<3) return false;
+		int taskID=Integer.parseInt(inputs[0]);
+		Task task=database.getTask(taskID);
+		if (task==null) return false;
+		int year=Integer.parseInt(inputs[1]);
+		int week=Integer.parseInt(inputs[2]);
+		CalWeek calWeek=new CalWeek(year, week);
+		task.end=calWeek;
+		database.changed("End time for task: " + task.name + " changed succesfully to " + calWeek );
+		return true;
 	}
-	private boolean employeesForTask(String userInput) {
-		return false;
+	private boolean employeesForTask(String userInput) throws WrongInputException {
+		int taskID=Integer.parseInt(userInput);
+		Task task=database.getTask(taskID);
+		if (task==null) return false;
+		this.listToProces=database.getAvailableEmployees(employee, task);
+		
+		this.setState(ScreenState.DisplayListState);
+		this.setState(ScreenState.ProjectLeaderState);
+		
+		return true;
 	}
 	private boolean manTask(String userInput) {
 		return false;

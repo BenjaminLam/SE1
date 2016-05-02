@@ -29,4 +29,9 @@ public class CalWeek {
 		}
 		return false;
 	}
+	
+	public String toString() {
+		String temp=("Year: " + year + " Week " + week);
+		return temp;
+	}
 }
