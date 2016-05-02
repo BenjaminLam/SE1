@@ -40,6 +40,7 @@ public class WorkPeriod extends Object {
 		if(this.end>other.start && this.start<other.end){
 			return true;
 		}
+		
 		return false;
 	}
 }
