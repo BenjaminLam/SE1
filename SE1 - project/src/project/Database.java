@@ -155,7 +155,7 @@ public class Database extends Observable {
 		assignment.timeRegisters.add(booking);
 	}
 	
-	public void registerWorkManually(int taskID, int start, int end, CalDay day){
+	public void registerWorkManually(int taskID, double start, double end, CalDay day){
 		if(day==null){
 			day=getCurrentDay();
 		}
@@ -183,7 +183,7 @@ public class Database extends Observable {
 		return true;
 	}
 
-	public void createBooking(CalDay day, int start, int end,Assignment assignment){
+	public void createBooking(CalDay day, double start, double end,Assignment assignment){
 		WorkPeriod newBooking = new WorkPeriod(day,start,end);
 		addBookingToAssignment(newBooking,assignment);
 	}
@@ -205,7 +205,8 @@ public class Database extends Observable {
 		tasks.add(task);
 		return task.ID;
 	}
-	public boolean addAssigment(Assignment assignment){
+	
+	public boolean addAssignment(Assignment assignment){
 		if(assignment==null){
 			return false;
 		}
