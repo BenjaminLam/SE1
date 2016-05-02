@@ -72,12 +72,12 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 		
 		assertFalse(database.checkIfCoWorkerIsAvailable(period, coWorker));
 		
-//		try{
-//			database.createBookingForCoWorker(period,coWorker,database.assignments.get(1));
-//			Assert.fail();
-//		} catch(WrongInputException e){
-//			
-//		}
+		try{
+			database.createBookingForCoWorker(period,coWorker,database.assignments.get(1));
+			Assert.fail();
+		} catch(WrongInputException e){
+			
+		}
 	}
 	
 	/*

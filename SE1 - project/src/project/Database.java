@@ -143,6 +143,10 @@ public class Database extends Observable {
 		}
 		return false;
 	}
+	
+	public boolean currentEmpIsProjectLeaderFor(Project project) {
+		return project.isProjectLeader(currentEmp);
+	}
 		
 	public List<Assignment> getEmployeeAssignments (Employee employee) {
 		List<Assignment> empAssignments=new ArrayList<Assignment>();
