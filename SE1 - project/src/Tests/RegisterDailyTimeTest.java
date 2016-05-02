@@ -40,7 +40,7 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 		
 		List<WorkPeriod> todaysBookings = (List<WorkPeriod>) database.employeesTodaysBookings(employee, day).mainInfo;
 		for(WorkPeriod booking: todaysBookings){
-			database.registerBooking(booking,database.assignments.get(lastAss));	
+			database.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));	
 		}
 		
 		assertEquals(todaysBookings.size(),database.assignments.get(lastAss).timeRegisters.size());

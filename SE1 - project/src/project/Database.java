@@ -12,8 +12,8 @@ import Enum_Interfaces_AbstractClasses.ScreenState;
 import Exceptions_Errors.WrongInputException;
 
 public class Database extends Observable {
-	private Employee currentEmp;
-	boolean isProjectLeader;
+	public Employee currentEmp;
+	public boolean isProjectLeader;
 	public List<Employee> employees;
 	public List<Project> projects;
 	private List<Task> tasks;
@@ -138,8 +138,16 @@ public class Database extends Observable {
 		return todaysBookings;
 	}
 	
-	public void registerBooking(WorkPeriod booking, Assignment assignment){
+	public void copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment){
 		assignment.timeRegisters.add(booking);
+	}
+	
+	public void registerWorkManually(int taskID, int start, int end, CalDay day){
+		if(day==null){
+			day=getCurrentDay;
+		}
+		Assignment TempAss=getAssignment(taskID,currentEmp);
+		TempAss.timeRegisters.add(new WorkPeriod(day,start,end));
 	}
 	
 	public void seekAssistance(WorkPeriod period,Employee coWorker,Assignment assignment) throws WrongInputException{
