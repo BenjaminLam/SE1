@@ -58,8 +58,12 @@ public class Database extends Observable {
 		return true;
 	}
 
-	
-	
+	public boolean seekAssistance(Employee coWorker,int taskID,WorkPeriod period) throws WrongInputException{
+		if(checkIfCoWorkerIsAvailable(period,coWorker)){
+			return createBookingForCoWorker(coWorker,taskID,period);
+		}
+		return false;
+	}
 	
 	//ovenstående er brugt af UI
 	
@@ -170,15 +174,8 @@ public class Database extends Observable {
 		return todaysBookings;
 	}
 
-	public void seekAssistance(Employee coWorker,Assignment assignment,WorkPeriod period) throws WrongInputException{
-		
-		
-		if(checkIfCoWorkerIsAvailable(period,coWorker)){
-			createBookingForCoWorker(period,coWorker,assignment);
-		}
-	}
-	
-	public boolean checkIfCoWorkerIsAvailable(WorkPeriod period,Employee coWorker){
+	//used by seekAssistance
+	private boolean checkIfCoWorkerIsAvailable(WorkPeriod period,Employee coWorker){
 		if(coWorker==null){
 			return false;
 		}
@@ -191,22 +188,26 @@ public class Database extends Observable {
 		}
 		return true;
 	}
-
-	public void createBooking(CalDay day, double start, double end,Assignment assignment) throws WrongInputException{
-		WorkPeriod newBooking = new WorkPeriod(day,start,end);
-		addBookingToAssignment(newBooking,assignment);
-	}
-	
-	public void addBookingToAssignment(WorkPeriod period,Assignment assignment){
-		assignment.bookings.add(period);
-	}
-	
-	public void createBookingForCoWorker(WorkPeriod period,Employee coWorker, Assignment assignment) throws WrongInputException{
+	private boolean createBookingForCoWorker(Employee coWorker, int taskID, WorkPeriod period) throws WrongInputException{
 		if(coWorker==null)throw new WrongInputException("Employee doen't excist");
-		Assignment coWorkerNew = new Assignment(getTask(assignment.taskID), coWorker);
-		addBookingToAssignment(period,coWorkerNew);
+		Task task=getTask(taskID);
+		if (task==null) throw new WrongInputException("Task doen't excist");
+		
+		Assignment coWorkerNew = new Assignment(task, coWorker);
+		coWorkerNew.bookings.add(period);
 		assignments.add(coWorkerNew);
+		
+		changed(coWorkerNew);
+		return true;
 	}
+	
+	
+// unused?	
+//	public void createBooking(CalDay day, double start, double end,Assignment assignment) throws WrongInputException{
+//		WorkPeriod newBooking = new WorkPeriod(day,start,end);
+//		assignment.bookings.add(newBooking);
+//	}
+	
 	
 	//not handling null input
 	public int addTask(Task task){
