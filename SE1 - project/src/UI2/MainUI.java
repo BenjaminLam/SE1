@@ -19,7 +19,7 @@ public class MainUI implements Observer {
 	private PrintStream out;
 	private BufferedReader in;
 	
-	public MainUI () {
+	public MainUI () throws WrongInputException {
 		this.uiHandler=new UIHandler(this);
 		this.out=new PrintStream(System.out);
 		this.in=new BufferedReader(new InputStreamReader(System.in));
@@ -103,7 +103,9 @@ public class MainUI implements Observer {
 	}
 	private void displayRegisterWork(){
 		out.println("Select one of the following entries if you want to register your time according to your timebooking");
-		out.println("If you want to manually register time, input number for manual input followed by task id, start time and end time");
+		out.println("If you want to manually register time, you have two options:"); 
+		out.println("Register task today: input task id, start time and end time");
+		out.println("Register task anyday: input task id, start time, end time, year, week, day of week"); 
 		out.println("When registereing manually split words with space");
 	
 	}

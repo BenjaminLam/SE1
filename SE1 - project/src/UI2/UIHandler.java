@@ -17,21 +17,44 @@ public class UIHandler extends Observable {
 	public int subState;
 	private Database database;
 	private MainUI mainUI;
-	List<? extends Object> listToProces;
-	MyMap mapToProcess;
+	List<? extends Object> listToProces; //list extracted from database, stored to process
+	MyMap mapToProcess; //MyMap extracted from database, stored to process
 	
 	public UIHandler (MainUI mainUI) {
 		this.mainUI=mainUI;
 		this.subState=0;
 		this.database=new Database();
 		database.addObserver(mainUI);
-		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
-	public void init() {
+	public void init() throws WrongInputException {
+		initDatabaseInfo();
 		setState (ScreenState.LoginState);
+	}
+	//inits database with information. See SampleDataSetup0 in test package for description
+	//this info differs from SampleDataSetup0 by using current day for bookings in stead of static day
+	public void initDatabaseInfo() throws WrongInputException {
+		CalDay day=database.getCurrentDay();
+		for (int i=0;i<10;i++){
+			Employee tempEmp=new Employee("Employee" + i,i);
+			database.employees.add(tempEmp);
+			Project tempPro=new Project ("Project" + i,i);
+			database.projects.add(tempPro);
+			Task tempTask=new Task(tempPro,"Task" + i);
+			database.addTask(tempTask);
+			Assignment tempAss=new Assignment(tempTask,tempEmp);
+			database.assignments.add(tempAss);
+			WorkPeriod tempWP=new WorkPeriod (day,9,9+i);
+			tempAss.bookings.add(tempWP);
+			
+			if(i==9) {
+				for (int j=0;j<6;j++) {
+					tempAss.bookings.add(new WorkPeriod(day,0,24));
+				}
+			}
+		}
+		database.projects.get(0).projectLeader=database.employees.get(0);
+		
 	}
 	
 	public boolean handleInput(String userInput) throws WrongInputException {
@@ -73,7 +96,7 @@ public class UIHandler extends Observable {
 		int userChoice=Integer.parseInt(userInput);
 		if (userChoice<0 || userChoice>9) return false;
 		if (userChoice==8) {
-			//if (!isProjectLeader) return false;
+			if (!database.isProjectLeader) return false;
 			setState(ScreenState.ProjectLeaderState);
 			return true;
 		}
@@ -82,31 +105,44 @@ public class UIHandler extends Observable {
 		return true;
 	}
 	private boolean registerWork(String userInput) throws WrongInputException{
-		String[] userInputs=userInput.split(" ");
-		int userChoice=Integer.parseInt(userInputs[0]);
-		Employee currentEmp=database.currrentEmp;
+		String[] userInputs=splitString(userInput);
+		
+		Employee currentEmp=database.currentEmp;
 		CalDay currentDay=database.getCurrentDay();
 		this.mapToProcess=database.employeesTodaysBookings(currentEmp, currentDay);
 	
-		WorkPeriod wp=null;
-		if (userChoice==mapToProcess.mainInfo.size()+1) {
-			int taskID=Integer.parseInt(userInputs[1]);
-			double start=Double.parseDouble(userInputs[2]);
-			double end=Double.parseDouble(userInputs[3]);
-			Assignment assignment=database.getAssignment(taskID, this.employee);
-			if (assignment==null) return false;
-			wp=new WorkPeriod (getCurrentDay(), start, end);
-			assignment.timeRegisters.add(wp);
+		switch (userInputs.length) {
+		case 1: return registerWorkExcisting(userInputs); 
+		case 3: return registerWorkToday(userInputs); 
+		case 6: return registerWorkAnyDay(userInputs); 
 		}
-		else {
-			if (userChoice>=1 && userChoice<=mapToProcess.mainInfo.size() ) {
-				Assignment assignment=(Assignment) mapToProcess.secondaryInfo.get(userChoice-1);
-				wp=(WorkPeriod) mapToProcess.mainInfo.get(userChoice-1);
-				assignment.timeRegisters.add(wp);
-			}
-		}
-		database.changed(wp);
-		return true;
+		
+		return false;
+	}
+	private boolean registerWorkExcisting(String[] userinputs) {
+		int userChoice=Integer.parseInt(userinputs[0]);
+		Assignment assignment=(Assignment) mapToProcess.secondaryInfo.get(userChoice-1);
+		WorkPeriod wp=(WorkPeriod) mapToProcess.mainInfo.get(userChoice-1);
+		return database.copyBookingToTimeRegister(wp, assignment);
+	}
+	private boolean registerWorkToday(String[] userInputs) throws WrongInputException {
+		int taskID=Integer.parseInt(userInputs[0]);
+		double start=Double.parseDouble(userInputs[1]);
+		double end=Double.parseDouble(userInputs[2]);
+		CalDay currentDay=database.getCurrentDay();
+		
+		return database.registerWorkManually(taskID, start, end, currentDay);
+	}
+	private boolean registerWorkAnyDay(String[] userInputs) throws WrongInputException {
+		int taskID=Integer.parseInt(userInputs[0]);
+		double start=Double.parseDouble(userInputs[1]);
+		double end=Double.parseDouble(userInputs[2]);
+		int year = Integer.parseInt(userInputs[3]);
+		int week = Integer.parseInt(userInputs[4]);
+		int weekDay = Integer.parseInt(userInputs[5]);
+		CalDay day=new CalDay(new CalWeek(year,week),weekDay);
+		
+		return database.registerWorkManually(taskID, start, end, day);
 	}
 	private boolean seekAssistance(String userInput){
 		return false;
@@ -194,7 +230,7 @@ public class UIHandler extends Observable {
 		int taskID=Integer.parseInt(userInput);
 		Task task=database.getTask(taskID);
 		if (task==null) return false;
-		this.listToProces=database.getAvailableEmployees(employee, task);
+		this.listToProces=database.getAvailableEmployees(database.currentEmp, task);
 		
 		this.setState(ScreenState.DisplayListState);
 		this.setState(ScreenState.ProjectLeaderState);
@@ -229,9 +265,7 @@ public class UIHandler extends Observable {
 			return database.createProject(name);
 	}
 
-	private String[] seperateString (String input) {
+	private String[] splitString (String input) {
 		return input.split(" ");
 	}
-
-	
 }

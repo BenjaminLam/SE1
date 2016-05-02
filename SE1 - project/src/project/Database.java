@@ -28,7 +28,7 @@ public class Database extends Observable {
 	
 	public boolean logIn(int EmpID) {
 		Employee employee=getEmployee(EmpID);
-		//if (employee==null) return false;
+		if (employee==null) return false;
 		currentEmp=employee;
 		isProjectLeader=isProjectLeader(employee);
 		return true;
@@ -43,9 +43,28 @@ public class Database extends Observable {
 		return true;
 	}
 	
+	public boolean copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment){
+		assignment.timeRegisters.add(booking);
+		changed(booking);
+		return true;
+	}
+
+	public boolean registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
+		Assignment TempAss=getAssignment(taskID,currentEmp);
+		if(TempAss==null)return false;
+		WorkPeriod wp=new WorkPeriod(day,start,end);
+		TempAss.timeRegisters.add(wp);
+		changed(wp);
+		return true;
+	}
 
 	
+	
+	
 	//ovenstående er brugt af UI
+	
+	
+	
 	
 	
 	
@@ -66,7 +85,7 @@ public class Database extends Observable {
 
 	public Assignment getAssignment (int taskID, Employee employee) {
 		for (Assignment assignment:assignments) {
-			if (assignment.taskID==taskID && employee.equals(employee)) return assignment;
+			if (assignment.taskID==taskID && employee.ID==assignment.employeeID) return assignment;
 		}
 		return null;
 	}
@@ -154,20 +173,10 @@ public class Database extends Observable {
 		}
 		return todaysBookings;
 	}
-	
-	public void copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment){
-		assignment.timeRegisters.add(booking);
-	}
-	
-	public boolean registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
-		Assignment TempAss=getAssignment(taskID,currentEmp);
-		if(TempAss==null)return false;
+
+	public void seekAssistance(Employee coWorker,Assignment assignment,WorkPeriod period) throws WrongInputException{
 		
-		TempAss.timeRegisters.add(new WorkPeriod(day,start,end));
-		return true;
-	}
-	
-	public void seekAssistance(WorkPeriod period,Employee coWorker,Assignment assignment) throws WrongInputException{
+		
 		if(checkIfCoWorkerIsAvailable(period,coWorker)){
 			createBookingForCoWorker(period,coWorker,assignment);
 		}
@@ -177,8 +186,8 @@ public class Database extends Observable {
 		if(coWorker==null){
 			return false;
 		}
-		for(Object booking: employeesTodaysBookings(coWorker,period.day).mainInfo){
-			booking=(WorkPeriod) booking;
+		for(Object object: employeesTodaysBookings(coWorker,period.day).mainInfo){
+			WorkPeriod booking=(WorkPeriod) object;
 			
 			if(booking.equals(period)){
 				return false;
@@ -400,7 +409,7 @@ public class Database extends Observable {
 	
 	private boolean isProjectLeader (Employee employee) {
 		for (Project project:projects) {
-			if (employee.equals(project.projectLeader)) return true;
+			if (project.isProjectLeader(employee)) return true;
 		}
 		return false;
 	}

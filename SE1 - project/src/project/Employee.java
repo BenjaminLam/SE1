@@ -13,6 +13,7 @@ public class Employee {
 	
 	//not handling null value
 	public boolean equals (Employee employee) {
+		if (employee==null) return false;
 		if (this.ID==employee.ID) return true;
 		return false;
 	}
