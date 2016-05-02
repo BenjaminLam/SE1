@@ -31,8 +31,15 @@ public class Task {
 		return new CalWeek(year,week);
 	}
 	
-	public void setTaskStart (CalWeek start, Employee employee) throws WrongInputException{
+	public void setTaskStart (CalWeek start, Employee employee, Database database) throws WrongInputException{
 		CalWeek currentWeek = getCurrentWeek();
+		Project project1 = database.getProject(0);
+		if (!project1.isProjectLeader(employee)){
+			throw new WrongInputException ("You are not projectleader of this project");
+		}
+		if(start.isBefore(project1.start)){
+			throw new WrongInputException ("Selected date is before start date of project"):
+		}
 		if (start.isBefore(currentWeek)){
 			throw new WrongInputException ("Invalid date; Date is in the past");
 		}

@@ -77,7 +77,7 @@ public class SetTaskEndTest extends SampleDataSetup0 {
 		assertTrue(project.isProjectLeader(employee));
 		
 		try {
-			task1.setTaskStart(calWeek1, employee);		
+			task1.setTaskStart(calWeek1, employee, super.database);		
 		} catch (WrongInputException e) { 
 			Assert.fail();
 		}	

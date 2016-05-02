@@ -29,12 +29,30 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 		assertTrue(project.isProjectLeader(employee));
 		
 		try {
-			task1.setTaskStart(calWeek1, employee);
+			task1.setTaskStart(calWeek1, employee, super.database);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
 		assertEquals(task1.start.week,calWeek1.week);
 		assertEquals(task1.start.year,calWeek1.year);
+	}
+	/*
+	 * Alternative scenario 1
+	 */
+	@Test
+	public void setTaskAlt1(){
+		Employee employee=super.database.employees.get(1);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
+		CalWeek calWeek1 = new CalWeek(2016,43);
+		assertFalse(project.isProjectLeader(employee));
+		try {
+			task1.setTaskStart(calWeek1, employee, database);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		assertNull(task1.start);
+		
 	}
 	/* 
 	 * Alternative scenario 2
@@ -53,14 +71,14 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 		
 		assertNull(task1.start);
 		try {
-			task1.setTaskStart(calWeek1, employee);
+			task1.setTaskStart(calWeek1, employee, super.database);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
 		assertNotNull(task1.start.year);
 		assertNotNull(task1.start.week);
 		try {
-			task1.setTaskStart(wrongWeek1, employee);
+			task1.setTaskStart(wrongWeek1, employee, super.database);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
@@ -86,11 +104,27 @@ public class SetTaskStartTest extends SampleDataSetup0 {
 			Assert.fail();
 		}
 		try {
-			task1.setTaskStart(wrongWeek1, employee);
+			task1.setTaskStart(wrongWeek1, employee, super.database);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
 		assertNull(task1.start);
 		assertEquals(task1.end.year,calWeek1.year);
+	}
+	/*
+	 * Alternative scenario 4
+	 * Selected date is before start date of project
+	 */
+	@Test
+	public void setTaskStartAlt4(){
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
+		CalWeek calWeek1 = new CalWeek(2016,43);
+		project.start = calWeek1;
+		CalWeek wrongWeek1 = new CalWeek(2016,44);
+		
+		assertTrue
+		
 	}
 }

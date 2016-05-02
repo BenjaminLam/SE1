@@ -4,8 +4,8 @@ public class Project {
 	public String name;
 	public int ID;
 	public Employee projectLeader;
-	private CalWeek start;
-	private CalWeek end;
+	public CalWeek start;
+	public CalWeek end;
 	
 	public Project (String name, int ID) {
 		this.name=name;
