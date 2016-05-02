@@ -63,9 +63,21 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 		//This should be false since employee 9 not works on task 0. (see sampledatasetup)
 		assertFalse(database.registerWorkManually(0, 9, 11, day));
 		
+	}
+	
+	/*
+	 * Test that employee gets an empty array if the day is not today
+	 */
+	@Test
+	public void registerDailyTimeDayNotToday(){
+		Employee employee = database.employees.get(database.assignments.size()-1);
+		CalDay day = new CalDay(new CalWeek(2050,2),5);
+		database.currentEmp=employee;
 		
-		
-		
+		assertNotNull(employee);
+		assertNotNull(day);
+
+		assertEquals(database.employeesTodaysBookings(employee,day).mainInfo.size(),0);
 	}
 	
 }
