@@ -47,7 +47,7 @@ public class SampleDataSetup0 {
 				}
 			}
 		}
-		database.projects.get(0).projectLeader=database.employees.get(0);
+		database.projects.get(1).projectLeader=database.employees.get(0);
 		
 	}	
 }
