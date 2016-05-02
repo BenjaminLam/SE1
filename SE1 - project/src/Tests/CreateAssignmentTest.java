@@ -35,7 +35,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			
 			Task task1 = super.database.getTask(0);
 			
-			assertFalse(employee.isAssigned(task1)); //Skal laves
+			assertFalse(employee.isAssigned(database, task1, employee)); //Skal laves
 			
 			try {
 				assertTrue(employee.createAssignment(database, task1, employee)); //skal laves
@@ -98,7 +98,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			
 			Task task1 = super.database.getTask(0);
 			
-			assertTrue(employee.isAssigned(task1));
+			assertTrue(employee.isAssigned(database, task1, employee));
 			
 			try {
 				employee.createAssignment(database, task1, employee);

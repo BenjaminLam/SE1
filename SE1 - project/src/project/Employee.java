@@ -31,7 +31,7 @@ public class Employee {
 		return database.addTask(new Task (project, name));
 	}
 	
-	//Virker kun for projectleader indtil videre
+
 	public boolean createAssignment (Database database, Task task, Employee employee) throws WrongInputException {
 		if (task==null) { 
 			throw new WrongInputException("Task doesn't exist");	
@@ -50,5 +50,11 @@ public class Employee {
 		return database.addAssignment(new Assignment (task, employee));
 	}
 
+	public boolean isAssigned (Database database, Task task, Employee employee){
+		if(database.getAssignment(task.ID , employee)== null){
+			return false;
+		}
+		return true;
+	}
 	
 }
