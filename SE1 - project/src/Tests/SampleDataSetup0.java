@@ -3,6 +3,7 @@ package Tests;
 import java.util.ArrayList;
 import org.junit.Before;
 
+import Exceptions_Errors.WrongInputException;
 import project.*;
 
 public class SampleDataSetup0 {
@@ -25,7 +26,7 @@ public class SampleDataSetup0 {
 	 * Adds 6 workperiods to employee9, each lasting 24 hours
 	 */
 	@Before
-	public void setup() {
+	public void setup() throws WrongInputException {
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		for (int i=0;i<10;i++){
 			Employee tempEmp=new Employee("Employee" + i,i);

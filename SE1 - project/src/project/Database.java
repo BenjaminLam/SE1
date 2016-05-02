@@ -155,12 +155,12 @@ public class Database extends Observable {
 		assignment.timeRegisters.add(booking);
 	}
 	
-	public void registerWorkManually(int taskID, int start, int end, CalDay day){
-		if(day==null){
-			day=getCurrentDay();
-		}
+	public boolean registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
 		Assignment TempAss=getAssignment(taskID,currentEmp);
+		if(TempAss==null)return false;
+		
 		TempAss.timeRegisters.add(new WorkPeriod(day,start,end));
+		return true;
 	}
 	
 	public void seekAssistance(WorkPeriod period,Employee coWorker,Assignment assignment) throws WrongInputException{
@@ -183,7 +183,7 @@ public class Database extends Observable {
 		return true;
 	}
 
-	public void createBooking(CalDay day, int start, int end,Assignment assignment){
+	public void createBooking(CalDay day, double start, double end,Assignment assignment) throws WrongInputException{
 		WorkPeriod newBooking = new WorkPeriod(day,start,end);
 		addBookingToAssignment(newBooking,assignment);
 	}
@@ -205,7 +205,8 @@ public class Database extends Observable {
 		tasks.add(task);
 		return task.ID;
 	}
-	public boolean addAssigment(Assignment assignment){
+	
+	public boolean addAssignment(Assignment assignment){
 		if(assignment==null){
 			return false;
 		}

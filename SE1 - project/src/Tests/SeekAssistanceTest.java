@@ -85,7 +85,7 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 	 * The co-worker isn't available. 
 	 */
 	@Test
-	public void seekAssistanceTestAlt2(){
+	public void seekAssistanceTestAlt2() throws WrongInputException{
 		Employee employee=database.employees.get(1);
 		Employee coWorker=database.employees.get(2);
 		
