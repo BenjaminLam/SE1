@@ -84,7 +84,9 @@ public class UIHandler extends Observable {
 	private boolean registerWork(String userInput) throws WrongInputException{
 		String[] userInputs=userInput.split(" ");
 		int userChoice=Integer.parseInt(userInputs[0]);
-		this.mapToProcess=database.employeesTodaysBookings(employee, getCurrentDay());
+		Employee currentEmp=database.currrentEmp;
+		CalDay currentDay=database.getCurrentDay();
+		this.mapToProcess=database.employeesTodaysBookings(currentEmp, currentDay);
 	
 		WorkPeriod wp=null;
 		if (userChoice==mapToProcess.mainInfo.size()+1) {
@@ -231,12 +233,5 @@ public class UIHandler extends Observable {
 		return input.split(" ");
 	}
 
-	private CalDay getCurrentDay () {
-		Calendar calendar=new GregorianCalendar();
-		int year=calendar.get(Calendar.YEAR);
-		int week=calendar.get(Calendar.WEEK_OF_YEAR);
-		int day=calendar.get(Calendar.DAY_OF_WEEK);
-		
-		return new CalDay(new CalWeek(year,week),day);
-	}
+	
 }

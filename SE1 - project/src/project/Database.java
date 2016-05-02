@@ -144,7 +144,7 @@ public class Database extends Observable {
 	
 	public void registerWorkManually(int taskID, int start, int end, CalDay day){
 		if(day==null){
-			day=getCurrentDay;
+			day=getCurrentDay();
 		}
 		Assignment TempAss=getAssignment(taskID,currentEmp);
 		TempAss.timeRegisters.add(new WorkPeriod(day,start,end));
@@ -363,6 +363,16 @@ public class Database extends Observable {
 
 	
 	//hjælpemetoder
+	public CalDay getCurrentDay () {
+		Calendar calendar=new GregorianCalendar();
+		int year=calendar.get(Calendar.YEAR);
+		int week=calendar.get(Calendar.WEEK_OF_YEAR);
+		int day=calendar.get(Calendar.DAY_OF_WEEK);
+		
+		return new CalDay(new CalWeek(year,week),day);
+	}
+	
+	
 	private boolean isProjectLeader (Employee employee) {
 		for (Project project:projects) {
 			if (employee.equals(project.projectLeader)) return true;
