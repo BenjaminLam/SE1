@@ -18,7 +18,7 @@ import project.*;
 /**
  * Test for user case RegisterDailyTime
  * @author BenjaminWrist
- * Still need to test alternative scenarios
+ * Only one alternative scenario. For further info read rapport. 
  */
 
 public class RegisterDailyTimeTest extends SampleDataSetup0{
@@ -60,6 +60,7 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 		assertNotNull(employee);
 		assertNotNull(day);
 		
+		//This should be false since employee 9 not works on task 0. (see sampledatasetup)
 		assertFalse(database.registerWorkManually(0, 9, 11, day));
 		
 		

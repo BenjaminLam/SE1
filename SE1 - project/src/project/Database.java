@@ -180,8 +180,8 @@ public class Database extends Observable {
 		if(coWorker==null){
 			return false;
 		}
-		for(Object booking: employeesTodaysBookings(coWorker,period.day).mainInfo){
-			booking=(WorkPeriod) booking;
+		for(Object object: employeesTodaysBookings(coWorker,period.day).mainInfo){
+			WorkPeriod booking=(WorkPeriod) object;
 			
 			if(booking.equals(period)){
 				return false;
