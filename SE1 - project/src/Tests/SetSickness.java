@@ -13,6 +13,8 @@ import project.Employee;
 
 public class SetSickness extends SampleDataSetup0 {
 	
+	//Not Complete
+	
 	/*
 	 *Main scenario: 
 	 * employee wants to create booking for sickness
@@ -26,7 +28,7 @@ public class SetSickness extends SampleDataSetup0 {
 	public void testSetSicknessMain () {
 		Employee employee=super.database.employees.get(1);
 		
-		int sickness=0;
+		boolean sickness=false;
 		
 		assertFalse(employee.isSick(employee)); //metoden skal laves
 		
@@ -51,7 +53,7 @@ public class SetSickness extends SampleDataSetup0 {
 	public void testCreateTaskAlt1(){
 Employee employee=super.database.employees.get(1);
 		
-		int sickness=1;
+		boolean sickness=true;
 		
 		assertTrue(employee.isSick(employee));
 		
