@@ -50,7 +50,7 @@ public class Employee {
 		}
 		return database.addAssignment(new Assignment (task, employee));
 	}
-		//checks if a employee is assigned a task
+		//checks if a employee is assigned a task.
 	public boolean isAssigned (Database database, Task task, Employee employee){
 		if(database.getAssignment(task.ID , employee)== null){
 			return false;
