@@ -144,9 +144,37 @@ public class UIHandler extends Observable {
 		
 		return database.registerWorkManually(taskID, start, end, day);
 	}
-	private boolean seekAssistance(String userInput){
+	private boolean seekAssistance(String userInput) throws WrongInputException{
+		String[] userInputs=splitString(userInput);
+		
+		switch(userInputs.length) {
+		case 4: return seekAssistanceToday(userInputs);
+		case 7: return seekAssistanceAnyDay(userInputs);
+		}
 		return false;
 	}
+	private boolean seekAssistanceToday (String[] userInputs) throws WrongInputException {
+		int taskID=Integer.parseInt(userInputs[0]);
+		int empID=Integer.parseInt(userInputs[1]);
+		double start=Double.parseDouble(userInputs[2]);
+		double end=Double.parseDouble(userInputs[3]);
+		WorkPeriod wp=new WorkPeriod(database.getCurrentDay(),start,end);
+		
+		return database.seekAssistance(taskID, empID, wp);
+	}
+	private boolean seekAssistanceAnyDay (String[] userInputs) throws WrongInputException {
+		int taskID=Integer.parseInt(userInputs[0]);
+		int empID=Integer.parseInt(userInputs[1]);
+		double start=Double.parseDouble(userInputs[2]);
+		double end=Double.parseDouble(userInputs[3]);
+		int year=Integer.parseInt(userInputs[4]);
+		int week=Integer.parseInt(userInputs[5]);
+		int weekDay=Integer.parseInt(userInputs[6]);
+		WorkPeriod wp=new WorkPeriod(new CalDay(new CalWeek(year,week),weekDay),start,end);
+		
+		return database.seekAssistance(taskID, empID, wp);
+	}
+	
 	private boolean registerVacation(String userInput){
 		return false;
 	}
