@@ -25,13 +25,36 @@ public class UIHandler extends Observable {
 		this.subState=0;
 		this.database=new Database();
 		database.addObserver(mainUI);
-		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
-	public void init() {
+	public void init() throws WrongInputException {
+		initDatabaseInfo();
 		setState (ScreenState.LoginState);
+	}
+	//inits database with information. See SampleDataSetup0 in test package for description
+	//this info differs from SampleDataSetup0 by using current day for bookings in stead of static day
+	public void initDatabaseInfo() throws WrongInputException {
+		CalDay day=database.getCurrentDay();
+		for (int i=0;i<10;i++){
+			Employee tempEmp=new Employee("Employee" + i,i);
+			database.employees.add(tempEmp);
+			Project tempPro=new Project ("Project" + i,i);
+			database.projects.add(tempPro);
+			Task tempTask=new Task(tempPro,"Task" + i);
+			database.addTask(tempTask);
+			Assignment tempAss=new Assignment(tempTask,tempEmp);
+			database.assignments.add(tempAss);
+			WorkPeriod tempWP=new WorkPeriod (day,9,9+i);
+			tempAss.bookings.add(tempWP);
+			
+			if(i==9) {
+				for (int j=0;j<6;j++) {
+					tempAss.bookings.add(new WorkPeriod(day,0,24));
+				}
+			}
+		}
+		database.projects.get(0).projectLeader=database.employees.get(0);
+		
 	}
 	
 	public boolean handleInput(String userInput) throws WrongInputException {
@@ -73,7 +96,7 @@ public class UIHandler extends Observable {
 		int userChoice=Integer.parseInt(userInput);
 		if (userChoice<0 || userChoice>9) return false;
 		if (userChoice==8) {
-			//if (!isProjectLeader) return false;
+			if (!database.isProjectLeader) return false;
 			setState(ScreenState.ProjectLeaderState);
 			return true;
 		}

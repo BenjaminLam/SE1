@@ -28,7 +28,7 @@ public class Database extends Observable {
 	
 	public boolean logIn(int EmpID) {
 		Employee employee=getEmployee(EmpID);
-		//if (employee==null) return false;
+		if (employee==null) return false;
 		currentEmp=employee;
 		isProjectLeader=isProjectLeader(employee);
 		return true;
@@ -85,7 +85,7 @@ public class Database extends Observable {
 
 	public Assignment getAssignment (int taskID, Employee employee) {
 		for (Assignment assignment:assignments) {
-			if (assignment.taskID==taskID && employee.equals(employee)) return assignment;
+			if (assignment.taskID==taskID && employee.equals(assignment.employeeID)) return assignment;
 		}
 		return null;
 	}
@@ -403,7 +403,7 @@ public class Database extends Observable {
 	
 	private boolean isProjectLeader (Employee employee) {
 		for (Project project:projects) {
-			if (employee.equals(project.projectLeader)) return true;
+			if (project.isProjectLeader(employee)) return true;
 		}
 		return false;
 	}
