@@ -152,7 +152,8 @@ public class MainUI implements Observer {
         out.println("   4) Set task end");
         out.println("   5) Get available employees for task");
         out.println("   6) Man task");
-        out.println("Select a number (0-9): ");
+        out.println("   7) back to employee screen");
+        out.println("Select a number (0-7): ");
 	}
 	private void displayCreatetask () {
 		

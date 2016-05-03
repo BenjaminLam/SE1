@@ -26,7 +26,7 @@ public class SetSickness extends SampleDataSetup0 {
 	
 	@Test
 	public void testSetSicknessMain () {
-		Employee employee=super.database.employees.get(0);
+		Employee employee=super.sysApp.employees.get(0);
 		
 		boolean sickness=false;
 		
@@ -51,7 +51,7 @@ public class SetSickness extends SampleDataSetup0 {
 	
 	@Test
 	public void testCreateTaskAlt1(){
-Employee employee=super.database.employees.get(1);
+Employee employee=super.sysApp.employees.get(1);
 		
 		boolean sickness=true;
 		

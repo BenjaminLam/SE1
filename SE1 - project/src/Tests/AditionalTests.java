@@ -24,12 +24,12 @@ public class AditionalTests extends SampleDataSetup0 {
 	
 	@Test 
 	public void hoursBookedTest() {
-		Employee employee=database.employees.get(0);
+		Employee employee=sysApp.employees.get(0);
 		CalWeek start=new CalWeek(2000,1);
 		CalWeek end=new CalWeek(2000,4);
 		
 		double hoursBooked=0;
-		for (Assignment assignment:database.assignments) {
+		for (Assignment assignment:sysApp.assignments) {
 			if (assignment.employeeID==employee.ID) {
 				for (WorkPeriod wp:assignment.bookings) {
 					if (wp.day.week.isAfter(start) && wp.day.week.isBefore(end)) {
@@ -38,7 +38,7 @@ public class AditionalTests extends SampleDataSetup0 {
 				}
 			}
 		}
-		assertEquals(hoursBooked,database.hoursBooked(employee,start,end),0.1);
+		assertEquals(hoursBooked,sysApp.hoursBooked(employee,start,end),0.1);
 	}
 	
 	/*
@@ -55,9 +55,9 @@ public class AditionalTests extends SampleDataSetup0 {
 		//expected 37.5*4 since theres 4 week and employee0 doesn't have any booking with time in it
 		double expected=37.5*4;
 		
-		Employee employee=database.employees.get(0);
+		Employee employee=sysApp.employees.get(0);
 		
-		double calculated=database.hoursAvailable(employee, start, end);
+		double calculated=sysApp.hoursAvailable(employee, start, end);
 		
 		assertEquals(expected,calculated,0.1);
 	}

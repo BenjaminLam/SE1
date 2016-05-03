@@ -32,8 +32,8 @@ public class createTaskTest extends SampleDataSetup0 {
 		
 		@Test
 		public void testCreateTaskMain () {
-			Employee employee=super.database.employees.get(0);
-			Project project=super.database.projects.get(1);
+			Employee employee=super.sysApp.employees.get(0);
+			Project project=super.sysApp.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
@@ -43,11 +43,11 @@ public class createTaskTest extends SampleDataSetup0 {
 			int taskID=-1;
 			
 			try {
-				taskID = employee.createTask(database, project, taskName);
+				taskID = employee.createTask(sysApp, project, taskName);
 			} catch (WrongInputException e) {
 			}
 			
-			Task task=super.database.getTask(taskID);
+			Task task=super.sysApp.getTask(taskID);
 			
 			assertNotNull(task);
 			assertEquals(task.name,taskName);
@@ -64,9 +64,9 @@ public class createTaskTest extends SampleDataSetup0 {
 		
 		@Test
 		public void testCreateTaskAlt1(){
-			int numberOfTasks = database.getNumberOfTasks();
-			Employee employee=super.database.employees.get(1);
-			Project project=super.database.projects.get(1);
+			int numberOfTasks = sysApp.getNumberOfTasks();
+			Employee employee=super.sysApp.employees.get(1);
+			Project project=super.sysApp.projects.get(1);
 			
 			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(employee));
@@ -74,13 +74,13 @@ public class createTaskTest extends SampleDataSetup0 {
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(database, project, taskName);
+				employee.createTask(sysApp, project, taskName);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(database.getNumberOfTasks(), numberOfTasks);
+			assertEquals(sysApp.getNumberOfTasks(), numberOfTasks);
 		}
 		
 		/*
@@ -92,20 +92,20 @@ public class createTaskTest extends SampleDataSetup0 {
 		
 		@Test
 		public void testCreateTaskAlt2(){
-			int numberOfTasks = database.getNumberOfTasks();
-			Employee employee=super.database.employees.get(0);
+			int numberOfTasks = sysApp.getNumberOfTasks();
+			Employee employee=super.sysApp.employees.get(0);
 			Project project=null;
 			
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(database, project, taskName);
+				employee.createTask(sysApp, project, taskName);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(database.getNumberOfTasks(), numberOfTasks);
+			assertEquals(sysApp.getNumberOfTasks(), numberOfTasks);
 		}
 		
 		/*
@@ -120,38 +120,38 @@ public class createTaskTest extends SampleDataSetup0 {
 		
 		@Test
 		public void testCreateTaskAlt3(){
-			Employee employee=super.database.employees.get(0);
-			Project project=super.database.projects.get(1);
+			Employee employee=super.sysApp.employees.get(0);
+			Project project=super.sysApp.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
 			//add task to secondary project
-			super.database.addTask(new Task(super.database.projects.get(1),"Task"));
+			super.sysApp.addTask(new Task(super.sysApp.projects.get(1),"Task"));
 			
 			//adding task with same name^ to main project
 			try {
-				employee.createTask(database, project, "Task");
+				employee.createTask(sysApp, project, "Task");
 			} catch (WrongInputException e) {
 				Assert.fail();
 			}
 			
 			//adding task with new name to main project
 			try {
-				employee.createTask(database, project, "Task01");
+				employee.createTask(sysApp, project, "Task01");
 			} catch (WrongInputException e) {
 				Assert.fail();
 			}
 			
 			//adding task with already excisting name in project
-			int numberOfTasks = database.getNumberOfTasks();
+			int numberOfTasks = sysApp.getNumberOfTasks();
 			try {
-				employee.createTask(database, project, "Task01");
+				employee.createTask(sysApp, project, "Task01");
 				Assert.fail();
 			} catch (WrongInputException e) {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(database.getNumberOfTasks(), numberOfTasks);
+			assertEquals(sysApp.getNumberOfTasks(), numberOfTasks);
 		}
 		
 		

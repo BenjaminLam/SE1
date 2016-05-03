@@ -33,16 +33,16 @@ public class ProjectReportTest extends SampleDataSetup0 {
 	
 	@Test
 	public void projectReportTestMain () {
-		Project project=database.projects.get(1);
+		Project project=sysApp.projects.get(1);
 		assertNotNull(project);
 		
-		Employee employee=database.employees.get(0);
+		Employee employee=sysApp.employees.get(0);
 		assertTrue(project.isProjectLeader(employee));
 		
 		List<String> projectReport=null;
 		
 		try {
-			projectReport=database.getProjectReport(project, employee);
+			projectReport=sysApp.getProjectReport(project, employee);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
@@ -62,12 +62,12 @@ public class ProjectReportTest extends SampleDataSetup0 {
 		Project project=null;
 		assertNull(project);
 		
-		Employee employee=database.employees.get(0);
+		Employee employee=sysApp.employees.get(0);
 		
 		List<String> projectReport=null;
 		
 		try {
-			projectReport=database.getProjectReport(project, employee);
+			projectReport=sysApp.getProjectReport(project, employee);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
@@ -85,16 +85,16 @@ public class ProjectReportTest extends SampleDataSetup0 {
 	
 	@Test
 	public void projectReportTestAlt2() {
-		Project project=database.projects.get(1);
+		Project project=sysApp.projects.get(1);
 		assertNotNull(project);
 		
-		Employee employee=database.employees.get(1);
+		Employee employee=sysApp.employees.get(1);
 		assertFalse(project.isProjectLeader(employee));
 		
 		List<String> projectReport=null;
 		
 		try {
-			projectReport=database.getProjectReport(project, employee);
+			projectReport=sysApp.getProjectReport(project, employee);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
@@ -112,7 +112,7 @@ public class ProjectReportTest extends SampleDataSetup0 {
 	
 	@Test
 	public void projectReportTestAlt3() {
-		Project project=database.projects.get(1);
+		Project project=sysApp.projects.get(1);
 		assertNotNull(project);
 		
 		Task testTask=new Task (project,"testTask");
@@ -125,15 +125,15 @@ public class ProjectReportTest extends SampleDataSetup0 {
 			Assert.fail();
 		}
 		
-		database.addTask(testTask);
+		sysApp.addTask(testTask);
 		
-		Employee employee=database.employees.get(0);
+		Employee employee=sysApp.employees.get(0);
 		assertTrue(project.isProjectLeader(employee));
 		
 		List<String> projectReport=null;
 		
 		try {
-			projectReport=database.getProjectReport(project, employee);
+			projectReport=sysApp.getProjectReport(project, employee);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}

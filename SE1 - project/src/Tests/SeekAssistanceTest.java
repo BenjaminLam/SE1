@@ -32,8 +32,8 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 	
 	@Test
 	public void seekAssistanceTestMain() throws WrongInputException{
-		Employee employee=database.employees.get(1);
-		Employee coWorker=database.employees.get(2);
+		Employee employee=sysApp.employees.get(1);
+		Employee coWorker=sysApp.employees.get(2);
 		
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		WorkPeriod period = new WorkPeriod(day,13,15);
@@ -42,16 +42,16 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 		assertNotNull(coWorker);
 		
 		//since employee 2 doesn't have any booking between 13 and 15 he should be available.
-		assertTrue(database.checkIfCoWorkerIsAvailable(period, coWorker));
+		assertTrue(sysApp.checkIfCoWorkerIsAvailable(period, coWorker));
 		
-		database.createBookingForCoWorker(coWorker,1,period);
+		sysApp.createBookingForCoWorker(coWorker,1,period);
 		
 		//checks that the booking is created.
-		assertNotNull(database.assignments.get(database.assignments.size()-1));
+		assertNotNull(sysApp.assignments.get(sysApp.assignments.size()-1));
 		//checks that the taskID's are the same.
-		assertEquals(database.assignments.get(database.assignments.size()-1).taskID,database.assignments.get(1).taskID);
+		assertEquals(sysApp.assignments.get(sysApp.assignments.size()-1).taskID,sysApp.assignments.get(1).taskID);
 		//checks that the employeeID's are different, to make sure that it's not just a copy of the other assignment.
-		assertFalse(database.assignments.get(database.assignments.size()-1).employeeID==database.assignments.get(1).employeeID);
+		assertFalse(sysApp.assignments.get(sysApp.assignments.size()-1).employeeID==sysApp.assignments.get(1).employeeID);
 		
 	}
 	/*
@@ -61,7 +61,7 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 	 */
 	@Test
 	public void seekAssistanceTestAlt1() throws WrongInputException{
-		Employee employee=database.employees.get(1);
+		Employee employee=sysApp.employees.get(1);
 		Employee coWorker=null;
 		
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
@@ -70,10 +70,10 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 		assertNotNull(employee);
 		assertNull(coWorker);
 		
-		assertFalse(database.checkIfCoWorkerIsAvailable(period, coWorker));
+		assertFalse(sysApp.checkIfCoWorkerIsAvailable(period, coWorker));
 		
 		try{
-			database.createBookingForCoWorker(coWorker,3,period);
+			sysApp.createBookingForCoWorker(coWorker,3,period);
 			Assert.fail();
 		} catch(WrongInputException e){
 			
@@ -86,20 +86,20 @@ public class SeekAssistanceTest extends SampleDataSetup0{
 	 */
 	@Test
 	public void seekAssistanceTestAlt2() throws WrongInputException{
-		Employee employee=database.employees.get(1);
-		Employee coWorker=database.employees.get(2);
+		Employee employee=sysApp.employees.get(1);
+		Employee coWorker=sysApp.employees.get(2);
 		
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		WorkPeriod period = new WorkPeriod(day,13,15);
-		Assignment coWorkerAss = new Assignment(database.getTask(1),coWorker);
-		database.assignments.add(coWorkerAss);
+		Assignment coWorkerAss = new Assignment(sysApp.getTask(1),coWorker);
+		sysApp.assignments.add(coWorkerAss);
 		WorkPeriod newBooking = new WorkPeriod(day,13,15);
 		coWorkerAss.bookings.add(newBooking);
 		
 		assertNotNull(employee);
 		assertNotNull(coWorker);
 		
-		assertFalse(database.checkIfCoWorkerIsAvailable(period, coWorker));
+		assertFalse(sysApp.checkIfCoWorkerIsAvailable(period, coWorker));
 		
 		
 	}

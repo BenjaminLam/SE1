@@ -32,18 +32,18 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 	
 	@Test
 	public void registerDailyTimeMain(){
-		Employee employee = database.employees.get(9);
+		Employee employee = sysApp.employees.get(9);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
-		int lastAss=database.assignments.size()-1;
+		int lastAss=sysApp.assignments.size()-1;
 		assertNotNull(employee);
 		assertNotNull(day);
 		
-		List<WorkPeriod> todaysBookings = (List<WorkPeriod>) database.employeesTodaysBookings(employee, day).mainInfo;
+		List<WorkPeriod> todaysBookings = (List<WorkPeriod>) sysApp.employeesTodaysBookings(employee, day).mainInfo;
 		for(WorkPeriod booking: todaysBookings){
-			database.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));	
+			sysApp.copyBookingToTimeRegister(booking,sysApp.assignments.get(lastAss));	
 		}
 		
-		assertEquals(todaysBookings.size(),database.assignments.get(lastAss).timeRegisters.size());
+		assertEquals(todaysBookings.size(),sysApp.assignments.get(lastAss).timeRegisters.size());
 	}
 	
 	
@@ -53,15 +53,15 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 	
 	@Test
 	public void registerDailyTimeAlt1() throws WrongInputException{
-		Employee employee = database.employees.get(database.assignments.size()-1);
+		Employee employee = sysApp.employees.get(sysApp.assignments.size()-1);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
-		database.currentEmp=employee;
+		sysApp.currentEmp=employee;
 		
 		assertNotNull(employee);
 		assertNotNull(day);
 		
 		//This should be false since employee 9 not works on task 0. (see sampledatasetup)
-		assertFalse(database.registerWorkManually(0, 9, 11, day));
+		assertFalse(sysApp.registerWorkManually(0, 9, 11, day));
 		
 	}
 	
@@ -70,14 +70,14 @@ public class RegisterDailyTimeTest extends SampleDataSetup0{
 	 */
 	@Test
 	public void registerDailyTimeDayNotToday(){
-		Employee employee = database.employees.get(database.assignments.size()-1);
+		Employee employee = sysApp.employees.get(sysApp.assignments.size()-1);
 		CalDay day = new CalDay(new CalWeek(2050,2),5);
-		database.currentEmp=employee;
+		sysApp.currentEmp=employee;
 		
 		assertNotNull(employee);
 		assertNotNull(day);
 
-		assertEquals(database.employeesTodaysBookings(employee,day).mainInfo.size(),0);
+		assertEquals(sysApp.employeesTodaysBookings(employee,day).mainInfo.size(),0);
 	}
 	
 }

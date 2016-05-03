@@ -2,6 +2,9 @@ package project;
 
 import Exceptions_Errors.WrongInputException;
 
+//where should private getCurrentDay be placed?
+
+
 public class WorkPeriod extends Object {
 	public CalDay day;
 	private double start;
@@ -43,4 +46,22 @@ public class WorkPeriod extends Object {
 		
 		return false;
 	}
+	
+	protected boolean isDay(CalDay day) {
+		return this.day.equals(day);
+	}
+	
+	protected boolean isWhile(CalWeek start, CalWeek end) {
+		if (day.week.isAfterOrWhile(start) && day.week.isBeforeOrWhile(end)) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
+	
 }
+

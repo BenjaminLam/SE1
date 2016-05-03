@@ -1,9 +1,13 @@
 package project;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import Exceptions_Errors.WrongInputException;
+
+//set task start/task end hvorfor getProject(0) og ikke getProject(task.projectID)
 
 public class Task {
 	public String name;
@@ -18,22 +22,25 @@ public class Task {
 		this.projectID = project.ID;
 	}
 
-	public boolean inPast() throws WrongInputException {
+	protected boolean inPast() throws WrongInputException {
 		if (end == null)
 			throw new WrongInputException("Week doesn't excist");
-		return end.isBefore(getCurrentWeek());
+		return end.isBefore(Util.getCurrentWeek());
 	}
 
-	private CalWeek getCurrentWeek() {
-		Calendar calendar = new GregorianCalendar();
-		int year = calendar.get(Calendar.YEAR);
-		int week = calendar.get(Calendar.WEEK_OF_YEAR);
-
-		return new CalWeek(year, week);
+	protected List<String> getAvailableEmployees (Employee mainEmployee,Database database) throws WrongInputException {	
+		Project project=database.getProject(projectID);
+		if (!project.isProjectLeader(mainEmployee)) throw new WrongInputException("You are not the project leader for the project of the task");
+		
+		if (start==null)throw new WrongInputException("Task doesn't have a start date");
+		
+		if (end==null)throw new WrongInputException("Task doesn't have an end date");
+		
+		return database.getAvailableEmployees(this.start,this.end);
 	}
 
-	public void setTaskStart(CalWeek start, Employee employee, Database database) throws WrongInputException {
-		CalWeek currentWeek = getCurrentWeek();
+	protected boolean setStart(CalWeek start, Employee employee, Database database) throws WrongInputException {
+		CalWeek currentWeek = Util.getCurrentWeek();
 		Project project1 = database.getProject(0);
 		if (!project1.isProjectLeader(employee)) {
 			throw new WrongInputException("You are not projectleader of this project");
@@ -57,11 +64,11 @@ public class Task {
 			}
 		}
 		this.start = start;
-		
+		return true;
 	}
 	
-	public void setTaskEnd(CalWeek End, Employee employee, Database database) throws WrongInputException {
-		CalWeek currentWeek = getCurrentWeek();
+	protected boolean setEnd(CalWeek End, Employee employee, Database database) throws WrongInputException {
+		CalWeek currentWeek = Util.getCurrentWeek();
 		Project project = database.getProject(0);
 		if (!project.isProjectLeader(employee)){
 			throw new WrongInputException("You are not the projectleader of this project");
@@ -85,6 +92,13 @@ public class Task {
 			}
 		}
 		this.end = End;
+		return true;
 	}
 
+	protected boolean setTimeBudget (double timeBudget){
+		if (timeBudget<0) return false;
+		this.timeBudget=timeBudget;
+		return true;
+	}
+	
 }
