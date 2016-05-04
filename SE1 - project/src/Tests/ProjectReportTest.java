@@ -33,10 +33,10 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	
 	@Test
 	public void projectReportTestMain () {
-		Project project=sysApp.projects.get(1);
+		Project project=database.projects.get(1);
 		assertNotNull(project);
 		
-		Employee employee=sysApp.employees.get(0);
+		Employee employee=database.employees.get(0);
 		assertTrue(project.isProjectLeader(employee));
 		
 		List<String> projectReport=null;
@@ -62,7 +62,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 		Project project=null;
 		assertNull(project);
 		
-		Employee employee=sysApp.employees.get(0);
+		Employee employee=database.employees.get(0);
 		
 		List<String> projectReport=null;
 		
@@ -85,10 +85,10 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	
 	@Test
 	public void projectReportTestAlt2() {
-		Project project=sysApp.projects.get(1);
+		Project project=database.projects.get(1);
 		assertNotNull(project);
 		
-		Employee employee=sysApp.employees.get(1);
+		Employee employee=database.employees.get(1);
 		assertFalse(project.isProjectLeader(employee));
 		
 		List<String> projectReport=null;
@@ -112,7 +112,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	
 	@Test
 	public void projectReportTestAlt3() {
-		Project project=sysApp.projects.get(1);
+		Project project=database.projects.get(1);
 		assertNotNull(project);
 		
 		Task testTask=new Task (project,"testTask");
@@ -125,9 +125,9 @@ public class ProjectReportTest extends SampleDataSetupTest {
 			Assert.fail();
 		}
 		
-		sysApp.addTask(testTask);
+		database.addTask(testTask);
 		
-		Employee employee=sysApp.employees.get(0);
+		Employee employee=database.employees.get(0);
 		assertTrue(project.isProjectLeader(employee));
 		
 		List<String> projectReport=null;

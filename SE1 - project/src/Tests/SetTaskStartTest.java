@@ -20,9 +20,9 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskStartMain(){
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		assertNotNull(calWeek1.week);
 		assertNotNull(calWeek1.year);
@@ -43,9 +43,9 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskAlt1(){
-		Employee employee=super.sysApp.employees.get(1);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(1);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		assertFalse(project.isProjectLeader(employee));
 		try {
@@ -63,9 +63,9 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskStartAlt2a(){
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		CalWeek wrongWeek1 = new CalWeek(2015,32);
 		
@@ -93,9 +93,9 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskStartAlt2b(){
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		project.start = calWeek1;
 		CalWeek wrongWeek1 = new CalWeek(2016,42);
@@ -123,9 +123,9 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskStartAlt2c(){
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		project.end = calWeek1;
 		CalWeek wrongWeek1 = new CalWeek(2016,44);
@@ -155,9 +155,9 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskStartAlt2d(){
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		CalWeek wrongWeek1 = new CalWeek(2016,44);
 		

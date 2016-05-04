@@ -32,8 +32,8 @@ public class createTaskTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateTaskMain () {
-			Employee employee=super.sysApp.employees.get(0);
-			Project project=super.sysApp.projects.get(1);
+			Employee employee=super.database.employees.get(0);
+			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
@@ -43,11 +43,11 @@ public class createTaskTest extends SampleDataSetupTest {
 			int taskID=-1;
 			
 			try {
-				taskID = employee.createTask(sysApp, project, taskName);
+				taskID = employee.createTask(database, project, taskName);
 			} catch (WrongInputException e) {
 			}
 			
-			Task task=super.sysApp.getTask(taskID);
+			Task task=super.database.getTask(taskID);
 			
 			assertNotNull(task);
 			assertEquals(task.name,taskName);
@@ -65,8 +65,8 @@ public class createTaskTest extends SampleDataSetupTest {
 		@Test
 		public void testCreateTaskAlt1(){
 			int numberOfTasks = sysApp.getNumberOfTasks();
-			Employee employee=super.sysApp.employees.get(1);
-			Project project=super.sysApp.projects.get(1);
+			Employee employee=super.database.employees.get(1);
+			Project project=super.database.projects.get(1);
 			
 			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(employee));
@@ -74,7 +74,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(sysApp, project, taskName);
+				employee.createTask(database, project, taskName);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -93,13 +93,13 @@ public class createTaskTest extends SampleDataSetupTest {
 		@Test
 		public void testCreateTaskAlt2(){
 			int numberOfTasks = sysApp.getNumberOfTasks();
-			Employee employee=super.sysApp.employees.get(0);
+			Employee employee=super.database.employees.get(0);
 			Project project=null;
 			
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(sysApp, project, taskName);
+				employee.createTask(database, project, taskName);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) {
 			}
@@ -120,24 +120,24 @@ public class createTaskTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateTaskAlt3(){
-			Employee employee=super.sysApp.employees.get(0);
-			Project project=super.sysApp.projects.get(1);
+			Employee employee=super.database.employees.get(0);
+			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
 			//add task to secondary project
-			super.sysApp.addTask(new Task(super.sysApp.projects.get(1),"Task"));
+			super.database.addTask(new Task(super.database.projects.get(1),"Task"));
 			
 			//adding task with same name^ to main project
 			try {
-				employee.createTask(sysApp, project, "Task");
+				employee.createTask(database, project, "Task");
 			} catch (WrongInputException e) {
 				Assert.fail();
 			}
 			
 			//adding task with new name to main project
 			try {
-				employee.createTask(sysApp, project, "Task01");
+				employee.createTask(database, project, "Task01");
 			} catch (WrongInputException e) {
 				Assert.fail();
 			}
@@ -145,7 +145,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			//adding task with already excisting name in project
 			int numberOfTasks = sysApp.getNumberOfTasks();
 			try {
-				employee.createTask(sysApp, project, "Task01");
+				employee.createTask(database, project, "Task01");
 				Assert.fail();
 			} catch (WrongInputException e) {
 			}

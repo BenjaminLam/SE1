@@ -52,7 +52,7 @@ public class Database {
 		return false;
 	}
 	
-	protected Assignment getAssignment (int taskID, int employeeID) {
+	public Assignment getAssignment (int taskID, int employeeID) {
 		for (Assignment assignment:assignments) {
 			if (assignment.taskID==taskID && employeeID==assignment.employeeID) return assignment;
 		}
@@ -113,7 +113,7 @@ public class Database {
 		return null;
 	}
 	
-	protected Project getProject (int projectID) {
+	public Project getProject (int projectID) {
 		for (Project project:projects){
 			if (project.ID==projectID) return project;
 		}

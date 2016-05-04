@@ -142,7 +142,7 @@ public class SysApp extends Observable {
 	
 	
 	
-n	public MyMap getTodaysBookings() {
+	public MyMap getTodaysBookings() {
 		return currentEmp.dayBookings(Util.getCurrentDay(),database);
 	}
 	

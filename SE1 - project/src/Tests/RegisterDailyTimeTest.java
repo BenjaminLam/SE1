@@ -32,18 +32,18 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 	
 	@Test
 	public void registerDailyTimeMain(){
-		Employee employee = sysApp.employees.get(9);
+		Employee employee = database.employees.get(9);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
-		int lastAss=sysApp.assignments.size()-1;
+		int lastAss=database.assignments.size()-1;
 		assertNotNull(employee);
 		assertNotNull(day);
 		
 		List<WorkPeriod> todaysBookings = (List<WorkPeriod>) sysApp.employeesTodaysBookings(employee, day).mainInfo;
 		for(WorkPeriod booking: todaysBookings){
-			sysApp.copyBookingToTimeRegister(booking,sysApp.assignments.get(lastAss));	
+			sysApp.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));	
 		}
 		
-		assertEquals(todaysBookings.size(),sysApp.assignments.get(lastAss).timeRegisters.size());
+		assertEquals(todaysBookings.size(),database.assignments.get(lastAss).timeRegisters.size());
 	}
 	
 	
@@ -53,7 +53,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 	
 	@Test
 	public void registerDailyTimeAlt1() throws WrongInputException{
-		Employee employee = sysApp.employees.get(sysApp.assignments.size()-1);
+		Employee employee = database.employees.get(database.assignments.size()-1);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
 		sysApp.currentEmp=employee;
 		
@@ -70,7 +70,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 	 */
 	@Test
 	public void registerDailyTimeDayNotToday(){
-		Employee employee = sysApp.employees.get(sysApp.assignments.size()-1);
+		Employee employee = database.employees.get(database.assignments.size()-1);
 		CalDay day = new CalDay(new CalWeek(2050,2),5);
 		sysApp.currentEmp=employee;
 		

@@ -22,7 +22,7 @@ public class Task {
 		this.projectID = project.ID;
 	}
 
-	protected boolean inPast() throws WrongInputException {
+	public boolean inPast() throws WrongInputException {
 		if (end == null)
 			throw new WrongInputException("Week doesn't excist");
 		return end.isBefore(Util.getCurrentWeek());

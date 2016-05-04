@@ -21,9 +21,9 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	@Test
 	public void setTaskEndMain(){
 		//Initialises objects
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016, 20);
 		
 		assertTrue(project.isProjectLeader(employee));
@@ -44,9 +44,9 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskEndAlt1(){
-		Employee employee=super.sysApp.employees.get(1);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(1);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		
 		assertFalse(project.isProjectLeader(employee));
@@ -66,9 +66,9 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskEndAlt2a(){
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		CalWeek calWeek2 = new CalWeek(2016,32);
 		assertTrue(project.isProjectLeader(employee));
@@ -102,9 +102,9 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskEndAlt2b(){
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		CalWeek calWeek2 = new CalWeek(2016,44);
 		project.end = calWeek1;
@@ -136,9 +136,9 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	
 	@Test
 	public void setTaskEndAlt2c() {
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		CalWeek wrongWeek1 = new CalWeek(2015,32);
 		assertTrue(project.isProjectLeader(employee));
@@ -166,9 +166,9 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskEndAlt2d(){
-		Employee employee=super.sysApp.employees.get(0);
-		Project project=super.sysApp.projects.get(0);
-		Task task1 = sysApp.getTask(1);
+		Employee employee=super.database.employees.get(0);
+		Project project=super.database.projects.get(0);
+		Task task1 = database.getTask(1);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		CalWeek calWeek2 = new CalWeek(2016,42);
 		project.start = calWeek1;

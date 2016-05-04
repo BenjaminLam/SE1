@@ -123,7 +123,7 @@ public class Employee {
 		}
 		Project project=sysApp.getProject(task.projectID);
 		
-		if(!sysApp.currentEmpIsProjectLeaderFor(project)) {
+		if(!database.currentEmpIsProjectLeaderFor(project)) {
 			throw new WrongInputException("You are not the project leader of the selected project");
 		}
 		if (sysApp.assignmentExists(task.ID, employee.ID)) {

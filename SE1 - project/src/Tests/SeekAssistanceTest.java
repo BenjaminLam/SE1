@@ -32,8 +32,8 @@ public class SeekAssistanceTest extends SampleDataSetupTest{
 	
 	@Test
 	public void seekAssistanceTestMain() throws WrongInputException{
-		Employee employee=sysApp.employees.get(1);
-		Employee coWorker=sysApp.employees.get(2);
+		Employee employee=database.employees.get(1);
+		Employee coWorker=database.employees.get(2);
 		
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		WorkPeriod period = new WorkPeriod(day,13,15);
@@ -47,11 +47,11 @@ public class SeekAssistanceTest extends SampleDataSetupTest{
 		sysApp.createBookingForCoWorker(coWorker,1,period);
 		
 		//checks that the booking is created.
-		assertNotNull(sysApp.assignments.get(sysApp.assignments.size()-1));
+		assertNotNull(database.assignments.get(database.assignments.size()-1));
 		//checks that the taskID's are the same.
-		assertEquals(sysApp.assignments.get(sysApp.assignments.size()-1).taskID,sysApp.assignments.get(1).taskID);
+		assertEquals(database.assignments.get(database.assignments.size()-1).taskID,database.assignments.get(1).taskID);
 		//checks that the employeeID's are different, to make sure that it's not just a copy of the other assignment.
-		assertFalse(sysApp.assignments.get(sysApp.assignments.size()-1).employeeID==sysApp.assignments.get(1).employeeID);
+		assertFalse(database.assignments.get(database.assignments.size()-1).employeeID==database.assignments.get(1).employeeID);
 		
 	}
 	/*
@@ -86,13 +86,13 @@ public class SeekAssistanceTest extends SampleDataSetupTest{
 	 */
 	@Test
 	public void seekAssistanceTestAlt2() throws WrongInputException{
-		Employee employee=sysApp.employees.get(1);
-		Employee coWorker=sysApp.employees.get(2);
+		Employee employee=database.employees.get(1);
+		Employee coWorker=database.employees.get(2);
 		
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		WorkPeriod period = new WorkPeriod(day,13,15);
-		Assignment coWorkerAss = new Assignment(sysApp.getTask(1),coWorker);
-		sysApp.assignments.add(coWorkerAss);
+		Assignment coWorkerAss = new Assignment(database.getTask(1),coWorker);
+		database.assignments.add(coWorkerAss);
 		WorkPeriod newBooking = new WorkPeriod(day,13,15);
 		coWorkerAss.bookings.add(newBooking);
 		
