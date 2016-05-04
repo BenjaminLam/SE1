@@ -120,7 +120,7 @@ public class Database {
 		return null;
 	}
 	
-	protected boolean addTask(Task task){
+	public boolean addTask(Task task){
 		if (task==null) return false;
 		task.ID=tasks.size();
 		tasks.add(task);

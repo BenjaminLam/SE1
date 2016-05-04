@@ -20,6 +20,7 @@ public class SysApp extends Observable {
 	public Employee currentEmp;
 	public boolean isProjectLeader;
 	private Database database;
+	public Object projects;
 	
 	public SysApp () {
 		this.database=new Database();
