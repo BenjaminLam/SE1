@@ -33,12 +33,12 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			
 			assertTrue(project.isProjectLeader(employee));
 			
-			Task task1 = super.sysApp.getTask(2);
+			Task task1 = super.database.getTask(2);
 			
-			assertFalse(employee.isAssigned(database, task1, employee)); 
+			assertFalse(employee.isAssigned(sysApp, task1, employee)); 
 			
 			try {
-				assertTrue(employee.createAssignment(database, task1, employee)); 
+				assertTrue(employee.createAssignment(sysApp, task1, employee)); 
 			} catch (WrongInputException e) {
 			}
 			
@@ -71,7 +71,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			Task task1 = super.database.getTask(0);
 			
 			try {
-				employee.createAssignment(database, task1, employee);
+				employee.createAssignment(sysApp, task1, employee);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -98,10 +98,10 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			
 			Task task1 = super.database.getTask(0);
 			
-			assertTrue(employee.isAssigned(database, task1, employee));
+			assertTrue(employee.isAssigned(sysApp, task1, employee));
 			
 			try {
-				employee.createAssignment(database, task1, employee);
+				employee.createAssignment(sysApp, task1, employee);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -127,7 +127,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			task1=null;
 			
 			try {
-				employee.createAssignment(database, task1, employee);
+				employee.createAssignment(sysApp, task1, employee);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
@@ -151,7 +151,7 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			Task task1 = super.database.getTask(0);
 			
 			try {
-				employee.createAssignment(database, task1, employee);
+				employee.createAssignment(sysApp, task1, employee);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}

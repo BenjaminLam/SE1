@@ -106,7 +106,7 @@ public class Database {
 		return false;		
 	}
 	
-	protected Task getTask (int taskID) {
+	public Task getTask (int taskID) {
 		for (Task task:tasks) {
 			if (task.ID==taskID) return task;
 		}
