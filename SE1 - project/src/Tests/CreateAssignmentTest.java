@@ -28,23 +28,23 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentMain () {
 			int numberOfAssignments = sysApp.getNumberOfAssignments();
-			Employee employee=super.sysApp.employees.get(0);
-			Project project=super.sysApp.projects.get(1);
+			Employee employee=super.database.employees.get(0);
+			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
 			Task task1 = super.sysApp.getTask(2);
 			
-			assertFalse(employee.isAssigned(sysApp, task1, employee)); 
+			assertFalse(employee.isAssigned(database, task1, employee)); 
 			
 			try {
-				assertTrue(employee.createAssignment(sysApp, task1, employee)); 
+				assertTrue(employee.createAssignment(database, task1, employee)); 
 			} catch (WrongInputException e) {
 			}
 			
 			assertEquals(sysApp.getNumberOfAssignments(), numberOfAssignments); //Ved ikke om vi skal indfører et ID for dette?
 			
-			Assignment assignment = super.sysApp.assignments.get(numberOfAssignments+1);
+			Assignment assignment = super.database.assignments.get(numberOfAssignments+1);
 			
 			assertNotNull(assignment); 
 			assertEquals(assignment.taskID,task1);
@@ -62,16 +62,16 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentAlt1(){
 			int numberOfAssignments = sysApp.getNumberOfAssignments(); 
-			Employee employee=super.sysApp.employees.get(1);
-			Project project=super.sysApp.projects.get(1);
+			Employee employee=super.database.employees.get(1);
+			Project project=super.database.projects.get(1);
 			
 			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(employee));
 			
-			Task task1 = super.sysApp.getTask(0);
+			Task task1 = super.database.getTask(0);
 			
 			try {
-				employee.createAssignment(sysApp, task1, employee);
+				employee.createAssignment(database, task1, employee);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -91,17 +91,17 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentAlt2(){
 			int numberOfAssignments = sysApp.getNumberOfAssignments();
-			Employee employee=super.sysApp.employees.get(0);
-			Project project=super.sysApp.projects.get(1);
+			Employee employee=super.database.employees.get(0);
+			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
-			Task task1 = super.sysApp.getTask(0);
+			Task task1 = super.database.getTask(0);
 			
-			assertTrue(employee.isAssigned(sysApp, task1, employee));
+			assertTrue(employee.isAssigned(database, task1, employee));
 			
 			try {
-				employee.createAssignment(sysApp, task1, employee);
+				employee.createAssignment(database, task1, employee);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -121,13 +121,13 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 		@Test
 		public void testCreateAssignmentAlt3(){
 			int numberOfAssignments = sysApp.getNumberOfAssignments();
-			Employee employee=super.sysApp.employees.get(0);
+			Employee employee=super.database.employees.get(0);
 			
-			Task task1 = super.sysApp.getTask(0);
+			Task task1 = super.database.getTask(0);
 			task1=null;
 			
 			try {
-				employee.createAssignment(sysApp, task1, employee);
+				employee.createAssignment(database, task1, employee);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
@@ -148,10 +148,10 @@ public class CreateAssignmentTest extends SampleDataSetup0 {
 			int numberOfAssignments = sysApp.getNumberOfAssignments();
 			Employee employee=null;
 			
-			Task task1 = super.sysApp.getTask(0);
+			Task task1 = super.database.getTask(0);
 			
 			try {
-				employee.createAssignment(sysApp, task1, employee);
+				employee.createAssignment(database, task1, employee);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}

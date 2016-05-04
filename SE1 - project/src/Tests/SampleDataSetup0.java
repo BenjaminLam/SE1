@@ -7,6 +7,7 @@ import Exceptions_Errors.WrongInputException;
 import project.*;
 
 public class SampleDataSetup0 {
+	protected Database database=new Database();
 	protected SysApp sysApp=new SysApp();
 	/*
 	 * Creates 10 employees, Employee0..Employee9
