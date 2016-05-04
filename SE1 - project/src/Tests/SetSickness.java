@@ -11,7 +11,7 @@ import project.Employee;
  * @author Christian 
  */
 
-public class SetSickness extends SampleDataSetup0 {
+public class SetSickness extends SampleDataSetupTest {
 	
 	//Not Complete
 	

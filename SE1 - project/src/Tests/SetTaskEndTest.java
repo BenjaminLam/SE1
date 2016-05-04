@@ -16,7 +16,7 @@ import project.*;
 /** Tests for setTaskend
  * Author Asbjørn
  */
-public class SetTaskEndTest extends SampleDataSetup0 {
+public class SetTaskEndTest extends SampleDataSetupTest {
 	
 	@Test
 	public void setTaskEndMain(){

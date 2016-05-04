@@ -25,7 +25,7 @@ import project.*;
 
 //Test information is correct from returned list??
 
-public class getAvailableEmployeesTest extends SampleDataSetup0 {
+public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	/* 
 	 * main scenario:
 	 * 

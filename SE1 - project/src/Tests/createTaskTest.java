@@ -19,7 +19,7 @@ import project.*;
  * new alternative scenarions are marked with *
  */
 
-public class createTaskTest extends SampleDataSetup0 {
+public class createTaskTest extends SampleDataSetupTest {
 		/*
 		 *Main scenario: 
 		 * employee is project leader

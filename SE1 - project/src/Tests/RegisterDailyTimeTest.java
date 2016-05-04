@@ -21,7 +21,7 @@ import project.*;
  * Only one alternative scenario. For further info read rapport. 
  */
 
-public class RegisterDailyTimeTest extends SampleDataSetup0{
+public class RegisterDailyTimeTest extends SampleDataSetupTest{
 	/*
 	 * Main scenario: 
 	 * 

@@ -12,7 +12,7 @@ import project.*;
 /** Tests for setTaskStart
  * Author Asbjørn
  */
-public class SetTaskStartTest extends SampleDataSetup0 {
+public class SetTaskStartTest extends SampleDataSetupTest {
 	/*
 	 * Main scenario
 	 * Projectleader tries to change the start date of a task.

@@ -15,7 +15,7 @@ import org.junit.Test;
 import Exceptions_Errors.*;
 import project.*;
 
-public class AditionalTests extends SampleDataSetup0 {
+public class AditionalTests extends SampleDataSetupTest {
 	/*
 	 * excisting calWeek (start) is inputted
 	 * excisting calWeek (end) is inputted

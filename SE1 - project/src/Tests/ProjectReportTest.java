@@ -23,7 +23,7 @@ import project.*;
  * old alternative scenario 1 is now alternative scenario 2
  * added alternative scenario 3
  */
-public class ProjectReportTest extends SampleDataSetup0 {
+public class ProjectReportTest extends SampleDataSetupTest {
 	/*
 	 *Main scenario: 
 	 * project excists

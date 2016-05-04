@@ -14,7 +14,7 @@ import project.*;
  * @author Christian 
  */
 
-public class CreateAssignmentTest extends SampleDataSetup0 {
+public class CreateAssignmentTest extends SampleDataSetupTest {
 		/*
 		 *Main scenario: 
 		 * employee is project leader

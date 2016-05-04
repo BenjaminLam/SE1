@@ -21,7 +21,7 @@ import project.*;
  * All alternative scenarios is tested
  */
 
-public class SeekAssistanceTest extends SampleDataSetup0{
+public class SeekAssistanceTest extends SampleDataSetupTest{
 
 	/*
 	 * Main scenario: 
