@@ -121,7 +121,7 @@ public class Employee {
 		if (employee==null) { 
 			throw new WrongInputException("Employee doesn't exist");	
 		}
-		Project project=sysApp.getProject(task.projectID);
+		Project project=database.getProject(task.projectID);
 		
 		if(!database.currentEmpIsProjectLeaderFor(project)) {
 			throw new WrongInputException("You are not the project leader of the selected project");
@@ -133,7 +133,7 @@ public class Employee {
 	}
 		//checks if a employee is assigned a task.
 	public boolean isAssigned (SysApp sysApp, Task task, Employee employee){
-		if(sysApp.getAssignment(task.ID , employee)== null){
+		if(database.getAssignment(task.ID , employee)== null){
 			return false;
 		}
 		return true;

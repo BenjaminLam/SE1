@@ -190,7 +190,7 @@ public class SysApp extends Observable {
 	}
 	
 	public int getNumberOfAssignments(){
-		return assignments.size();
+		return database.assignments.size();
 	}
 	
 	
