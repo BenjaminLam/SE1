@@ -28,7 +28,7 @@ public class SysApp extends Observable {
 	
 	public Employee logIn(int EmpID) {
 		Employee employee=database.getEmployee(EmpID);
-		if (employee==null) return null;
+		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
 		
 		currentEmp=employee;
 		isProjectLeader=employee.isProjectLeader(database);
