@@ -96,7 +96,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateAssignmentAlt2() throws WrongInputException{
-			int numberOfAssignments = sysApp.getNumberOfAssignments();
+			int numberOfAssignments = database.getNumberOfAssignments();
 			Employee leader=super.database.employees.get(0);
 			Employee worker=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
