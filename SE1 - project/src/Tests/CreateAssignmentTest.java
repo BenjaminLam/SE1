@@ -6,7 +6,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Assert;
 import org.junit.Test;
-import Exceptions_Errors.*;
+
+import Exceptions_Enums.*;
 import project.*;
 
 /**

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import Exceptions_Errors.WrongInputException;
+import Exceptions_Enums.WrongInputException;
 
 //set task start/task end hvorfor getProject(0) og ikke getProject(task.projectID)
 

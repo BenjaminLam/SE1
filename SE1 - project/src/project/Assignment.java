@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import Exceptions_Errors.WrongInputException;
+import Exceptions_Enums.WrongInputException;
 
 public class Assignment {
 	public int taskID;

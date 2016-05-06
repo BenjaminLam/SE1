@@ -9,7 +9,7 @@ import java.util.Observer;
 import java.util.Scanner;
 
 import Enum_Interfaces_AbstractClasses.ScreenState;
-import Exceptions_Errors.WrongInputException;
+import Exceptions_Enums.WrongInputException;
 
 //implementere hele moletjavsen med error i stedet for exception
 //når en metode fejler udskriver den error og returnerer false, så bruger kan prøve igen
@@ -29,7 +29,6 @@ public class SysApp extends Observable {
 	public Employee logIn(int EmpID) {
 		Employee employee=database.getEmployee(EmpID);
 		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
-		
 		currentEmp=employee;
 		isProjectLeader=employee.isProjectLeader(database);
 		return employee;

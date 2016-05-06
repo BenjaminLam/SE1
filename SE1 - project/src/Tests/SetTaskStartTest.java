@@ -7,7 +7,7 @@ import org.junit.Assert;
 
 import org.junit.Test;
 
-import Exceptions_Errors.*;
+import Exceptions_Enums.*;
 import project.*;
 /** Tests for setTaskStart
  * Author Asbjørn

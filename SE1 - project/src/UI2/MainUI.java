@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import Exceptions_Errors.ScreenState;
-import Exceptions_Errors.WrongInputException;
+import Exceptions_Enums.ScreenState;
+import Exceptions_Enums.WrongInputException;
 
 
 //when user registers work for today print number of hours he has registered

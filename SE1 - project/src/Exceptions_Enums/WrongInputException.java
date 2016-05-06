@@ -1,4 +1,4 @@
-package Exceptions_Errors;
+package Exceptions_Enums;
 
 public class WrongInputException extends Exception {
 	

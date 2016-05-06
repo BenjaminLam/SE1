@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Observable;
 
-import Exceptions_Errors.*;
+import Exceptions_Enums.*;
 import project.*;
 
 //notify user fail of operation

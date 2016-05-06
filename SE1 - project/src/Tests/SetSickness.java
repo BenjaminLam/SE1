@@ -3,7 +3,7 @@ package Tests;
 import org.junit.Assert;
 import org.junit.Test;
 
-import Exceptions_Errors.WrongInputException;
+import Exceptions_Enums.WrongInputException;
 import project.Employee;
 
 /**

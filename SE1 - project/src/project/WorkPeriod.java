@@ -1,6 +1,6 @@
 package project;
 
-import Exceptions_Errors.WrongInputException;
+import Exceptions_Enums.WrongInputException;
 
 //where should private getCurrentDay be placed?
 
