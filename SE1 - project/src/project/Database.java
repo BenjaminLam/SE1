@@ -123,11 +123,11 @@ public class Database {
 		return null;
 	}
 	
-	public boolean addTask(Task task){
-		if (task==null) return false;
+	public Task addTask(Task task) throws WrongInputException{
+		if (task==null) throw new WrongInputException("Task doesn't exist, and therefore was not created or added");
 		task.ID=tasks.size();
 		tasks.add(task);
-		return true;
+		return task;
 	}
 	
 	protected boolean taskExists (Project project, String name) {
@@ -139,11 +139,12 @@ public class Database {
 		return false;
 	}
 	
-	protected boolean createAssignment(Employee employee, Task task) {
-		if (employee==null) return false;
-		if (task==null) return false;
-		assignments.add(new Assignment(task,employee));
-		return true;	
+	protected Assignment createAssignment(Employee employee, Task task) throws WrongInputException {
+		if (employee==null) throw new WrongInputException("Employee doesn't exist");
+		if (task==null) throw new WrongInputException("Task doesn't exist");
+		Assignment ass = new Assignment(task,employee);
+		assignments.add(ass);
+		return ass;	
 	}
 	
 	

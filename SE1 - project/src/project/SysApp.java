@@ -90,7 +90,7 @@ public class SysApp extends Observable {
 	
 	//ovenstående er brugt af UI Employee state
 	
-	public boolean createTask (int projectID, String name) throws WrongInputException {
+	public Task createTask (int projectID, String name) throws WrongInputException {
 		return currentEmp.createTask(database, projectID, name);
 	}
 	
@@ -100,7 +100,7 @@ public class SysApp extends Observable {
 		return task.setStart(new CalWeek (year,week), currentEmp, database);
 	}
 	
-	public boolean setTaskEnd (int taskID, int year, int week) throws WrongInputException {
+	public Task setTaskEnd (int taskID, int year, int week) throws WrongInputException {
 		Task task=database.getTask(taskID);
 		if (task==null){
 			throw new WrongInputException ("Wrong input: Task doesn't exist");
@@ -108,7 +108,7 @@ public class SysApp extends Observable {
 		return task.setEnd(new CalWeek (year,week), currentEmp, database);
 	}
 	
-	public List<String> employeesForTask(int taskID) {
+	public List<String> employeesForTask(int taskID) throws WrongInputException {
 		Task task=database.getTask(taskID);
 		if (task==null) throw new WrongInputException ("Task doesn't excist");
 		
@@ -121,13 +121,13 @@ public class SysApp extends Observable {
 		return availableEmps;
 	}
 
-	public boolean manTask (int taskID, int employeeID) {
+	public Assignment manTask (int taskID, int employeeID) throws WrongInputException {
 		return currentEmp.manTask(database, taskID,employeeID);
 	}
 	
-	public boolean setTaskBudgetTime(int taskID, double timeBudget) {
+	public Task setTaskBudgetTime(int taskID, double timeBudget) throws WrongInputException {
 		Task task=database.getTask(taskID);
-		if (task==null) return false;
+		if (task==null) throw new WrongInputException("Task doesn't exist.");
 		return currentEmp.setTaskBudgetTime(database, task,timeBudget);
 	}
 	

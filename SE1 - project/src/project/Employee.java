@@ -33,7 +33,7 @@ public class Employee {
 		return database.getEmployeeDayBookings (this,day);
 	}
 	
-	protected boolean createTask (Database database, int projectID, String name) throws WrongInputException {
+	protected Task createTask (Database database, int projectID, String name) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		
 		if (project==null) { 
@@ -45,22 +45,22 @@ public class Employee {
 		if (database.taskExists(project, name)) {
 			throw new WrongInputException("The task already exists in this project");
 		}
-		return database.addTask(new Task (project, name));
+		Task task= new Task (project, name);
+		return database.addTask(task);
 	}
 
-	protected boolean manTask(Database database, int taskID, int employeeID) {
+	protected Assignment manTask(Database database, int taskID, int employeeID) throws WrongInputException {
 		Task task=database.getTask(taskID);
-		if (task==null) return false;
-		Employee employee=database.getEmployee(employeeID);
-		if (employee==null) return false;
-		Project project=database.getProject(task.projectID);
-		if (project==null) return false;
-		if (!project.isProjectLeader(this)) return false;
+		if (task==null) throw new WrongInputException("No task exists with that taskID");
 		
-		if (database.getTask(taskID)==null) {
-			return database.createAssignment(employee,task);
-		}
-		return false;
+		Employee employee=database.getEmployee(employeeID);
+		if (employee==null) throw new WrongInputException("No employee exists with that employeeID");
+		
+		Project project=database.getProject(task.projectID);
+		if (project==null) throw new WrongInputException("No project exists corresponding to that task");
+		
+		if (!project.isProjectLeader(this)) throw new WrongInputException("You are not projectleader of this project, therefore you can not man this task.");
+		return database.createAssignment(employee,task);
 	}
 	
 	protected double hoursAvailable (Database database, CalWeek start, CalWeek end) {
@@ -69,10 +69,10 @@ public class Employee {
 		return availableTime-hoursBooked(database, start,end);
 	}
 	
-	protected boolean setTaskBudgetTime (Database database, Task task, double timeBudget) {
-		if (task==null) return false;
+	protected Task setTaskBudgetTime (Database database, Task task, double timeBudget) throws WrongInputException {
+		if (task==null) throw new WrongInputException("Task doesn't exist.");
 		Project project=database.getProject(task.projectID);
-		if(!project.isProjectLeader(this)) return false;
+		if(!project.isProjectLeader(this)) throw new WrongInputException("You are not projectleader for this project. You can therefore not create an assignment.");
 		return task.setTimeBudget(timeBudget);
 	}
 	

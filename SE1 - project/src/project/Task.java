@@ -67,7 +67,7 @@ public class Task {
 		return this;
 	}
 	
-	protected boolean setEnd(CalWeek End, Employee employee, Database database) throws WrongInputException {
+	protected Task setEnd(CalWeek End, Employee employee, Database database) throws WrongInputException {
 		CalWeek currentWeek = Util.getCurrentWeek();
 		Project project = database.getProject(0);
 		if (!project.isProjectLeader(employee)){
@@ -92,13 +92,13 @@ public class Task {
 			}
 		}
 		this.end = End;
-		return true;
+		return this;
 	}
 
-	protected boolean setTimeBudget (double timeBudget){
-		if (timeBudget<0) return false;
+	protected Task setTimeBudget (double timeBudget) throws WrongInputException{
+		if (timeBudget<0) throw new WrongInputException("Timebudget is less than zero. Thats not possible. Please enter a positive timebudget");
 		this.timeBudget=timeBudget;
-		return true;
+		return this;
 	}
 	
 }
