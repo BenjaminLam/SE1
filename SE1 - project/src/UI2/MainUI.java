@@ -126,7 +126,7 @@ public class MainUI implements Observer {
 	
 	}
 	private void displaySeekAssistance(){
-		out.println("2");
+		
 	}
 	private void displayRegisterVacation(){
 		out.println("3");

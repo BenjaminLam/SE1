@@ -210,8 +210,6 @@ public class SysApp extends Observable {
 	
 	
 	
-	
-	
 	//ikke tjekket endnu:
 	public void initDatabase () {
 		//creates the powerful secret project
