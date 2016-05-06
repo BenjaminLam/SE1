@@ -172,15 +172,11 @@ public class SysApp extends Observable {
 	
 	
 	
-
 	
 	
 	//Er under process:
 	
-	public Employee setSickness (Database database, int employeeID){
-=======
 	public Employee setSickness (Database database, int employeeID) throws WrongInputException{
->>>>>>> branch 'master' of https://github.com/BenjaminLam/SE1.git
 		Employee employee=database.getEmployee(employeeID);
 		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
 		return currentEmp.setSickness(database, employee);
