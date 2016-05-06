@@ -201,7 +201,7 @@ public class Database {
 		return (employees.size()==0);
 	}
 
-	protected List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
+	public List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
 		List<String> employeesAvailable= new ArrayList<String>();
 		
 		for (Employee employee:employees) {
