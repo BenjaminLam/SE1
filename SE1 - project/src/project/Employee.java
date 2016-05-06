@@ -33,7 +33,7 @@ public class Employee {
 		return database.getEmployeeDayBookings (this,day);
 	}
 	
-	protected Task createTask (Database database, int projectID, String name) throws WrongInputException {
+	public Task createTask (Database database, int projectID, String name) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		
 		if (project==null) { 
