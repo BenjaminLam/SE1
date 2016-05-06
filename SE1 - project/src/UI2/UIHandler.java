@@ -424,7 +424,7 @@ public class UIHandler extends Observable {
 	private void error (String errorMessage) {
 		if (errorMessage==null) terminate();
 		this.errorMessage=errorMessage;
-		failState();
+		errorState();
 	}
 	
 	private void wrongInputFormat () {
@@ -458,8 +458,8 @@ public class UIHandler extends Observable {
 		this.notifyObservers();
 	}
 
-	private void failState() {
-		setTempState(ScreenState.FailState);
+	private void errorState() {
+		setTempState(ScreenState.ErrorState);
 	}
 	
 }
