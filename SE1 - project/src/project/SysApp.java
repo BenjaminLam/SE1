@@ -133,6 +133,10 @@ public class SysApp extends Observable {
 	
 	//ovenstående er brugt af UI project leader state
 	
+	
+	
+	
+	
 	public Employee setSickness (Database database, int employeeID){
 		Employee employee=database.getEmployee(employeeID);
 		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
@@ -144,10 +148,6 @@ public class SysApp extends Observable {
 		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
 		return currentEmp.isSick(database, employee);
 	}
-	
-	
-	
-	
 	
 	public MyMap getTodaysBookings() {
 		return currentEmp.dayBookings(Util.getCurrentDay(),database);
