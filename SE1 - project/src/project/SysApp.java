@@ -41,7 +41,7 @@ public class SysApp extends Observable {
 	
 	public Project createProject (String name) throws WrongInputException {
 		if (database.projectExcists(name)) throw new WrongInputException("Aroject with that name already exists");
-		Project project=new Project(name, database.getNextProjectNumber());
+		Project project=new Project(name);
 		database.addProject(project);
 		changed(project);
 		return project;
@@ -92,6 +92,10 @@ public class SysApp extends Observable {
 		return project.projectLeader;
 	}
 	
+	public Employee createEmployee (String name) throws WrongInputException {
+		Employee employee=new Employee (name);
+		return database.addEmployee(employee);
+	}
 	
 	//nedenstående er brugt at UI project leader state
 	public Task createTask (int projectID, String name) throws WrongInputException {
