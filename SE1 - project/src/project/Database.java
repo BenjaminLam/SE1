@@ -22,7 +22,7 @@ public class Database {
 	
 	}
 	
-	protected Employee getEmployee (int ID) {
+	public Employee getEmployee (int ID) {
 		for (Employee employee:employees) {
 			if (employee.ID==ID) return employee;
 		}
