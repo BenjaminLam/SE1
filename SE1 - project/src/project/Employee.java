@@ -3,7 +3,7 @@ package project;
 import java.util.ArrayList;
 import java.util.List;
 
-import Exceptions_Errors.*;
+import Exceptions_Enums.*;
 
 public class Employee {
 	public String name;
