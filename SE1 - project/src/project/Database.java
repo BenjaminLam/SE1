@@ -49,8 +49,9 @@ public class Database {
 	
 	protected boolean addProject (Project project) throws WrongInputException {
 		if (project==null){
-			throw new WrongInputException("Project is null");
+			throw new WrongInputException("Project doesn't excist");
 		}
+		
 		this.projects.add(project);
 		return true;
 	}
@@ -181,6 +182,10 @@ public class Database {
 		return this.assignments.size();
 	}
 	
+	public int numberOfTasks() {
+		return this.tasks.size();
+	}
+	
 	
 	
 	
@@ -196,7 +201,7 @@ public class Database {
 		return (employees.size()==0);
 	}
 
-	protected List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
+	public List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
 		List<String> employeesAvailable= new ArrayList<String>();
 		
 		for (Employee employee:employees) {
