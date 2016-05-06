@@ -54,15 +54,12 @@ public class SysApp extends Observable {
 		return assignment.addTimeRegister(booking);
 	}
 
-	public boolean registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
+	public WorkPeriod registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
 		Assignment tempAss=database.getAssignment(taskID,currentEmp.ID);
-		if(tempAss==null)return false;
+		if(tempAss==null)throw new WrongInputException("You do not work on this assignemt");
 		WorkPeriod wp=new WorkPeriod(day,start,end);
-		if(tempAss.addTimeRegister(wp)) {
-			changed(wp);
-			return true;
-		}
-		return false;
+		changed(wp);
+		return tempAss.addTimeRegister(wp);
 	}
 
 	public boolean seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
@@ -75,21 +72,21 @@ public class SysApp extends Observable {
 		return false;
 	}
 	
-	public boolean setProjectLeader(int projectID, int employeeID) {
+	public Employee setProjectLeader(int projectID, int employeeID) throws WrongInputException {
 		Project project=database.getProject(projectID);
-		if (project==null) return false;
+		if (project==null) throw new WrongInputException("There exist no project with this projectID");
 		Employee emp=database.getEmployee(employeeID);
-		if (emp==null) return false;
+		if (emp==null) throw new WrongInputException("No employee exists with this employeeID");
 		
 		if (!(project.projectLeader==null)) {
 			if (!project.projectLeader.equals(currentEmp)) {
-				return false;
+				throw new WrongInputException("Project already has a project leader and it's not you.");
 			}
 		}
 		
 		project.projectLeader=emp;
 		changed(emp);
-		return true;
+		return project.projectLeader;
 	}
 	
 	//ovenstående er brugt af UI Employee state
