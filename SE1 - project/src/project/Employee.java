@@ -134,6 +134,11 @@ public class Employee {
 		return ;
 	}	
 	
-	public 
-	
+	public boolean isSick(Database database, Employee employee){
+		int taskID = 0;
+		int employeeID = employee.ID;
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
+		
+		return ;
+	}
 }
