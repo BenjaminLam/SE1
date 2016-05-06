@@ -18,7 +18,7 @@ public class Employee {
 		return database.isProjectLeader(this);
 	}
 	
-	protected boolean isAvailable(WorkPeriod period,Database database ){
+	public boolean isAvailable(WorkPeriod period,Database database ){
 		for(Object object: dayBookings(period.day, database).mainInfo){
 			WorkPeriod booking=(WorkPeriod) object;
 			
@@ -33,7 +33,7 @@ public class Employee {
 		return database.getEmployeeDayBookings (this,day);
 	}
 	
-	protected Task createTask (Database database, int projectID, String name) throws WrongInputException {
+	public Task createTask (Database database, int projectID, String name) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		
 		if (project==null) { 
@@ -114,25 +114,42 @@ public class Employee {
 		return false;
 	}
 
+<<<<<<< HEAD
 	//checks if a employee is assigned a task.
 	public boolean isAssigned (SysApp sysApp, Task task, Employee employee){
+=======
+		//checks if a employee is assigned a task.
+	public boolean isAssigned (Database database, Task task, Employee employee){
+>>>>>>> branch 'master' of https://github.com/BenjaminLam/SE1.git
 		if(database.getAssignment(task.ID , employee.ID)== null){
 			return false;
 		}
 		return true;
 	}
-	public Employee setSickness (Database database, int employeeID){
-		Assignment ass = database.assignments.get(0);
-		if(employeeID = database.asignments.employeeID){
-			if()
-				
-		}
-		
+	
+	public Employee setSickness (Database database, Employee employee) throws WrongInputException{
+		int taskID = 0;
+		int employeeID = employee.ID;
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
-		ass.addBooking(wp);
-		return ;
+		for (Assignment ass:database.assignments) {
+			if(employeeID == ass.employeeID && ass.taskID==taskID){
+				ass.addBooking(wp);
+			}
+		}
+		return employee;
 	}	
 	
-	
-	
+	public boolean isSick(Database database, Employee employee) throws WrongInputException{
+		int taskID = 0;
+		int employeeID = employee.ID;
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
+		for (Assignment ass:database.assignments) {
+			if(employeeID == ass.employeeID && ass.taskID==taskID){
+				if(ass.bookings.equals(wp)){
+					return true;
+					}
+				}
+			}
+		return false;
+	}
 }

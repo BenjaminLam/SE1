@@ -36,7 +36,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			
 			Task task1 = super.database.getTask(2);
 			
-			assertFalse(employee.isAssigned(sysApp, task1, employee)); 
+			assertFalse(employee.isAssigned(database, task1, employee)); 
 			
 			try {
 				sysApp.manTask(task1.ID, employee.ID); 
@@ -99,7 +99,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			
 			Task task1 = super.database.getTask(0);
 			
-			assertTrue(employee.isAssigned(sysApp, task1, employee));
+			assertTrue(employee.isAssigned(database, task1, employee));
 			
 			try {
 				sysApp.manTask(task1.ID, employee.ID);

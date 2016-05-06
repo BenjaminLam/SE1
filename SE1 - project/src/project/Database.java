@@ -71,6 +71,8 @@ public class Database {
 		return empAssignments;
 	}
 	
+	
+	
 	protected MyMap getEmployeeDayBookings(Employee employee, CalDay day) {
 		//init of lists
 		MyMap dayBookings= new MyMap();
@@ -147,6 +149,33 @@ public class Database {
 		return ass;	
 	}
 	
+	protected List<Task> projectGetTasks(Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		List<Task> projectTasks = new ArrayList<Task>();
+		
+		for (Task task:tasks) {
+			if (task.projectID==project.ID) projectTasks.add(task);
+		}
+		return projectTasks;
+	}
+	
+	protected List<Employee> getEmployeesForProject (Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		
+		List<Employee> projectEmployees = new ArrayList<Employee>();
+		
+		List<Task> projectTasks=projectGetTasks(project);
+				
+		for (Task task:projectTasks) {
+			for (Assignment assignment:assignments) {
+				if (assignment.taskID==task.ID) {
+					Employee tempEmp=getEmployee(assignment.employeeID);
+					if (!projectEmployees.contains(tempEmp)) projectEmployees.add(tempEmp);
+				}
+			}
+		}
+		return projectEmployees;
+	}
 	
 	
 	
@@ -173,7 +202,18 @@ public class Database {
 	}
 
 	
-	
+	//unused??
+		protected List<Assignment> getTaskAssignments(Task task){
+			List<Assignment> taskAss = new ArrayList<Assignment>();
+			
+			for(Assignment ass:assignments){
+				if(ass.taskID==task.ID){
+					taskAss.add(ass);
+				}
+			}
+			return taskAss;
+		}
+		
 	
 	
 }

@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.junit.Assert.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,20 +27,18 @@ public class SetSickness extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void testSetSicknessMain () {
-		Employee employee=super.sysApp.employees.get(0);
+	public void testSetSicknessMain () throws WrongInputException {
+		Employee employee=super.database.employees.get(0);
 		
-		boolean sickness=false;
-		
-		assertFalse(employee.isSick(employee)); //metoden skal laves
+		assertFalse(sysApp.isSick(database, employee.ID)); //metoden skal laves
 		
 		try { //tror heller ikke at dette er nødvendigt
-			sickness = employee.setSickness(employee /*er i tvivl om den skal bruges her*/); //skal laves
+			sysApp.setSickness(database, employee.ID); //skal laves
 		} catch (WrongInputException e) {
 		}
 		
 		//checks if employee is sick
-		assertTrue(employee.isSick(employee));
+		assertTrue(sysApp.isSick(database, employee.ID));
 	}
 	
 	/*
@@ -50,15 +50,13 @@ public class SetSickness extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void testCreateTaskAlt1(){
-Employee employee=super.database.employees.get(1);
+	public void testSetSicknessAlt1() throws WrongInputException{
+		Employee employee=super.database.employees.get(1);
 		
-		boolean sickness=true;
-		
-		assertTrue(employee.isSick(employee));
+		assertTrue(sysApp.isSick(database, employee.ID));
 		
 		try { 
-			sickness = employee.setSickness(employee);
+			sysApp.setSickness(database, employee.ID);
 			Assert.fail(); //checks if exception is thrown
 		} catch (WrongInputException e) { //exception skal laves
 		}

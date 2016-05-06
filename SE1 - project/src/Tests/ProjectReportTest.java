@@ -26,7 +26,7 @@ import project.*;
 public class ProjectReportTest extends SampleDataSetupTest {
 	/*
 	 *Main scenario: 
-	 * project excists
+	 * project exists
 	 * employee is project leader
 	 * employee creates report
 	 */
@@ -51,7 +51,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	
 	/*
 	 *Alternative scenario1: 
-	 * project doesn't excist
+	 * project doesn't exist
 	 * employee tries to create report
 	 * exception is thrown
 	 * report is not created
@@ -76,7 +76,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	
 	/*
 	 *Alternative scenario2: 
-	 * project excists
+	 * project exists
 	 * employee is not project leader
 	 * employee tries to create report
 	 * exception is thrown
@@ -103,15 +103,15 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	
 	/*
 	 *Alternative scenario3: 
-	 * project excists
+	 * project exists
 	 * employee is project leader
-	 * excisting task is created for project
+	 * Existing task is created for project
 	 * task is done
 	 * employee creates report
 	 */
 	
 	@Test
-	public void projectReportTestAlt3() {
+	public void projectReportTestAlt3() throws WrongInputException {
 		Project project=database.projects.get(1);
 		assertNotNull(project);
 		
