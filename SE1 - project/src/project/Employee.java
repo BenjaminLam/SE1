@@ -9,9 +9,8 @@ public class Employee {
 	public String name;
 	public int ID;
 	
-	public Employee (String name, int ID){
+	public Employee (String name){
 		this.name=name;
-		this.ID=ID;
 	}
 	
 	protected boolean isProjectLeader(Database database) {
