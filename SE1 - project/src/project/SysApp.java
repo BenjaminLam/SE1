@@ -99,7 +99,7 @@ public class SysApp extends Observable {
 	
 	public boolean setTaskStart (int taskID, int year, int week) throws WrongInputException {
 		Task task=database.getTask(taskID);
-		if (task==null) return false;
+		if (task==null) throw new WrongInputException("Task doesn't exist");
 		return task.setStart(new CalWeek (year,week), currentEmp, database);
 	}
 	
