@@ -121,21 +121,24 @@ public class Employee {
 		}
 		return true;
 	}
-	public Employee setSickness (Database database, int employeeID){
-		Assignment ass = database.assignments.get(0);
+	
+	public Employee setSickness (Database database, Employee employee){
+		int taskID = 0;
+		int employeeID = employee.ID;
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
 		for (Assignment ass:database.assignments) {
-			if(employeeID = ass.employeeID){
-				if(employee.assignment=){
-				
-				}
+			if(employeeID == ass.employeeID && ass.taskID==taskID){
+				ass.addBooking(wp);
 			}
 		}
-		
-		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
-		ass.addBooking(wp);
 		return ;
 	}	
 	
-	
-	
+	public boolean isSick(Database database, Employee employee){
+		int taskID = 0;
+		int employeeID = employee.ID;
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
+		
+		return ;
+	}
 }

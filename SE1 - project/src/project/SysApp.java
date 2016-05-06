@@ -134,7 +134,7 @@ public class SysApp extends Observable {
 	
 	
 	
-	public Employee setSickness (Database database, int employeeID){
+	public Employee setSickness (Database database, int employeeID) throws WrongInputException{
 		Employee employee=database.getEmployee(employeeID);
 		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
 		return currentEmp.setSickness(database, employee);

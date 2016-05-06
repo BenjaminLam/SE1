@@ -26,19 +26,17 @@ public class SetSickness extends SampleDataSetupTest {
 	
 	@Test
 	public void testSetSicknessMain () {
-		Employee employee=super.sysApp.employees.get(0);
+		Employee employee=super.database.employees.get(0);
 		
-		boolean sickness=false;
-		
-		assertFalse(employee.isSick(employee)); //metoden skal laves
+		assertFalse(sysApp.isSick(employee.ID)); //metoden skal laves
 		
 		try { //tror heller ikke at dette er nødvendigt
-			sickness = employee.setSickness(employee /*er i tvivl om den skal bruges her*/); //skal laves
+			sickness = sysApp.setSickness(employee.ID); //skal laves
 		} catch (WrongInputException e) {
 		}
 		
 		//checks if employee is sick
-		assertTrue(employee.isSick(employee));
+		assertTrue(employee.isSick(employee.ID));
 	}
 	
 	/*
@@ -51,14 +49,12 @@ public class SetSickness extends SampleDataSetupTest {
 	
 	@Test
 	public void testCreateTaskAlt1(){
-Employee employee=super.database.employees.get(1);
-		
-		boolean sickness=true;
+		Employee employee=super.database.employees.get(1);
 		
 		assertTrue(employee.isSick(employee));
 		
 		try { 
-			sickness = employee.setSickness(employee);
+			employee.setSickness(employee);
 			Assert.fail(); //checks if exception is thrown
 		} catch (WrongInputException e) { //exception skal laves
 		}
