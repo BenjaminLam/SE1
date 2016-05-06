@@ -227,8 +227,19 @@ public class UIHandler extends Observable {
 		}
 	}
 	private void createEmployee (String userInput) {
+		try {
+			sysApp.createEmployee(userInput);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void removeEmployee (String userInput) {
+		int empID=Integer.parseInt(userInput);
+		try {
+			sysApp.removeEmployee(empID);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	
 	//Editing any of theese methods should also lead to change

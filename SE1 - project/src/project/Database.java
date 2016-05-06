@@ -181,6 +181,10 @@ public class Database {
 		return employee;
 	}
 	
+	protected boolean removeEmployee (Employee employee) {
+		return employees.remove(employee);
+	}
+	
 	// methods only used for testing:
 	public int numberOfAssignments () {
 		return this.assignments.size();

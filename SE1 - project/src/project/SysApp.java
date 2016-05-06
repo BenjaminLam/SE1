@@ -97,6 +97,12 @@ public class SysApp extends Observable {
 		return database.addEmployee(employee);
 	}
 	
+	public Employee removeEmployee (int empID) throws WrongInputException {
+		Employee employee=database.getEmployee(empID);
+		if (!database.removeEmployee(employee)) throw new WrongInputException("Employee doesn't excist");
+		return employee;
+	}
+	
 	//nedenstående er brugt at UI project leader state
 	public Task createTask (int projectID, String name) throws WrongInputException {
 		return currentEmp.createTask(database, projectID, name);
@@ -207,15 +213,6 @@ public class SysApp extends Observable {
 	
 	
 	//ikke tjekket endnu:
-	
-	public boolean createEmployee (String name, int ID) throws WrongInputException {
-		if (employeeExcists(ID)) return false;
-		Employee emp=new Employee(name,ID);
-		employees.add(emp);
-		changed(emp);
-		return true;
-	}
-	
 	public void initDatabase () {
 		//creates the powerful secret project
 		Project project = new Project("project0",0);
