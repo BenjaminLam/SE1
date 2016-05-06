@@ -220,7 +220,11 @@ public class UIHandler extends Observable {
 		int projectID=Integer.parseInt(userInputs[0]);
 		int employeeID=Integer.parseInt(userInputs[1]);		
 		
-		sysApp.setProjectLeader(projectID, employeeID);
+		try {
+			sysApp.setProjectLeader(projectID, employeeID);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void createEmployee (String userInput) {
 	}
@@ -296,7 +300,11 @@ public class UIHandler extends Observable {
 		
 		int taskID=Integer.parseInt(userInputs[0]);
 		double timeBudget=Double.parseDouble(userInputs[1]);
-		sysApp.setTaskBudgetTime(taskID, timeBudget);
+		try {
+			sysApp.setTaskBudgetTime(taskID, timeBudget);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void setTaskStart(String userInput) {
 		String[] inputs=userInput.split(" ");
@@ -361,8 +369,12 @@ public class UIHandler extends Observable {
 	}
 	private void employeesForTask(String userInput) {
 		int taskID=Integer.parseInt(userInput);
-		this.listToProces=sysApp.employeesForTask(taskID);
-		setTempState(ScreenState.DisplayListState);
+		try {
+			this.listToProces=sysApp.employeesForTask(taskID);
+			setTempState(ScreenState.DisplayListState);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void renameTask (String userInput) {
 		
@@ -377,7 +389,11 @@ public class UIHandler extends Observable {
 		int taskID=Integer.parseInt(userInputs[0]);
 		int empID=Integer.parseInt(userInputs[1]);
 		
-		sysApp.manTask(taskID,empID);
+		try {
+			sysApp.manTask(taskID,empID);
+		} catch (WrongInputException e) {
+			error (e.getMessage());
+		}
 	}
 	private void createBooking (String userInput) {
 		
