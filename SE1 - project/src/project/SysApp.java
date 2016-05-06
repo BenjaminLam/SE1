@@ -40,7 +40,7 @@ public class SysApp extends Observable {
 	}
 	
 	public Project createProject (String name) throws WrongInputException {
-		if (database.projectExcists(name)) throw new WrongInputException("Aroject with that name already exists");
+		if (database.projectExcists(name)) throw new WrongInputException("A project with that name already exists");
 		Project project=new Project(name);
 		database.addProject(project);
 		changed(project);
