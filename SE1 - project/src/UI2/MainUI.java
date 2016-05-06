@@ -18,6 +18,7 @@ import Exceptions_Enums.WrongInputException;
 //when user registers work for today print number of hours he has registered
 //mangler at displayer rigtige meddelelser
 
+
 public class MainUI implements Observer {
 	private UIHandler uiHandler;
 	private PrintStream out;
@@ -126,7 +127,10 @@ public class MainUI implements Observer {
 	
 	}
 	private void displaySeekAssistance(){
-		
+		out.println("Seek assistance today: input task id, employee id for employee you want help from, start time and end time");
+		out.println("Seek assistance another day: input task id, employee id for employee you want help from, start time, end time, year, week and week day of the day you want help"); 
+		out.println("Please split input words by a space");
+	
 	}
 	private void displayRegisterVacation(){
 		out.println("3");
@@ -138,18 +142,17 @@ public class MainUI implements Observer {
 		out.println("5");
 	}
 	private void displayCreateNewProject(){
-		out.println("Please enter name of project and project id seperated by a space");
+		out.println("Please enter name of project to create");
 	}
 	private void displaySetProjectLeader(){
-		out.println("Please enter project ID to set project leader for");
-		out.println("Please enter employee ID for meployee to be project leader");
+		out.println("Please enter project ID of project and employee ID of employee");
 		out.println("Inputs should be seperated by a space");
 	}
 	private void displayCreateEmployee() {
-		
+		out.println("Please type name of new employee");
 	}
 	private void displayRemoveEmployee() {
-		
+		out.println("Please type employee ID of employee to be removed");
 	}
 	
 	private void handleProjectLeaderScreen() {
@@ -158,18 +161,19 @@ public class MainUI implements Observer {
 		case 1: displayRenameProject(); break;
 		case 2: displaySetProjectStart(); break;
 		case 3: displaySetProjectEnd (); break;
-		case 4: displayCreatetask (); break;
-		case 5: displaySetTaskBudgetTime(); break;
-		case 6: displaySetTaskStart (); break;
-		case 7: displaySetTaskEnd (); break;
-		case 8: displayDeleteTask (); break;
-		case 9: displayEmployeesForTask (); break;
-		case 10: displayRenameTask (); break;
-		case 11: displayManTask (); break;
-		case 12: displayCreateBooking(); break;		
-		case 13: displayRemoveBooking(); break;
-		case 14: displayProjectReport(); break;
-		case 15: displayTaskReport(); break;
+		case 4: displayRemoveProject(); break;
+		case 5: displayCreatetask (); break;
+		case 6: displaySetTaskBudgetTime(); break;
+		case 7: displaySetTaskStart (); break;
+		case 8: displaySetTaskEnd (); break;
+		case 9: displayRemoveTask (); break;
+		case 10: displayEmployeesForTask (); break;
+		case 11: displayRenameTask (); break;
+		case 12: displayManTask (); break;
+		case 13: displayCreateBooking(); break;		
+		case 14: displayRemoveBooking(); break;
+		case 15: displayProjectReport(); break;
+		case 16: displayTaskReport(); break;
 		}
 	}
 	private void displayProjectLeaderScreen () {
@@ -177,21 +181,22 @@ public class MainUI implements Observer {
 		out.println("   1) Rename project");
 		out.println("   2) Set project start");
 		out.println("   3) Set project end");
-		out.println("   4) Create task");
-        out.println("   5) Set task budget time");
-        out.println("   6) Set task start");
-        out.println("   7) Set task end");
-        out.println("   8) Delete task");
-        out.println("   9) Get available employees for task");
-        out.println("   10) Rename task");
-        out.println("   11) Man task");
-        out.println("   12) Create booking");
-        out.println("   13) Remove booking");
-        out.println("   14) Create project report");
-        out.println("   15) Create task report");
-        out.println("   16) back to employee screen");
+		out.println("   4) Remove project");
+		out.println("   5) Create task");
+        out.println("   6) Set task budget time");
+        out.println("   7) Set task start");
+        out.println("   8) Set task end");
+        out.println("   9) Delete task");
+        out.println("   10) Get available employees for task");
+        out.println("   11) Rename task");
+        out.println("   12) Man task");
+        out.println("   13) Create booking");
+        out.println("   14) Remove booking");
+        out.println("   15) Create project report");
+        out.println("   16) Create task report");
+        out.println("   17) back to employee screen");
         
-        out.println("Select a number (0-16): ");
+        out.println("Select a number (0-17): ");
 	}
 	private void displayRenameProject() {
 		
@@ -202,8 +207,11 @@ public class MainUI implements Observer {
 	private void displaySetProjectEnd() {
 		
 	}
-	private void displayCreatetask () {
+	private void displayRemoveProject() {
 		
+	}
+	private void displayCreatetask () {
+	
 	}
 	private void displaySetTaskBudgetTime () {
 		out.println("Please enter task ID and budget time seperated by a space");
@@ -215,7 +223,7 @@ public class MainUI implements Observer {
 	private void displaySetTaskEnd () {
 		out.println("Please enter task ID, task end year and task end week, each info seperated by a space");
 	}
-	private void displayDeleteTask() {
+	private void displayRemoveTask() {
 		
 	}
 	private void displayEmployeesForTask () {
@@ -239,7 +247,6 @@ public class MainUI implements Observer {
 	private void displayTaskReport() {
 		
 	}
-	
 	
 	private void handleList() {
 		List<Object> temp=(List<Object>) uiHandler.listToProces;

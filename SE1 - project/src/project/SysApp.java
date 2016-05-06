@@ -29,8 +29,6 @@ public class SysApp extends Observable {
 		this.database=database;
 	}
 	
-	
-	//nedenstående er brugt af UI Employee state
 	public Employee logIn(int EmpID) throws WrongInputException {
 		Employee employee=database.getEmployee(EmpID);
 		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
@@ -39,14 +37,8 @@ public class SysApp extends Observable {
 		return employee;
 	}
 	
-	public Project createProject (String name) throws WrongInputException {
-		if (database.projectExcists(name)) throw new WrongInputException("A project with that name already exists");
-		Project project=new Project(name);
-		database.addProject(project);
-		changed(project);
-		return project;
-	}
 	
+	//nedenstående er brugt af UI Employee state
 	public WorkPeriod copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment) throws WrongInputException{
 		if (booking==null){
 			throw new WrongInputException("The booking doesn't exist");
@@ -76,6 +68,26 @@ public class SysApp extends Observable {
 		return coWorker;
 	}
 	
+	public void registerSickness () {
+		
+	}
+	
+	public void registerVacation () {
+		
+	}
+	
+	public void registerCourse () {
+		
+	}
+	
+	public Project createProject (String name) throws WrongInputException {
+		if (database.projectExcists(name)) throw new WrongInputException("A project with that name already exists");
+		Project project=new Project(name);
+		database.addProject(project);
+		changed(project);
+		return project;
+	}
+	
 	public Employee setProjectLeader(int projectID, int employeeID) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException("There exist no project with this projectID");
@@ -98,14 +110,45 @@ public class SysApp extends Observable {
 	}
 	
 	public Employee removeEmployee (int empID) throws WrongInputException {
-		Employee employee=database.getEmployee(empID);
-		if (!database.removeEmployee(employee)) throw new WrongInputException("Employee doesn't excist");
-		return employee;
+		return database.removeEmployee(database.getEmployee(empID));
 	}
 	
+
 	//nedenstående er brugt at UI project leader state
+	
+	public Project renameProject(int projectID, String name) throws WrongInputException {
+		Project project=database.getProject(projectID);
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		if (database.projectExcists(name)) throw new WrongInputException ("Project with that name already excists");
+		project.name=name;
+		return project;
+	}
+	
+	public void setProjectStart() {
+		
+	}
+	
+	public void setProjectEnd() {
+		
+	}
+	
+	public Project removeProject (int projectID) throws WrongInputException {
+		try {
+			if (!database.getProject(projectID).projectLeader.equals(currentEmp)) throw new WrongInputException("You are not the project leader of this project");
+		} catch (NullPointerException e) {
+			throw new WrongInputException ("Project doesn't excist");
+		}
+		return database.removeProject(database.getProject(projectID));
+	}
+	
 	public Task createTask (int projectID, String name) throws WrongInputException {
 		return currentEmp.createTask(database, projectID, name);
+	}
+	
+	public Task setTaskBudgetTime(int taskID, double timeBudget) throws WrongInputException {
+		Task task=database.getTask(taskID);
+		if (task==null) throw new WrongInputException("Task doesn't exist.");
+		return currentEmp.setTaskBudgetTime(database, task,timeBudget);
 	}
 	
 	public Task setTaskStart (int taskID, int year, int week) throws WrongInputException {
@@ -122,6 +165,10 @@ public class SysApp extends Observable {
 		return task.setEnd(new CalWeek (year,week), currentEmp, database);
 	}
 	
+	public Task removeTask (int taskID) throws WrongInputException {
+		return database.removeTask(database.getTask(taskID));
+	}
+
 	public List<String> employeesForTask(int taskID) throws WrongInputException {
 		Task task=database.getTask(taskID);
 		if (task==null) throw new WrongInputException ("Task doesn't excist");
@@ -135,14 +182,20 @@ public class SysApp extends Observable {
 		return availableEmps;
 	}
 
+	public void renameTask() {
+		
+	}
+	
 	public Assignment manTask (int taskID, int employeeID) throws WrongInputException {
 		return currentEmp.manTask(database, taskID,employeeID);
 	}
 	
-	public Task setTaskBudgetTime(int taskID, double timeBudget) throws WrongInputException {
-		Task task=database.getTask(taskID);
-		if (task==null) throw new WrongInputException("Task doesn't exist.");
-		return currentEmp.setTaskBudgetTime(database, task,timeBudget);
+	public void createBooking () {
+		
+	}
+	
+	public void removeBooking () {
+		
 	}
 	
 	public List<String> createProjectReport(int projectID) throws WrongInputException {
@@ -183,6 +236,9 @@ public class SysApp extends Observable {
 		return projectReport;
 	}
 
+	public void createTaskReport() {
+		
+	}
 	
 	
 	

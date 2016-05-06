@@ -38,7 +38,7 @@ public class Database {
 	
 	protected boolean projectExcists (String name) {
 		for (Project project:projects) {
-			if (project.name==name) return true;
+			if (project.name.equals(name)) return true;
 		}
 		return false;
 	}
@@ -181,8 +181,31 @@ public class Database {
 		return employee;
 	}
 	
-	protected boolean removeEmployee (Employee employee) {
-		return employees.remove(employee);
+	protected Employee removeEmployee (Employee employee) throws WrongInputException {
+		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
+		if (!employees.remove(employee)){
+			throw new WrongInputException ("Employee doesn't excist");
+		}
+		resetEmployeeID();
+		return employee;
+	}
+	
+	protected Project removeProject (Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		if (!projects.remove(project)){
+			throw new WrongInputException ("Project doesn't excist");
+		}
+		resetProjectID();
+		return project;
+	}
+	
+	protected Task removeTask (Task task) throws WrongInputException {
+		if (task==null) throw new WrongInputException ("Task doesn't excist");
+		if (!tasks.remove(task)){
+			throw new WrongInputException ("Task doesn't excist");
+		}
+		resetTaskID();
+		return task;
 	}
 	
 	// methods only used for testing:
@@ -195,8 +218,24 @@ public class Database {
 	}
 	
 	
+	//reset functions
+	private void resetEmployeeID() {
+		for (int i=1;i<=employees.size();i++){
+			employees.get(i).ID=i;
+		}
+	}
 	
+	private void resetTaskID() {
+		for (int i=1;i<=tasks.size();i++){
+			tasks.get(i).ID=i;
+		}
+	}
 	
+	private void resetProjectID() {
+		for (int i=1;i<=projects.size();i++){
+			projects.get(i).ID=i;
+		}
+	}
 	
 	
 	

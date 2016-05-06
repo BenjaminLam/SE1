@@ -13,6 +13,7 @@ import project.*;
 //needs all register method in employee state
 //register work: display list with bookings
 //Notify user succes of operation
+//when creating new employee/project/task: paste the id of the project
 
 
 public class UIHandler extends Observable {
@@ -197,9 +198,9 @@ public class UIHandler extends Observable {
 			error(e.getMessage());
 		}
 	}
-	private void registerVacation(String userInput){
-	}
 	private void registerSickness(String userInput){
+	}
+	private void registerVacation(String userInput){
 	}
 	private void registerCourse (String userInput){
 	}
@@ -250,41 +251,61 @@ public class UIHandler extends Observable {
 		case 1: renameProject(userInput); break;
 		case 2: setProjectStart(userInput); break; 
 		case 3: setProjectEnd(userInput); break;
-		case 4: createTask(userInput); break;
-		case 5: setTaskBudgetTime(userInput); break; 
-		case 6: setTaskStart(userInput); break; 
-		case 7: setTaskEnd(userInput); break; 
-		case 8: deleteTask(userInput); break; 
-		case 9: employeesForTask(userInput); break; 
-		case 10: renameTask(userInput); break;
-		case 11: manTask (userInput); break; 
-		case 12: createBooking (userInput); break;
-		case 13: removeBooking (userInput); break;
-		case 14: createProjectReport (userInput); break;
-		case 15: createTaskReport (userInput); break;
+		case 4: removeProject (userInput); break;
+		case 5: createTask(userInput); break;
+		case 6: setTaskBudgetTime(userInput); break; 
+		case 7: setTaskStart(userInput); break; 
+		case 8: setTaskEnd(userInput); break; 
+		case 9: removeTask(userInput); break; 
+		case 10: employeesForTask(userInput); break; 
+		case 11: renameTask(userInput); break;
+		case 12: manTask (userInput); break; 
+		case 13: createBooking (userInput); break;
+		case 14: removeBooking (userInput); break;
+		case 15: createProjectReport (userInput); break;
+		case 16: createTaskReport (userInput); break;
 		default: terminate();
 		}
 	}
 	private void selectProjectLeaderSubstate(String userInput) {
 		int userChoice=(Integer.parseInt(userInput));
 		try {
-			if (userChoice<1 || userChoice >16) throw new WrongInputException ("Illegal choice");
+			if (userChoice<1 || userChoice >17) throw new WrongInputException ("Illegal choice");
 		}
 		catch (WrongInputException e) {
 			error(e.getMessage());
 			return;
 		}
-		if (userChoice==16) setStateResetSub(ScreenState.EmployeeState); 
+		if (userChoice==17) setStateResetSub(ScreenState.EmployeeState); 
 		else setSubState(userChoice);
 	}
 	private void renameProject (String userInput) {
-		
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=2) {
+			wrongInputFormat();
+			return;
+		}
+		int projectID=Integer.parseInt(userInputs[0]);
+		String name=userInputs[1];
+		try {
+			sysApp.renameProject(projectID,name);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void setProjectStart (String userInput) {
 		
 	}
 	private void setProjectEnd (String userInput) {
 		
+	}
+	private void removeProject (String userInput) {
+		int projectID=Integer.parseInt(userInput);
+		try {
+			sysApp.removeProject(projectID);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void createTask (String userInput) {
 		String[] userInputs=Util.splitString(userInput);
@@ -375,8 +396,13 @@ public class UIHandler extends Observable {
 			error(e.getMessage());
 		}
 	}
-	private void deleteTask(String userInput) {
-		
+	private void removeTask(String userInput) {
+		int taskID=Integer.parseInt(userInput);
+		try {
+			sysApp.removeTask(taskID);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void employeesForTask(String userInput) {
 		int taskID=Integer.parseInt(userInput);
