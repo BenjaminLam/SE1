@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.junit.Assert.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,18 +27,18 @@ public class SetSickness extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void testSetSicknessMain () {
+	public void testSetSicknessMain () throws WrongInputException {
 		Employee employee=super.database.employees.get(0);
 		
-		assertFalse(sysApp.isSick(employee.ID)); //metoden skal laves
+		assertFalse(sysApp.isSick(database, employee.ID)); //metoden skal laves
 		
 		try { //tror heller ikke at dette er nødvendigt
-			sickness = sysApp.setSickness(employee.ID); //skal laves
+			sysApp.setSickness(database, employee.ID); //skal laves
 		} catch (WrongInputException e) {
 		}
 		
 		//checks if employee is sick
-		assertTrue(employee.isSick(employee.ID));
+		assertTrue(sysApp.isSick(database, employee.ID));
 	}
 	
 	/*
@@ -48,13 +50,13 @@ public class SetSickness extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void testCreateTaskAlt1(){
+	public void testSetSicknessAlt1() throws WrongInputException{
 		Employee employee=super.database.employees.get(1);
 		
-		assertTrue(employee.isSick(employee));
+		assertTrue(sysApp.isSick(database, employee.ID));
 		
 		try { 
-			employee.setSickness(employee);
+			sysApp.setSickness(database, employee.ID);
 			Assert.fail(); //checks if exception is thrown
 		} catch (WrongInputException e) { //exception skal laves
 		}

@@ -122,7 +122,7 @@ public class Employee {
 		return true;
 	}
 	
-	public Employee setSickness (Database database, Employee employee){
+	public Employee setSickness (Database database, Employee employee) throws WrongInputException{
 		int taskID = 0;
 		int employeeID = employee.ID;
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
@@ -131,14 +131,20 @@ public class Employee {
 				ass.addBooking(wp);
 			}
 		}
-		return ;
+		return employee;
 	}	
 	
-	public boolean isSick(Database database, Employee employee){
+	public boolean isSick(Database database, Employee employee) throws WrongInputException{
 		int taskID = 0;
 		int employeeID = employee.ID;
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
-		
-		return ;
+		for (Assignment ass:database.assignments) {
+			if(employeeID == ass.employeeID && ass.taskID==taskID){
+				if(ass.bookings.equals(wp)){
+					return true;
+					}
+				}
+			}
+		return false;
 	}
 }
