@@ -6,8 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Observable;
 
-import Enum_Interfaces_AbstractClasses.ScreenState;
-import Exceptions_Errors.WrongInputException;
+import Exceptions_Errors.*;
 import project.*;
 
 //notify user fail of operation
@@ -15,29 +14,14 @@ import project.*;
 //register work: display list with bookings
 //Notify user succes of operation
 
-/*
- * Options in employee screen:
- * 		0) exit
-		1) Register work
-		2) Seek assistance
-		3) Register vacation
-		4) Register sickness
-		5) Register course
-		6) Create new project
-		7) Set project leader
-		8) Project leader page
-		9) create new employee
-		10) remove employee 
-		11) Log off");
- */
-
 
 public class UIHandler extends Observable {
 	public ScreenState currentState;
 	public int subState;
 	private SysApp sysApp;
-	List<? extends Object> listToProces; //list extracted from database, stored to process
-	MyMap mapToProcess; //MyMap extracted from database, stored to process
+	public List<? extends Object> listToProces; //list extracted from database, stored to process
+	public MyMap mapToProcess; //MyMap extracted from database, stored to process
+	public String errorMessage;
 	
 	public UIHandler (MainUI mainUI) {
 		this.subState=0;
@@ -45,110 +29,112 @@ public class UIHandler extends Observable {
 		sysApp.addObserver(mainUI);
 	}
 	
-	public void init() throws WrongInputException {
-		initDatabaseInfo();
+	public void init()  {
 		setState (ScreenState.LoginState);
 	}
-	//inits database with information. See SampleDataSetup0 in test package for description
-	//this info differs from SampleDataSetup0 by using current day for bookings in stead of static day
-	public void initDatabaseInfo() throws WrongInputException {
-//		CalDay day=systemApp.getCurrentDay();
-//		for (int i=0;i<10;i++){
-//			Employee tempEmp=new Employee("Employee" + i,i);
-//			systemApp.employees.add(tempEmp);
-//			Project tempPro=new Project ("Project" + i,i);
-//			systemApp.projects.add(tempPro);
-//			Task tempTask=new Task(tempPro,"Task" + i);
-//			systemApp.addTask(tempTask);
-//			Assignment tempAss=new Assignment(tempTask,tempEmp);
-//			systemApp.assignments.add(tempAss);
-//			WorkPeriod tempWP=new WorkPeriod (day,9,9+i);
-//			tempAss.bookings.add(tempWP);
-//			
-//			if(i==9) {
-//				for (int j=0;j<6;j++) {
-//					tempAss.bookings.add(new WorkPeriod(day,0,24));
-//				}
-//			}
-//		}
-//		systemApp.projects.get(0).projectLeader=systemApp.employees.get(0);
-//		
-	}
-	
-	public boolean handleInput(String userInput) throws WrongInputException {
+
+	public void handleInput(String userInput) {
 		switch (currentState){
 		case LoginState:
-			return logIn(userInput);
+			logIn(userInput); break;
 		case EmployeeState:
-			return handleEmployeeState(userInput);
+			handleEmployeeState(userInput); break;
 		case ProjectLeaderState:
-			return handleProjectLeaderState(userInput);
+			handleProjectLeaderState(userInput); break;
+		default:
+			terminate();
 		}
-		return false;
 	}
 	
-	private boolean logIn(String userInput) {
+	private void logIn(String userInput) {
 		int empID=Integer.parseInt(userInput);
-		Boolean succesfull=sysApp.logIn(empID);
-		if (succesfull)setState(ScreenState.EmployeeState);
-		return succesfull;
+		try {
+			sysApp.logIn(empID);
+			setState(ScreenState.EmployeeState);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	
 	//Editing any of theese methods should also lead to change
 	//in the options displayed in employee screen in ui
-	private boolean handleEmployeeState(String userInput) throws WrongInputException {
+	private void handleEmployeeState(String userInput)  {
 		switch (this.subState) {
-		case 0: return selectEmployeeSubstate(userInput); 	
-		case 1: return registerWork(userInput); 
-		case 2: return seekAssistance(userInput); 
-		case 3: return registerVacation(userInput); 
-		case 4: return registerSickness(userInput); 
-		case 5: return registerCourse (userInput); 
-		case 6: return createNewProject (userInput); 
-		case 7: return setProjectLeader (userInput); 
+		case 0:  selectEmployeeSubstate(userInput); break; 	
+		case 1:  registerWork(userInput); break; 
+		case 2:  seekAssistance(userInput); break; 
+		case 3:  registerVacation(userInput); break; 
+		case 4:  registerSickness(userInput); break; 
+		case 5:  registerCourse (userInput); break; 
+		case 6:  createProject (userInput); break; 
+		case 7:  setProjectLeader (userInput); break;
+		case 9:  createEmployee (userInput); break;
+		case 10:  removeEmployee (userInput); break;
+		default: terminate();
 		}
-		return false;
+		
 	}
-	private boolean selectEmployeeSubstate (String userInput) {
+	private void selectEmployeeSubstate (String userInput) {
 		int userChoice=Integer.parseInt(userInput);
-		if (userChoice<0 || userChoice>9) return false;
-		if (userChoice==8) {
-			if (!sysApp.isProjectLeader) return false;
-			setStateResetSub(ScreenState.ProjectLeaderState);
-			return true;
+		
+		try {
+			if (userChoice<0 || userChoice>11) {
+				throw new WrongInputException ("Illegal choice");
+			}
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+			return;
 		}
-		if (userChoice==9) logOff();
+		
+		if (userChoice==8) {
+			try {
+				if (!sysApp.isProjectLeader) throw new WrongInputException ("You are not a project leader");
+				setStateResetSub(ScreenState.ProjectLeaderState);
+				return;
+			} catch (WrongInputException e) {
+				error(e.getMessage());
+				return;
+			}
+		}
+		
+		if (userChoice==11) logOff();
 		setSubState(userChoice);
-		return true;
 	}
-	private boolean registerWork(String userInput) throws WrongInputException{
-		String[] userInputs=splitString(userInput);
+	private void registerWork(String userInput){
+		String[] userInputs=Util.splitString(userInput);
 		
 		Employee currentEmp=sysApp.currentEmp;
 		this.mapToProcess=sysApp.getTodaysBookings();
 	
 		switch (userInputs.length) {
-		case 1: return registerWorkExcisting(userInputs); 
-		case 3: return registerWorkToday(userInputs); 
-		case 6: return registerWorkAnyDay(userInputs); 
+		case 1: registerWorkExcisting(userInputs); break;
+		case 3: registerWorkToday(userInputs); break;
+		case 6: registerWorkAnyDay(userInputs); break;
+		default: wrongInputFormat(); break;
 		}
-		
-		return false;
 	}
-	private boolean registerWorkExcisting(String[] userinputs) {
+	private void registerWorkExcisting(String[] userinputs) {
 		int userChoice=Integer.parseInt(userinputs[0]);
 		Assignment assignment=(Assignment) mapToProcess.secondaryInfo.get(userChoice-1);
 		WorkPeriod wp=(WorkPeriod) mapToProcess.mainInfo.get(userChoice-1);
-		return sysApp.copyBookingToTimeRegister(wp, assignment);
+		try {
+			sysApp.copyBookingToTimeRegister(wp, assignment);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean registerWorkToday(String[] userInputs) throws WrongInputException {
+	private void registerWorkToday(String[] userInputs) {
 		int taskID=Integer.parseInt(userInputs[0]);
 		double start=Double.parseDouble(userInputs[1]);
 		double end=Double.parseDouble(userInputs[2]);
 		
-		return sysApp.registerWorkManually(taskID, start, end, Util.getCurrentDay());
+		try {
+			sysApp.registerWorkManually(taskID, start, end, Util.getCurrentDay());
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean registerWorkAnyDay(String[] userInputs) throws WrongInputException {
+	private void registerWorkAnyDay(String[] userInputs) {
 		int taskID=Integer.parseInt(userInputs[0]);
 		double start=Double.parseDouble(userInputs[1]);
 		double end=Double.parseDouble(userInputs[2]);
@@ -157,27 +143,40 @@ public class UIHandler extends Observable {
 		int weekDay = Integer.parseInt(userInputs[5]);
 		CalDay day=new CalDay(new CalWeek(year,week),weekDay);
 		
-		return sysApp.registerWorkManually(taskID, start, end, day);
+		try {
+			sysApp.registerWorkManually(taskID, start, end, day);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean seekAssistance(String userInput) throws WrongInputException{
-		String[] userInputs=splitString(userInput);
+	private void seekAssistance(String userInput) {
+		String[] userInputs=Util.splitString(userInput);
 		
 		switch(userInputs.length) {
-		case 4: return seekAssistanceToday(userInputs);
-		case 7: return seekAssistanceAnyDay(userInputs);
+		case 4: seekAssistanceToday(userInputs); break;
+		case 7: seekAssistanceAnyDay(userInputs); break;
+		default: wrongInputFormat(); break;
 		}
-		return false;
 	}
-	private boolean seekAssistanceToday (String[] userInputs) throws WrongInputException {
+	private void seekAssistanceToday (String[] userInputs) {
 		int taskID=Integer.parseInt(userInputs[0]);
 		int empID=Integer.parseInt(userInputs[1]);
 		double start=Double.parseDouble(userInputs[2]);
 		double end=Double.parseDouble(userInputs[3]);
-		WorkPeriod wp=new WorkPeriod(Util.getCurrentDay(),start,end);
+		WorkPeriod wp=null;
+		try {
+			wp = new WorkPeriod(Util.getCurrentDay(),start,end);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 		
-		return sysApp.seekAssistance(taskID, empID, wp);
+		try {
+			sysApp.seekAssistance(taskID, empID, wp);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean seekAssistanceAnyDay (String[] userInputs) throws WrongInputException {
+	private void seekAssistanceAnyDay (String[] userInputs)  {
 		int taskID=Integer.parseInt(userInputs[0]);
 		int empID=Integer.parseInt(userInputs[1]);
 		double start=Double.parseDouble(userInputs[2]);
@@ -185,131 +184,241 @@ public class UIHandler extends Observable {
 		int year=Integer.parseInt(userInputs[4]);
 		int week=Integer.parseInt(userInputs[5]);
 		int weekDay=Integer.parseInt(userInputs[6]);
-		WorkPeriod wp=new WorkPeriod(new CalDay(new CalWeek(year,week),weekDay),start,end);
+		WorkPeriod wp=null;
+		try {
+			wp = new WorkPeriod(new CalDay(new CalWeek(year,week),weekDay),start,end);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 		
-		return sysApp.seekAssistance(taskID, empID, wp);
+		try {
+			sysApp.seekAssistance(taskID, empID, wp);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean registerVacation(String userInput){
-		return false;
+	private void registerVacation(String userInput){
 	}
-	private boolean registerSickness(String userInput){
-		return false;
+	private void registerSickness(String userInput){
 	}
-	private boolean registerCourse (String userInput){
-		return false;
+	private void registerCourse (String userInput){
 	}
-	private boolean createNewProject(String userInput) throws WrongInputException{		
-		return sysApp.createProject(userInput);
+	private void createProject(String userInput){		
+		try {
+			sysApp.createProject(userInput);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean setProjectLeader(String userInput){
-		String[] userInputs=splitString(userInput);
-		if (userInputs.length!=2) return false;
+	private void setProjectLeader(String userInput){
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=2) {
+			wrongInputFormat();
+			return;
+		}
 
 		int projectID=Integer.parseInt(userInputs[0]);
 		int employeeID=Integer.parseInt(userInputs[1]);		
 		
-		return sysApp.setProjectLeader(projectID, employeeID);
+		sysApp.setProjectLeader(projectID, employeeID);
 	}
-
+	private void createEmployee (String userInput) {
+	}
+	private void removeEmployee (String userInput) {
+	}
+	
 	//Editing any of theese methods should also lead to change
 	//in the options displayed in project leader screen in ui
-	private boolean handleProjectLeaderState (String userInput) throws WrongInputException {
+	private void handleProjectLeaderState (String userInput) {
 		switch (this.subState) {
-		case 0: return selectProjectLeaderSubstate(userInput); 	
-		case 1: return createTask(userInput);
-		case 2: return setTaskBudgetTime(userInput); 
-		case 3: return setTaskStart(userInput); 
-		case 4: return setTaskEnd(userInput); 
-		case 5: return employeesForTask(userInput); 
-		case 6: return manTask (userInput); 
+		case 0: selectProjectLeaderSubstate(userInput); break; 	
+		case 1: renameProject(userInput); break;
+		case 2: setProjectStart(userInput); break; 
+		case 3: setProjectEnd(userInput); break;
+		case 4: createTask(userInput); break;
+		case 5: setTaskBudgetTime(userInput); break; 
+		case 6: setTaskStart(userInput); break; 
+		case 7: setTaskEnd(userInput); break; 
+		case 8: deleteTask(userInput); break; 
+		case 9: employeesForTask(userInput); break; 
+		case 10: renameTask(userInput); break;
+		case 11: manTask (userInput); break; 
+		case 12: createBooking (userInput); break;
+		case 13: removeBooking (userInput); break;
+		case 14: createProjectReport (userInput); break;
+		case 15: createTaskReport (userInput); break;
+		default: terminate();
 		}
-		return false;
 	}
-	private boolean selectProjectLeaderSubstate(String userInput) {
+	private void selectProjectLeaderSubstate(String userInput) {
 		int userChoice=(Integer.parseInt(userInput));
-		if (userChoice<1 || userChoice >7) return false;
-		if (userChoice==7) setStateResetSub(ScreenState.EmployeeState); 
+		try {
+			if (userChoice<1 || userChoice >16) throw new WrongInputException ("Illegal choice");
+		}
+		catch (WrongInputException e) {
+			error(e.getMessage());
+			return;
+		}
+		if (userChoice==16) setStateResetSub(ScreenState.EmployeeState); 
 		else setSubState(userChoice);
-		
-		return true;
+	}
+	private void renameProject (String userInput) {
 		
 	}
-	private boolean createTask (String userInput) throws WrongInputException{
-		String[] userInputs=splitString(userInput);
+	private void setProjectStart (String userInput) {
+		
+	}
+	private void setProjectEnd (String userInput) {
+		
+	}
+	private void createTask (String userInput) {
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=2) {
+			wrongInputFormat();
+			return;
+		}
+		
 		int projectID=Integer.parseInt(userInputs[0]);
 		String taskName=userInputs[1];
 		
-		return sysApp.createTask(projectID,taskName);
+		try {
+			sysApp.createTask(projectID,taskName);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean setTaskBudgetTime(String userInput) throws WrongInputException {
-		String[] userInputs=splitString(userInput);
+	private void setTaskBudgetTime(String userInput) {
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=2) {
+			wrongInputFormat();
+			return;
+		}
+		
 		int taskID=Integer.parseInt(userInputs[0]);
 		double timeBudget=Double.parseDouble(userInputs[1]);
-		return sysApp.setTaskBudgetTime(taskID, timeBudget);
+		sysApp.setTaskBudgetTime(taskID, timeBudget);
 	}
-	private boolean setTaskStart(String userInput) throws WrongInputException {
+	private void setTaskStart(String userInput) {
 		String[] inputs=userInput.split(" ");
 		
 		switch (inputs.length) {
-		case 2: return setTaskStartThisYear(inputs);
-		case 3: return setTaskStartAnyYear(inputs);
+		case 2: setTaskStartThisYear(inputs); break;
+		case 3: setTaskStartAnyYear(inputs); break;
+		default: wrongInputFormat(); break;
 		}
-		
-		return false;
 	}
-	private boolean setTaskStartThisYear(String[] inputs) throws WrongInputException{
+	private void setTaskStartThisYear(String[] inputs){
 		int taskID=Integer.parseInt(inputs[0]);
 		int week=Integer.parseInt(inputs[1]);
 		
-		return sysApp.setTaskStart(taskID, Util.getCurrentYear(), week);
+		try {
+			sysApp.setTaskStart(taskID, Util.getCurrentYear(), week);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean setTaskStartAnyYear (String[] inputs) throws WrongInputException {
+	private void setTaskStartAnyYear (String[] inputs) {
 		int taskID=Integer.parseInt(inputs[0]);
 		int year=Integer.parseInt(inputs[1]);
 		int week=Integer.parseInt(inputs[2]);
-		return sysApp.setTaskStart(taskID,year,week);
+		try {
+			sysApp.setTaskStart(taskID,year,week);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean setTaskEnd(String userInput) throws WrongInputException {
+	private void setTaskEnd(String userInput) {
 		String[] inputs=userInput.split(" ");
 		
 		switch (inputs.length) {
-		case 2: return setTaskEndThisYear(inputs);
-		case 3: return setTaskEndAnyYear(inputs);
+		case 2: setTaskEndThisYear(inputs); break;
+		case 3: setTaskEndAnyYear(inputs); break;
+		default: wrongInputFormat(); break;
 		}
-		
-		return false;
 	}
-	private boolean setTaskEndThisYear(String[] inputs) throws WrongInputException{
+	private void setTaskEndThisYear(String[] inputs){
 		int taskID=Integer.parseInt(inputs[0]);
 		int week=Integer.parseInt(inputs[1]);
 		
-		return sysApp.setTaskEnd(taskID, Util.getCurrentYear(), week);
+		try {
+			sysApp.setTaskEnd(taskID, Util.getCurrentYear(), week);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean setTaskEndAnyYear (String[] inputs) throws WrongInputException {
+	private void setTaskEndAnyYear (String[] inputs) {
 		int taskID=Integer.parseInt(inputs[0]);
 		int year=Integer.parseInt(inputs[1]);
 		int week=Integer.parseInt(inputs[2]);
-		return sysApp.setTaskEnd(taskID,year,week);
+		try {
+			sysApp.setTaskEnd(taskID,year,week);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
-	private boolean employeesForTask(String userInput) throws WrongInputException {
-		int userChoice=Integer.parseInt(userInput);
-		this.listToProces=sysApp.employeesForTask(userChoice);
+	private void deleteTask(String userInput) {
+		
+	}
+	private void employeesForTask(String userInput) {
+		int taskID=Integer.parseInt(userInput);
+		this.listToProces=sysApp.employeesForTask(taskID);
 		setTempState(ScreenState.DisplayListState);
-		return true;
 	}
-	private boolean manTask(String userInput) {
-		String[] userInputs=splitString(userInput);
+	private void renameTask (String userInput) {
+		
+	}
+	private void manTask(String userInput) {
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=2) {
+			wrongInputFormat();
+			return;
+		}
+		
 		int taskID=Integer.parseInt(userInputs[0]);
 		int empID=Integer.parseInt(userInputs[1]);
 		
-		return sysApp.manTask(taskID,empID);
+		sysApp.manTask(taskID,empID);
 	}
+	private void createBooking (String userInput) {
+		
+	}
+	private void removeBooking (String userInput) {
+		
+	}
+	private void createProjectReport (String userInput) {
+		
+	}
+	private void createTaskReport (String userInput) {
+		
+	}
+
+	
+	
+	
 	
 	
 	private void logOff() {
 		setStateResetSub(ScreenState.LoginState);
 	}
 	
+	private void terminate() {
+		
+	}
+	
+	private void error (String errorMessage) {
+		if (errorMessage==null) terminate();
+		this.errorMessage=errorMessage;
+		failState();
+	}
+	
+	private void wrongInputFormat () {
+		error("The format of your input is not valid");
+	}
+	
+	
+	
+	
+	//methods changing state:
 	private void setTempState (ScreenState state) {
 		ScreenState normalState=this.currentState;
 		setState(state);
@@ -332,8 +441,9 @@ public class UIHandler extends Observable {
 		this.setChanged();
 		this.notifyObservers();
 	}
-	
-	private String[] splitString (String input) {
-		return input.split(" ");
+
+	private void failState() {
+		setTempState(ScreenState.FailState);
 	}
+	
 }

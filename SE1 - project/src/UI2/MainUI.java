@@ -11,45 +11,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import Enum_Interfaces_AbstractClasses.ScreenState;
+import Exceptions_Errors.ScreenState;
 import Exceptions_Errors.WrongInputException;
-
-
-/*
- * Options in employee screen:
- * 		0) exit
-		1) Register work
-		2) Seek assistance
-		3) Register vacation
-		4) Register sickness
-		5) Register course
-		6) Create new project
-		7) Set project leader
-		8) Project leader page
-		9) create new employee
-		10) remove employee 
-		11) Log off");
- */
-/*
- * Options in project leader screen:
-	 	0) exit
-	 	1) rename project
-	 	2) set project start
-	 	3) set project end
-	 	4) create task
-	 	5) Set task budget time
-	 	6) Set task start
-	 	7) Set task end
-	 	8) delete task
-	 	9) Get available employees for task
-	 	10) rename task
-	 	11) Man task
-	 	12) create booking
-	 	13) remove booking 
-	 	14) Create project report 
-	 	15)	Create task report
-	 	16) back to employee screen
- */
 
 
 //when user registers work for today print number of hours he has registered
@@ -130,7 +93,7 @@ public class MainUI implements Observer {
 		case 5:  displayRegisterCourse (); break;
 		case 6:  displayCreateNewProject (); break;
 		case 7:  displaySetProjectLeader (); break;
-		case 9:  displayCreateNewEmployee (); break;
+		case 9:  displayCreateEmployee (); break;
 		case 10: displayRemoveEmployee (); break; 
 		}
 	}
@@ -177,7 +140,7 @@ public class MainUI implements Observer {
 		out.println("Please enter employee ID for meployee to be project leader");
 		out.println("Inputs should be seperated by a space");
 	}
-	private void displayCreateNewEmployee() {
+	private void displayCreateEmployee() {
 		
 	}
 	private void displayRemoveEmployee() {

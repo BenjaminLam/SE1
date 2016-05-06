@@ -1,6 +1,7 @@
 package Tests;
 
 import org.junit.Before;
+
 import Exceptions_Errors.WrongInputException;
 import project.Assignment;
 import project.CalDay;

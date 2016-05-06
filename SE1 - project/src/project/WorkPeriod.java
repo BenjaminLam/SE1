@@ -11,11 +11,17 @@ public class WorkPeriod extends Object {
 	private double end;
 	
 	public WorkPeriod (CalDay day, double start, double end) throws WrongInputException {
-		if(start<0 || end<0){
-			throw new WrongInputException("Input cannot be less than zero.");
+		if (start<0) {
+			throw new WrongInputException("Start time cannot be less than zero.");
 		}
-		if(start>24 || end>24){
-			throw new WrongInputException("Input cannot be more than 24, due to the fact that there is only 24 hours each day.");
+		if (end<0) {
+			throw new WrongInputException("End time cannot be less than zero.");
+		}
+		if (start>24) {
+			throw new WrongInputException("Start cannot be more than 24, due to the fact that there is only 24 hours each day.");
+		}
+		if(end>24){
+			throw new WrongInputException("End cannot be more than 24, due to the fact that there is only 24 hours each day.");
 		}
 		this.day=day;
 		this.start=start;

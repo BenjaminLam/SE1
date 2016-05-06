@@ -40,4 +40,8 @@ public class Util {
 		if (tal1<tal2) return tal1;
 		return tal2;
 	}
+
+	public static String[] splitString (String input) {
+		return input.split(" ");
+	}
 }
