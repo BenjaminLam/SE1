@@ -71,8 +71,6 @@ public class Database {
 		return empAssignments;
 	}
 	
-	
-	
 	protected MyMap getEmployeeDayBookings(Employee employee, CalDay day) {
 		//init of lists
 		MyMap dayBookings= new MyMap();
@@ -178,6 +176,10 @@ public class Database {
 	}
 	
 	
+	// methods only used for testing:
+	public int numberOfAssignments () {
+		return this.assignments.size();
+	}
 	
 	
 	
@@ -186,12 +188,15 @@ public class Database {
 	
 	
 	
- 	public boolean noEmployeeExcists() {
-		if (employees.size()==0) return true;
-		return false;
+	
+	
+	
+	
+ 	protected boolean noEmployeeExcists() {
+		return (employees.size()==0);
 	}
 
-	public List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
+	protected List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
 		List<String> employeesAvailable= new ArrayList<String>();
 		
 		for (Employee employee:employees) {
@@ -203,7 +208,7 @@ public class Database {
 
 	
 	//unused??
-		protected List<Assignment> getTaskAssignments(Task task){
+	protected List<Assignment> getTaskAssignments(Task task){
 			List<Assignment> taskAss = new ArrayList<Assignment>();
 			
 			for(Assignment ass:assignments){
