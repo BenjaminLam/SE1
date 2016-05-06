@@ -26,6 +26,12 @@ public class SysApp extends Observable {
 		this.database=new Database();
 	}
 	
+	public SysApp(Database database) {
+		this.database=database;
+	}
+	
+	
+	//nedenstående er brugt af UI Employee state
 	public Employee logIn(int EmpID) throws WrongInputException {
 		Employee employee=database.getEmployee(EmpID);
 		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
@@ -87,8 +93,8 @@ public class SysApp extends Observable {
 		return project.projectLeader;
 	}
 	
-	//ovenstående er brugt af UI Employee state
 	
+	//nedenstående er brugt at UI project leader state
 	public Task createTask (int projectID, String name) throws WrongInputException {
 		return currentEmp.createTask(database, projectID, name);
 	}
@@ -168,7 +174,7 @@ public class SysApp extends Observable {
 		return projectReport;
 	}
 
-	//ovenstående er brugt af UI project leader state
+	
 	
 	
 	
@@ -191,12 +197,6 @@ public class SysApp extends Observable {
 	public MyMap getTodaysBookings() {
 		return currentEmp.dayBookings(Util.getCurrentDay(),database);
 	}
-	
-	
-	
-	
-	
-		
 	
 	
 	
@@ -228,29 +228,6 @@ public class SysApp extends Observable {
 		this.tasks.add(course);
 	}
 
-	
-
-	
-	
-	
-	
-	
-	
-	//lam process:
-	
-	
-	
-	
-
-	
-
-	
-
-	
-
-	
-
-	
 
 	public void changed(Object o) {
 		if (o==null) return;
@@ -258,6 +235,4 @@ public class SysApp extends Observable {
 		this.notifyObservers(o);
 	}
 
-	
-	
 }
