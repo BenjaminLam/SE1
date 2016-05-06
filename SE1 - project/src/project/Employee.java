@@ -3,7 +3,7 @@ package project;
 import java.util.ArrayList;
 import java.util.List;
 
-import Exceptions_Errors.*;
+import Exceptions_Enums.*;
 
 public class Employee {
 	public String name;
@@ -18,7 +18,7 @@ public class Employee {
 		return database.isProjectLeader(this);
 	}
 	
-	protected boolean isAvailable(WorkPeriod period,Database database ){
+	public boolean isAvailable(WorkPeriod period,Database database ){
 		for(Object object: dayBookings(period.day, database).mainInfo){
 			WorkPeriod booking=(WorkPeriod) object;
 			
@@ -115,7 +115,7 @@ public class Employee {
 	}
 
 		//checks if a employee is assigned a task.
-	public boolean isAssigned (SysApp sysApp, Task task, Employee employee){
+	public boolean isAssigned (Database database, Task task, Employee employee){
 		if(database.getAssignment(task.ID , employee.ID)== null){
 			return false;
 		}
@@ -123,9 +123,12 @@ public class Employee {
 	}
 	public Employee setSickness (Database database, int employeeID){
 		Assignment ass = database.assignments.get(0);
-		if(employeeID = database.asignments.employeeID){
-			if()
+		for (Assignment ass:database.assignments) {
+			if(employeeID = ass.employeeID){
+				if(employee.assignment=){
 				
+				}
+			}
 		}
 		
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
