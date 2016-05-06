@@ -116,7 +116,7 @@ public class Employee {
 
 		//checks if a employee is assigned a task.
 	public boolean isAssigned (SysApp sysApp, Task task, Employee employee){
-		if(database.getAssignment(task.ID , employee)== null){
+		if(database.getAssignment(task.ID , employee.ID)== null){
 			return false;
 		}
 		return true;

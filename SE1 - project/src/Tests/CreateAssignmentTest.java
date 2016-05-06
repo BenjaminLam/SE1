@@ -38,7 +38,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			assertFalse(employee.isAssigned(sysApp, task1, employee)); 
 			
 			try {
-				assertTrue(employee.createAssignment(sysApp, task1, employee)); 
+				sysApp.manTask(task1.ID, employee.ID); 
 			} catch (WrongInputException e) {
 			}
 			
@@ -71,7 +71,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			Task task1 = super.database.getTask(0);
 			
 			try {
-				employee.createAssignment(sysApp, task1, employee);
+				sysApp.manTask(task1.ID, employee.ID);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -101,7 +101,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			assertTrue(employee.isAssigned(sysApp, task1, employee));
 			
 			try {
-				employee.createAssignment(sysApp, task1, employee);
+				sysApp.manTask(task1.ID, employee.ID);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -127,7 +127,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			task1=null;
 			
 			try {
-				employee.createAssignment(sysApp, task1, employee);
+				sysApp.manTask(task1.ID, employee.ID);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
@@ -151,7 +151,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			Task task1 = super.database.getTask(0);
 			
 			try {
-				sysApp.manTask(sysApp, task1, employee);
+				sysApp.manTask(task1.ID, employee.ID);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
