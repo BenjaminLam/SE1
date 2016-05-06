@@ -134,6 +134,10 @@ public class SysApp extends Observable {
 	
 	
 	
+	
+	
+	//Er under process:
+	
 	public Employee setSickness (Database database, int employeeID){
 		Employee employee=database.getEmployee(employeeID);
 		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
@@ -150,10 +154,7 @@ public class SysApp extends Observable {
 		return currentEmp.dayBookings(Util.getCurrentDay(),database);
 	}
 	
-	//ovenstående er hjælpemetoder brugt af UI
 	
-	//ikke bare flyttes til database?
-	//used by seekAssistance
 	
 	
 	
@@ -166,8 +167,6 @@ public class SysApp extends Observable {
 	
 	//ikke tjekket endnu:
 	
-	
-	
 	public boolean createEmployee (String name, int ID) throws WrongInputException {
 		if (employeeExcists(ID)) return false;
 		Employee emp=new Employee(name,ID);
@@ -175,44 +174,6 @@ public class SysApp extends Observable {
 		changed(emp);
 		return true;
 	}
-
-	
-	
-	
-	
-	
-	
-	private boolean employeeExcists(int ID) {
-		if (getEmployee(ID)==null) return false;
-		return true;
-	}
-	
-	
-	
-	public int getNumberOfTasks() {
-		return tasks.size();
-	}
-	
-	public int getNumberOfAssignments(){
-		return database.assignments.size();
-	}
-	
-	
-	
-	public boolean assignmentExists(int taskID, int employeeID){
-		for(Assignment assignment: assignments){
-			if(taskID==assignment.taskID && employeeID==assignment.employeeID){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	
-	
-	
-		
-	
 	
 	public void initDatabase () {
 		//creates the powerful secret project
@@ -230,28 +191,14 @@ public class SysApp extends Observable {
 	}
 
 	
-	
-// unused?	
-//	public void createBooking(CalDay day, double start, double end,Assignment assignment) throws WrongInputException{
-//		WorkPeriod newBooking = new WorkPeriod(day,start,end);
-//		assignment.bookings.add(newBooking);
-//	}
-	
-	
-	//not handling null input
-	
-	
-	public boolean addAssignment(Assignment assignment){
-		if(assignment==null){
-			return false;
-		}
-		assignments.add(assignment);
-		return true;
-	}
+
 	
 	
 	
 	
+	
+	
+	//lam process:
 	
 	public List<Employee> projectEmployees (Project project) throws WrongInputException {
 		if (project==null) throw new WrongInputException ("Project doesn't excist");
@@ -381,11 +328,6 @@ public class SysApp extends Observable {
 		this.notifyObservers(o);
 	}
 
-	
-	//hjælpemetoder
-	
-	
-	
 	
 	
 }
