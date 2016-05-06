@@ -44,7 +44,7 @@ public class Assignment {
 		return false;
 	}
 
-	protected List<WorkPeriod> getDayBookings(CalDay day) {
+	public List<WorkPeriod> getDayBookings(CalDay day) {
 		List<WorkPeriod> todaysBookings=new ArrayList<WorkPeriod>();
 		for (WorkPeriod wp:bookings) {
 			if (wp.isDay(day)) todaysBookings.add(wp);

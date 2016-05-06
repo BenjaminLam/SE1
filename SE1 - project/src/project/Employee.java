@@ -29,7 +29,7 @@ public class Employee {
 		return true;
 	}
 	
-	protected MyMap dayBookings(CalDay day, Database database){
+	public MyMap dayBookings(CalDay day, Database database){
 		return database.getEmployeeDayBookings (this,day);
 	}
 	
@@ -121,17 +121,6 @@ public class Employee {
 		}
 		return true;
 	}
-	
-	public Employee setSickness (Database database, int employeeID){
-		Assignment ass = database.assignments.get(0);
-		ass.addBooking(new WorkPeriod(9,16))
-		
-		return ;
-	}
-	
-	
-	
-	
 	
 	
 	
