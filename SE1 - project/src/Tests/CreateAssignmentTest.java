@@ -27,19 +27,22 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		 */
 		
 		@Test
-		public void testCreateAssignmentMain () {
+		public void testCreateAssignmentMain () throws WrongInputException {
 			int numberOfAssignments = sysApp.getNumberOfAssignments();
-			Employee employee=super.database.employees.get(0);
+			Employee leader=super.database.employees.get(0);
+			Employee worker=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
 			
-			assertTrue(project.isProjectLeader(employee));
+			sysApp.logIn(leader.ID);
+			
+			assertTrue(project.isProjectLeader(leader));
 			
 			Task task1 = super.database.getTask(2);
 			
-			assertFalse(employee.isAssigned(database, task1, employee)); 
+			assertFalse(leader.isAssigned(database, task1, worker)); 
 			
 			try {
-				sysApp.manTask(task1.ID, employee.ID); 
+				sysApp.manTask(task1.ID, worker.ID); 
 			} catch (WrongInputException e) {
 			}
 			
@@ -49,7 +52,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			
 			assertNotNull(assignment); 
 			assertEquals(assignment.taskID,task1);
-			assertEquals(assignment.employeeID,employee.ID); 
+			assertEquals(assignment.employeeID,worker.ID); 
 		}
 		
 		/*
@@ -61,18 +64,20 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		 */
 		
 		@Test
-		public void testCreateAssignmentAlt1(){
+		public void testCreateAssignmentAlt1() throws WrongInputException{
 			int numberOfAssignments = sysApp.getNumberOfAssignments(); 
-			Employee employee=super.database.employees.get(1);
+			Employee worker=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
 			
+			sysApp.logIn(worker.ID);
+			
 			//checks employee is not project leader
-			assertFalse(project.isProjectLeader(employee));
+			assertFalse(project.isProjectLeader(worker));
 			
 			Task task1 = super.database.getTask(0);
 			
 			try {
-				sysApp.manTask(task1.ID, employee.ID);
+				sysApp.manTask(task1.ID, worker.ID);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -90,19 +95,22 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		 */
 		
 		@Test
-		public void testCreateAssignmentAlt2(){
+		public void testCreateAssignmentAlt2() throws WrongInputException{
 			int numberOfAssignments = sysApp.getNumberOfAssignments();
-			Employee employee=super.database.employees.get(0);
+			Employee leader=super.database.employees.get(0);
+			Employee worker=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
 			
-			assertTrue(project.isProjectLeader(employee));
+			sysApp.logIn(leader.ID);
+			
+			assertTrue(project.isProjectLeader(leader));
 			
 			Task task1 = super.database.getTask(0);
 			
-			assertTrue(employee.isAssigned(database, task1, employee));
+			assertTrue(leader.isAssigned(database, task1, worker));
 			
 			try {
-				sysApp.manTask(task1.ID, employee.ID);
+				sysApp.manTask(task1.ID, worker.ID);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -120,15 +128,18 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		 */
 		
 		@Test
-		public void testCreateAssignmentAlt3(){
+		public void testCreateAssignmentAlt3() throws WrongInputException{
 			int numberOfAssignments = sysApp.getNumberOfAssignments();
-			Employee employee=super.database.employees.get(0);
+			Employee leader=super.database.employees.get(0);
+			Employee worker=super.database.employees.get(1);
+			
+			sysApp.logIn(leader.ID);
 			
 			Task task1 = super.database.getTask(0);
 			task1=null;
 			
 			try {
-				sysApp.manTask(task1.ID, employee.ID);
+				sysApp.manTask(task1.ID, worker.ID);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
@@ -139,7 +150,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		
 		/*
 		 *Alternative scenario4: 
-		 * employee tries to create assignment for non excisting employee (null)
+		 * employee tries to create assignment for non existing employee (null)
 		 * method throws exception
 		 * no task has been added
 		 */

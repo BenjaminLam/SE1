@@ -17,8 +17,8 @@ import project.*;
 
 public class AditionalTests extends SampleDataSetupTest {
 	/*
-	 * excisting calWeek (start) is inputted
-	 * excisting calWeek (end) is inputted
+	 * Existing calWeek (start) is inputed
+	 * Existing calWeek (end) is inputed
 	 * method returns number of hours the person is booked in the interval
 	 */
 	
