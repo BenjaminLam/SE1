@@ -13,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import Exceptions_Enums.*;
+
 import project.*;
 
 /**
@@ -61,7 +62,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		assertNotNull(employee);
 		assertNotNull(day);
 		
-		//This should be false since employee 9 not works on task 0. (see sampledatasetup)
+		//This should be n since employee 9 not works on task 0. (see sampledatasetup)
 		assertNull(sysApp.registerWorkManually(0, 9, 11, day));
 		
 	}
@@ -78,7 +79,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		assertNotNull(employee);
 		assertNotNull(day);
 
-		assertEquals(sysApp.employeesTodaysBookings(employee,day).mainInfo.size(),0);
+		assertEquals(employee.dayBookings(day, database).mainInfo.size(),0);
 	}
 	
 }
