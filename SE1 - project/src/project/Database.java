@@ -49,8 +49,9 @@ public class Database {
 	
 	protected boolean addProject (Project project) throws WrongInputException {
 		if (project==null){
-			throw new WrongInputException("Project is null");
+			throw new WrongInputException("Project doesn't excist");
 		}
+		
 		this.projects.add(project);
 		return true;
 	}
@@ -179,6 +180,10 @@ public class Database {
 	// methods only used for testing:
 	public int numberOfAssignments () {
 		return this.assignments.size();
+	}
+	
+	public int numberOfTasks() {
+		return this.tasks.size();
 	}
 	
 	
