@@ -26,13 +26,13 @@ public class SysApp extends Observable {
 		this.database=new Database();
 	}
 	
-	public boolean logIn(int EmpID) {
+	public Employee logIn(int EmpID) {
 		Employee employee=database.getEmployee(EmpID);
-		if (employee==null) return false;
+		if (employee==null) return null;
 		
 		currentEmp=employee;
 		isProjectLeader=employee.isProjectLeader(database);
-		return true;
+		return employee;
 	}
 	
 	public boolean createProject (String name) throws WrongInputException {
