@@ -38,10 +38,8 @@ public class SampleDataSetupTest {
 	public void setup() throws WrongInputException {
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		for (int i=0;i<10;i++){
-			Employee tempEmp=new Employee("Employee" + i);
-			database.employees.add(tempEmp);
-			Project tempPro=new Project ("Project" + i+1);
-			database.projects.add(tempPro);
+			Employee tempEmp=sysApp.createEmployee("Employee"+i);
+			Project tempPro=sysApp.createProject("project"+(i+1));
 			Task tempTask=new Task(tempPro,"Task" + i);
 			database.addTask(tempTask);
 			Assignment tempAss=new Assignment(tempTask,tempEmp);
