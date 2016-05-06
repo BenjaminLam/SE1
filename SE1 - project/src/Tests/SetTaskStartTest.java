@@ -19,7 +19,7 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 * The Start date is changed.
 	 */
 	@Test
-	public void setTaskStartMain(){
+	public void setTaskStartMain() throws WrongInputException{
 		Project project1 = database.getProject(1);
 		Employee employee = database.getEmployee(0);
 		sysApp.logIn(employee.ID);
@@ -47,7 +47,7 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 * Task start date is not changed
 	 */
 	@Test
-	public void setTaskAlt1(){
+	public void setTaskAlt1() throws WrongInputException{
 		Employee employee=database.getEmployee(1);
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
@@ -67,7 +67,7 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 * Method returns error
 	 */
 	@Test
-	public void setTaskStartAlt2a(){
+	public void setTaskStartAlt2a() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
@@ -94,7 +94,7 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 * Selected date is before start date of project
 	 */
 	@Test
-	public void setTaskStartAlt2b(){
+	public void setTaskStartAlt2b() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(0);
 		sysApp.logIn(employee.ID);
@@ -122,7 +122,7 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 * Selected date is after project end date
 	 */
 	@Test
-	public void setTaskStartAlt2c(){
+	public void setTaskStartAlt2c() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
@@ -154,7 +154,7 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 * The selected date is after task end date
 	 */
 	@Test
-	public void setTaskStartAlt2d(){
+	public void setTaskStartAlt2d() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(0);
 		sysApp.logIn(employee.ID);

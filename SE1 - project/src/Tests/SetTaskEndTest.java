@@ -19,7 +19,7 @@ import project.*;
 public class SetTaskEndTest extends SampleDataSetupTest {
 	
 	@Test
-	public void setTaskEndMain(){
+	public void setTaskEndMain() throws WrongInputException{
 		
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(1);
@@ -42,7 +42,7 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 * The task end date 
 	 */	
 	@Test
-	public void setTaskEndAlt1(){
+	public void setTaskEndAlt1() throws WrongInputException{
 		Employee employee=database.getEmployee(1);
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
@@ -63,7 +63,7 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void setTaskEndAlt2a(){
+	public void setTaskEndAlt2a() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
@@ -97,7 +97,7 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 * Task end date is not changed
 	 */
 	@Test
-	public void setTaskEndAlt2b(){
+	public void setTaskEndAlt2b() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
@@ -130,7 +130,7 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void setTaskEndAlt2c() {
+	public void setTaskEndAlt2c() throws WrongInputException {
 		Employee employee=super.database.employees.get(0);
 		Project project=super.database.projects.get(1);
 		sysApp.logIn(employee.ID);
@@ -160,7 +160,7 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	 * Task end date is not changed
 	 */
 	@Test
-	public void setTaskEndAlt2d(){
+	public void setTaskEndAlt2d() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);

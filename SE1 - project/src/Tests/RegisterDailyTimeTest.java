@@ -36,6 +36,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		Employee employee = database.employees.get(9);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
 		int lastAss=database.assignments.size()-1;
+		sysApp.logIn(employee.ID);
 		assertNotNull(employee);
 		assertNotNull(day);
 		
@@ -62,7 +63,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		assertNotNull(employee);
 		assertNotNull(day);
 		
-		//This should be n since employee 9 not works on task 0. (see sampledatasetup)
+		//This should be null since employee 9 not works on task 0. (see sampledatasetup)
 		assertNull(sysApp.registerWorkManually(0, 9, 11, day));
 		
 	}
