@@ -121,4 +121,19 @@ public class Employee {
 		}
 		return true;
 	}
+	
+	public Employee setSickness (Database database, int employeeID){
+		Assignment ass = database.assignments.get(0);
+		ass.addBooking(new WorkPeriod(9,16))
+		
+		return ;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
