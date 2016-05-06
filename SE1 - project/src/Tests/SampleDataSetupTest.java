@@ -15,7 +15,7 @@ import project.WorkPeriod;
 
 public class SampleDataSetupTest {
 	protected Database database=new Database();
-	protected SysApp sysApp=new SysApp();
+	protected SysApp sysApp=new SysApp(database);
 	/*
 	 * Creates 10 employees, Employee0..Employee9
 	 * Creates 10 projects, Project1..Project10

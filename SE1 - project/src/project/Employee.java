@@ -114,13 +114,9 @@ public class Employee {
 		return false;
 	}
 
-<<<<<<< HEAD
-	//checks if a employee is assigned a task.
-	public boolean isAssigned (SysApp sysApp, Task task, Employee employee){
-=======
+
 		//checks if a employee is assigned a task.
 	public boolean isAssigned (Database database, Task task, Employee employee){
->>>>>>> branch 'master' of https://github.com/BenjaminLam/SE1.git
 		if(database.getAssignment(task.ID , employee.ID)== null){
 			return false;
 		}
