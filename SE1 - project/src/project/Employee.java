@@ -122,7 +122,11 @@ public class Employee {
 		return true;
 	}
 	public Employee setSickness (Database database, int employeeID){
-		Assignment ass = ;
+		Assignment ass = database.assignments.get(0);
+		if(employeeID = database.asignments.employeeID){
+			if()
+				
+		}
 		
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
 		ass.addBooking(wp);
