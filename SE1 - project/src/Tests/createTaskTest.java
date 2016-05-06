@@ -61,7 +61,7 @@ public class createTaskTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateTaskAlt1(){
-			int numberOfTasks = sysApp.getNumberOfTasks();
+			int numberOfTasks = database.numberOfTasks();
 			Employee employee=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
 			
@@ -77,19 +77,19 @@ public class createTaskTest extends SampleDataSetupTest {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(sysApp.getNumberOfTasks(), numberOfTasks);
+			assertEquals(database.numberOfTasks(), numberOfTasks);
 		}
 		
 		/*
 		 *Alternative scenario2: 
-		 * employee tries to create task for non excisting project (null)
+		 * employee tries to create task for non existing project (null)
 		 * method throws exception
 		 * no task has been added
 		 */
 		
 		@Test
 		public void testCreateTaskAlt2(){
-			int numberOfTasks = sysApp.getNumberOfTasks();
+			int numberOfTasks = database.numberOfTasks();
 			Employee employee=super.database.employees.get(0);
 			Project project=null;
 			
@@ -102,7 +102,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(sysApp.getNumberOfTasks(), numberOfTasks);
+			assertEquals(database.numberOfTasks(), numberOfTasks);
 		}
 		
 		/*
@@ -139,8 +139,8 @@ public class createTaskTest extends SampleDataSetupTest {
 				Assert.fail();
 			}
 			
-			//adding task with already excisting name in project
-			int numberOfTasks = sysApp.getNumberOfTasks();
+			//adding task with already existing name in project
+			int numberOfTasks = database.numberOfTasks();
 			try {
 				employee.createTask(database, project.ID, "Task01");
 				Assert.fail();
@@ -148,7 +148,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(sysApp.getNumberOfTasks(), numberOfTasks);
+			assertEquals(database.numberOfTasks(), numberOfTasks);
 		}
 		
 		

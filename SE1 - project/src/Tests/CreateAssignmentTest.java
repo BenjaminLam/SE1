@@ -28,7 +28,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateAssignmentMain () throws WrongInputException {
-			int numberOfAssignments = sysApp.getNumberOfAssignments();
+			int numberOfAssignments = database.numberOfAssignments();
 			Employee leader=super.database.employees.get(0);
 			Employee worker=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
@@ -46,7 +46,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			} catch (WrongInputException e) {
 			}
 			
-			assertEquals(sysApp.getNumberOfAssignments(), numberOfAssignments); 
+			assertEquals(database.numberOfAssignments(), numberOfAssignments); 
 			
 			Assignment assignment = super.database.assignments.get(numberOfAssignments+1);
 			
@@ -65,7 +65,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateAssignmentAlt1() throws WrongInputException{
-			int numberOfAssignments = sysApp.getNumberOfAssignments(); 
+			int numberOfAssignments = database.numberOfAssignments(); 
 			Employee worker=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
 			
@@ -83,7 +83,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			}
 			
 			//checks createTask hasn't created assignment; 
-			assertEquals(sysApp.getNumberOfAssignments(), numberOfAssignments);
+			assertEquals(database.numberOfAssignments(), numberOfAssignments);
 		}
 
 		/*
@@ -96,7 +96,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateAssignmentAlt2() throws WrongInputException{
-			int numberOfAssignments = database.getNumberOfAssignments();
+			int numberOfAssignments = database.numberOfAssignments();
 			Employee leader=super.database.employees.get(0);
 			Employee worker=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
@@ -116,7 +116,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(sysApp.getNumberOfAssignments(), numberOfAssignments);
+			assertEquals(database.numberOfAssignments(), numberOfAssignments);
 			
 		}
 		
@@ -129,7 +129,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateAssignmentAlt3() throws WrongInputException{
-			int numberOfAssignments = sysApp.getNumberOfAssignments();
+			int numberOfAssignments = database.numberOfAssignments();
 			Employee leader=super.database.employees.get(0);
 			Employee worker=super.database.employees.get(1);
 			
@@ -145,7 +145,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(sysApp.getNumberOfAssignments(), numberOfAssignments);
+			assertEquals(database.numberOfAssignments(), numberOfAssignments);
 		}
 		
 		/*
@@ -155,9 +155,10 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		 * no task has been added
 		 */
 		
+		
 		@Test
 		public void testCreateAssignmentAlt4(){
-			int numberOfAssignments = sysApp.getNumberOfAssignments();
+			int numberOfAssignments = database.numberOfAssignments();
 			Employee employee=null;
 			
 			Task task1 = super.database.getTask(0);
@@ -169,7 +170,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			}
 			
 			//checks createTask hasn't created task; 
-			assertEquals(sysApp.getNumberOfAssignments(), numberOfAssignments);
+			assertEquals(database.numberOfAssignments(), numberOfAssignments);
 		}
 		
 		
