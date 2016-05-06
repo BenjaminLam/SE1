@@ -133,9 +133,17 @@ public class SysApp extends Observable {
 	
 	//ovenstående er brugt af UI project leader state
 	
-	
+	public Employee setSickness (int employeeID){
+		Employee employee=database.getEmployee(employeeID);
+		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
+		return currentEmp.setSickness(database, employee);
+	}
 
-	
+	public Employee isSick (int employeeID){
+		Employee employee=database.getEmployee(employeeID);
+		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
+		return currentEmp.isSick(database, employee);
+	}
 	
 	
 	
