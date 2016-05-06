@@ -9,30 +9,37 @@ public class CalWeek {
 		this.week=week;
 	}
 	
+	
 	public boolean isAfterOrWhile (CalWeek week) {
+		return (isAfter(week)||isWhile(week));
+	}
+	
+	public boolean isAfter (CalWeek week) {
 		if (week.year<this.year) return true;
 		if (week.year>this.year) return false;
-		if (week.week<=this.week) return true;
-		return false;
+		return (week.week<this.week);
+	}
+	
+	public boolean isWhile (CalWeek week) {
+		return (week.year==this.year && week.week==this.week); 
 	}
 	
 	public boolean isBeforeOrWhile (CalWeek week) {
+		return (isBefore(week)||isWhile(week));
+	}
+	
+	public boolean isBefore(CalWeek week) {
 		if (week.year>this.year) return true;
 		if (week.year<this.year) return false;
-		if (week.week>=this.week) return true;
-		return false;
+		return (week.week>this.week);
 	}
 	
 	public boolean equals(CalWeek other){
-		if(this.year==other.year && this.week==other.week){
-			return true;
-		}
-		return false;
+		return (this.year==other.year && this.week==other.week);
 	}
 	
 	public String toString() {
-		String temp=("Year: " + year + " Week " + week);
-		return temp;
+		return("Year: " + year + " Week " + week);
 	}
 	
 	public int weeksBetween(CalWeek other){
