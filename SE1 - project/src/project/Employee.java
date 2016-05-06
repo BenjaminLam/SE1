@@ -18,7 +18,7 @@ public class Employee {
 		return database.isProjectLeader(this);
 	}
 	
-	protected boolean isAvailable(WorkPeriod period,Database database ){
+	public boolean isAvailable(WorkPeriod period,Database database ){
 		for(Object object: dayBookings(period.day, database).mainInfo){
 			WorkPeriod booking=(WorkPeriod) object;
 			

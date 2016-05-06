@@ -62,7 +62,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		assertNotNull(employee);
 		assertNotNull(day);
 		
-		//This should be n since employee 9 not works on task 0. (see sampledatasetup)
+		//This should be null since employee 9 not works on task 0. (see sampledatasetup)
 		assertNull(sysApp.registerWorkManually(0, 9, 11, day));
 		
 	}
