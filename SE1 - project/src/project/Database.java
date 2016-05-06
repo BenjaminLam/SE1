@@ -47,12 +47,12 @@ public class Database {
 		return projects.size();
 	}
 	
-	protected boolean addProject (Project project) {
-		if (project!=null){
-			this.projects.add(project);
-			return true;
+	protected boolean addProject (Project project) throws WrongInputException {
+		if (project==null){
+			throw new WrongInputException("Project is null");
 		}
-		return false;
+		this.projects.add(project);
+		return true;
 	}
 	
 	public Assignment getAssignment (int taskID, int employeeID) {

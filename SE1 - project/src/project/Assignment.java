@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import Exceptions_Errors.WrongInputException;
+
 public class Assignment {
 	public int taskID;
 	public int employeeID;
@@ -26,12 +28,12 @@ public class Assignment {
 		return cumulativeValue;
 	}
 	
-	protected boolean addTimeRegister (WorkPeriod wp){
+	protected WorkPeriod addTimeRegister (WorkPeriod wp) throws WrongInputException{
 		if (wp!=null) {
-			timeRegisters.add(wp);
-			return true;
+			throw new WrongInputException("Booking doesn't exist");
 		}
-		return false;
+		timeRegisters.add(wp);
+		return timeRegisters.get(timeRegisters.size()-1);
 	}
 	
 	protected boolean addBooking (WorkPeriod wp){

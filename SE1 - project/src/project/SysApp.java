@@ -35,26 +35,27 @@ public class SysApp extends Observable {
 		return employee;
 	}
 	
-	public boolean createProject (String name) throws WrongInputException {
-		if (database.projectExcists(name)) return false;
+	public Project createProject (String name) throws WrongInputException {
+		if (!database.projectExcists(name)) throw new WrongInputException("No project exists with that name.");
 		Project project=new Project(name, database.getNextProjectNumber());
-		if (database.addProject(project)) {
-			changed(project);
-			return true;
-		}
-		return false;
+		database.addProject(project);
+		changed(project);
+		return project;
 	}
 	
-	public boolean copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment){
-		if (assignment.addTimeRegister(booking)){
-			changed(booking);
-			return true;
+	public WorkPeriod copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment) throws WrongInputException{
+		if (booking==null){
+			throw new WrongInputException("The booking doesn't exist");
 		}
-		return false;
+		if(assignment==null){
+			throw new WrongInputException("The assignment doesn't exist");
+		}
+		changed(booking);
+		return assignment.addTimeRegister(booking);
 	}
 
 	public boolean registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
-		Assignment tempAss=database.getAssignment(taskID,currentEmp);
+		Assignment tempAss=database.getAssignment(taskID,currentEmp.ID);
 		if(tempAss==null)return false;
 		WorkPeriod wp=new WorkPeriod(day,start,end);
 		if(tempAss.addTimeRegister(wp)) {
@@ -97,7 +98,7 @@ public class SysApp extends Observable {
 		return currentEmp.createTask(database, projectID, name);
 	}
 	
-	public boolean setTaskStart (int taskID, int year, int week) throws WrongInputException {
+	public Task setTaskStart (int taskID, int year, int week) throws WrongInputException {
 		Task task=database.getTask(taskID);
 		if (task==null) throw new WrongInputException("Task doesn't exist");
 		return task.setStart(new CalWeek (year,week), currentEmp, database);

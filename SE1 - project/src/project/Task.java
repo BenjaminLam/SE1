@@ -25,7 +25,7 @@ public class Task {
 	public boolean inPast() throws WrongInputException {
 		if (end == null)
 			throw new WrongInputException("Week doesn't excist");
-		return end.isBefore(Util.getCurrentWeek());
+		return end.isBeforeOrWhile(Util.getCurrentWeek());
 	}
 
 	protected List<String> getAvailableEmployees (Employee mainEmployee,Database database) throws WrongInputException {	
@@ -39,32 +39,32 @@ public class Task {
 		return database.getAvailableEmployees(this.start,this.end);
 	}
 
-	protected boolean setStart(CalWeek start, Employee employee, Database database) throws WrongInputException {
+	protected Task setStart(CalWeek start, Employee employee, Database database) throws WrongInputException {
 		CalWeek currentWeek = Util.getCurrentWeek();
 		Project project1 = database.getProject(0);
 		if (!project1.isProjectLeader(employee)) {
 			throw new WrongInputException("You are not projectleader of this project");
 		}
 		if (project1.start != null) {
-			if (start.isBefore(project1.start)) {
+			if (start.isBeforeOrWhile(project1.start)) {
 				throw new WrongInputException("Selected date is before start date of project");
 			}
 		}
-		if (start.isBefore(currentWeek)) {
+		if (start.isBeforeOrWhile(currentWeek)) {
 			throw new WrongInputException("Invalid date; Date is in the past");
 		}
 		if (this.end != null) {
-			if (start.isAfter(this.end)) {
+			if (start.isAfterOrWhile(this.end)) {
 				throw new WrongInputException("Invalid date; Date is after task end date");
 			}
 		}
 		if (project1.end != null){
-			if (start.isAfter(project1.end)){
+			if (start.isAfterOrWhile(project1.end)){
 				throw new WrongInputException("Invalid date; Date is after project end date");
 			}
 		}
 		this.start = start;
-		return true;
+		return this;
 	}
 	
 	protected boolean setEnd(CalWeek End, Employee employee, Database database) throws WrongInputException {
@@ -74,20 +74,20 @@ public class Task {
 			throw new WrongInputException("You are not the projectleader of this project");
 		}
 		if(project.start != null){
-			if(End.isBefore(project.start)){
+			if(End.isBeforeOrWhile(project.start)){
 				throw new WrongInputException("Invalid date; Date is before project start");
 			}
 		}
 		if(project.end != null){
-			if (End.isAfter(project.end)){
+			if (End.isAfterOrWhile(project.end)){
 				throw new WrongInputException("Invalid date; date is after project end");
 			}
 		}
-		if (End.isBefore(currentWeek)) {
+		if (End.isBeforeOrWhile(currentWeek)) {
 			throw new WrongInputException("Invalid date; Date is in the past");
 		}
 		if (this.start != null) {
-			if (End.isBefore(this.start)) {
+			if (End.isBeforeOrWhile(this.start)) {
 				throw new WrongInputException("Invalid date; Date is before start date");
 			}
 		}
