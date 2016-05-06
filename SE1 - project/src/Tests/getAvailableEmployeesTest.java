@@ -29,7 +29,7 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	/* 
 	 * main scenario:
 	 * 
-	 * Excisting Task is selected
+	 * Existing Task is selected
 	 * task has start and end
 	 * Employee is project leader for project task is connected to
 	 * System returns information
@@ -68,7 +68,7 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	/*  
 	 * alternative  scenario 1:
 	 * 
-	 * Excisting Task is selected
+	 * Existing Task is selected
 	 * Task has start and end
 	 * Employee is not project leader for project task is connected to
 	 * exception is thrown

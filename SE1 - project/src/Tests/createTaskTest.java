@@ -16,7 +16,7 @@ import project.*;
  * Tests for user case createTask
  * @author all group members 
  * added two more alternative scenarios under alternate test 3
- * new alternative scenarions are marked with *
+ * new alternative scenarios are marked with *
  */
 
 public class createTaskTest extends SampleDataSetupTest {
@@ -32,22 +32,19 @@ public class createTaskTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateTaskMain () {
-			Employee employee=super.database.employees.get(0);
-			Project project=super.database.projects.get(1);
+			Employee employee=database.getEmployee(0);
+			Project project=database.getProject(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
 			String taskName="Task01";
 			
-			
-			int taskID=-1;
-			
+			Task task = new Task(project, taskName);
 			try {
-				taskID = employee.createTask(database, project, taskName);
+				task = employee.createTask(database, project.ID, taskName);
 			} catch (WrongInputException e) {
 			}
 			
-			Task task=super.database.getTask(taskID);
 			
 			assertNotNull(task);
 			assertEquals(task.name,taskName);
@@ -74,7 +71,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(database, project, taskName);
+				employee.createTask(database, project.ID, taskName);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -99,7 +96,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(database, project, taskName);
+				employee.createTask(database, project.ID, taskName);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) {
 			}
@@ -111,7 +108,7 @@ public class createTaskTest extends SampleDataSetupTest {
 		/*
 		 *Alternative scenario3: 
 		 * employee is project leader
-		 * *employee creates task with name already excisting under another project
+		 * *employee creates task with name already existing under another project
 		 * *employee creates task with arbitrary name for project which already contains task 
 		 * employee tries to create task with name already existing under selected project
 		 * method throws exception
@@ -119,25 +116,25 @@ public class createTaskTest extends SampleDataSetupTest {
 		 */
 		
 		@Test
-		public void testCreateTaskAlt3(){
+		public void testCreateTaskAlt3() throws WrongInputException{
 			Employee employee=super.database.employees.get(0);
 			Project project=super.database.projects.get(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
 			//add task to secondary project
-			super.database.addTask(new Task(super.database.projects.get(1),"Task"));
+			database.addTask(new Task(super.database.projects.get(1),"Task"));
 			
 			//adding task with same name^ to main project
 			try {
-				employee.createTask(database, project, "Task");
+				employee.createTask(database, project.ID, "Task");
 			} catch (WrongInputException e) {
 				Assert.fail();
 			}
 			
 			//adding task with new name to main project
 			try {
-				employee.createTask(database, project, "Task01");
+				employee.createTask(database, project.ID, "Task01");
 			} catch (WrongInputException e) {
 				Assert.fail();
 			}
@@ -145,7 +142,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			//adding task with already excisting name in project
 			int numberOfTasks = sysApp.getNumberOfTasks();
 			try {
-				employee.createTask(database, project, "Task01");
+				employee.createTask(database, project.ID, "Task01");
 				Assert.fail();
 			} catch (WrongInputException e) {
 			}
