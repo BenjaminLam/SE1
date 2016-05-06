@@ -12,9 +12,8 @@ public class Project {
 	public CalWeek start;
 	public CalWeek end;
 	
-	public Project (String name, int ID) {
+	public Project (String name) {
 		this.name=name;
-		this.ID=ID;
 	}
 	
 	//not handling null value
