@@ -15,6 +15,23 @@ import project.*;
 //register work: display list with bookings
 //Notify user succes of operation
 
+/*
+ * Options in employee screen:
+ * 		0) exit
+		1) Register work
+		2) Seek assistance
+		3) Register vacation
+		4) Register sickness
+		5) Register course
+		6) Create new project
+		7) Set project leader
+		8) Project leader page
+		9) create new employee
+		10) remove employee 
+		11) Log off");
+ */
+
+
 public class UIHandler extends Observable {
 	public ScreenState currentState;
 	public int subState;

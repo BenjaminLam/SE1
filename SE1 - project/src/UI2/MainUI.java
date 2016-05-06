@@ -219,8 +219,11 @@ public class MainUI implements Observer {
         out.println("   11) Man task");
         out.println("   12) Create booking");
         out.println("   13) Remove booking");
-        out.println("   14) back to employee screen");
-        out.println("Select a number (0-14): ");
+        out.println("   14) Create project report");
+        out.println("   15) Create task report");
+        out.println("   16) back to employee screen");
+        
+        out.println("Select a number (0-16): ");
 	}
 	private void displayRenameProject() {
 		
@@ -282,8 +285,6 @@ public class MainUI implements Observer {
 		out.println("Time can include half hours: eg input 9.5 for 9.30");
 	}
 
-	
-	
 	public static void main(String[] args) throws IOException, WrongInputException {
 		MainUI minUI=new MainUI();
 		minUI.mainLoop();
