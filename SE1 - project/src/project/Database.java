@@ -206,7 +206,6 @@ public class Database {
 		return employeesAvailable;
 	}
 
-	
 	//unused??
 	protected List<Assignment> getTaskAssignments(Task task){
 			List<Assignment> taskAss = new ArrayList<Assignment>();
