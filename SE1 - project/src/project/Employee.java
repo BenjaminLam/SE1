@@ -122,12 +122,10 @@ public class Employee {
 		return true;
 	}
 	public Employee setSickness (Database database, int employeeID){
-		Assignment ass = database.assignments.get(0);
+		int taskID = 0;
 		for (Assignment ass:database.assignments) {
-			if(employeeID = ass.employeeID){
-				if(employee.assignment=){
+			if(employeeID == ass.employeeID && ass.taskID==taskID){
 				
-				}
 			}
 		}
 		
