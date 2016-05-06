@@ -47,13 +47,11 @@ public class Database {
 		return projects.size();
 	}
 	
-	protected boolean addProject (Project project) throws WrongInputException {
-		if (project==null){
-			throw new WrongInputException("Project doesn't excist");
-		}
-		
-		this.projects.add(project);
-		return true;
+	protected Project addProject (Project project) throws WrongInputException {
+		if (project==null) throw new WrongInputException("Project doesn't excist");
+		project.ID=projects.size();
+		projects.add(project);
+		return project;
 	}
 	
 	public Assignment getAssignment (int taskID, int employeeID) {
@@ -176,6 +174,12 @@ public class Database {
 		return projectEmployees;
 	}
 	
+	public Employee addEmployee (Employee employee) throws WrongInputException {
+		if (employee==null) throw new WrongInputException("Employee doesn't excist");
+		employee.ID=employees.size();
+		employees.add(employee);
+		return employee;
+	}
 	
 	// methods only used for testing:
 	public int numberOfAssignments () {
