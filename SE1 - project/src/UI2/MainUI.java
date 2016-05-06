@@ -56,8 +56,13 @@ public class MainUI implements Observer {
 				handleProjectLeaderScreen();
 			break;
 			case DisplayListState:
-				displayList();
+				handleList();
+			break;
+			case ErrorState:
+				handleError();
+			break;
 			}
+			
 		}
 		else {
 			if (arg instanceof String) {
@@ -236,14 +241,18 @@ public class MainUI implements Observer {
 	}
 	
 	
-	private void displayList() {
+	private void handleList() {
 		List<Object> temp=(List<Object>) uiHandler.listToProces;
 		
 		for (Object object:temp) {
 			out.println(object);
 		}
 	}
-	
+
+	private void handleError() {
+		out.print(uiHandler.errorMessage);
+	}
+
 	private void explainDoubleTime() {
 		out.println("Time can include half hours: eg input 9.5 for 9.30");
 	}
