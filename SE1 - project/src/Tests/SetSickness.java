@@ -51,10 +51,10 @@ public class SetSickness extends SampleDataSetupTest {
 	public void testCreateTaskAlt1(){
 		Employee employee=super.database.employees.get(1);
 		
-		assertTrue(employee.isSick(employee.ID));
+		assertTrue(employee.isSick(employee));
 		
 		try { 
-			sickness = employee.setSickness(employee.ID);
+			employee.setSickness(employee);
 			Assert.fail(); //checks if exception is thrown
 		} catch (WrongInputException e) { //exception skal laves
 		}

@@ -33,7 +33,7 @@ public class Employee {
 		return database.getEmployeeDayBookings (this,day);
 	}
 	
-	protected Task createTask (Database database, int projectID, String name) throws WrongInputException {
+	public Task createTask (Database database, int projectID, String name) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		
 		if (project==null) { 
@@ -121,19 +121,19 @@ public class Employee {
 		}
 		return true;
 	}
-	public Employee setSickness (Database database, int employeeID){
+	
+	public Employee setSickness (Database database, Employee employee){
 		int taskID = 0;
+		int employeeID = employee.ID;
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
 		for (Assignment ass:database.assignments) {
 			if(employeeID == ass.employeeID && ass.taskID==taskID){
-				
+				ass.addBooking(wp);
 			}
 		}
-		
-		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
-		ass.addBooking(wp);
 		return ;
 	}	
 	
-	
+	public 
 	
 }
