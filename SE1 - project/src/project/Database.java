@@ -97,9 +97,9 @@ public class Database {
 	}
 
 	protected boolean createBookingForCoWorker(Employee coWorker, int taskID, WorkPeriod period) throws WrongInputException{
-		if(coWorker==null)throw new WrongInputException("Employee doen't excist");
+		if(coWorker==null)throw new WrongInputException("Employee doesn't excist");
 		Task task=getTask(taskID);
-		if (task==null) throw new WrongInputException("Task doen't excist");
+		if (task==null) throw new WrongInputException("Task doesn't excist");
 		
 		Assignment coWorkerNew = new Assignment(task, coWorker);		
 		if (coWorkerNew.addBooking(period)) {

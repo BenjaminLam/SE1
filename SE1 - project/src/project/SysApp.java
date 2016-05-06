@@ -62,14 +62,14 @@ public class SysApp extends Observable {
 		return tempAss.addTimeRegister(wp);
 	}
 
-	public boolean seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
+	public Employee seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
 		Employee coWorker=database.getEmployee(empID);
-		if (coWorker==null) return false;
-		
-		if(coWorker.isAvailable(period, database)){
-			return database.createBookingForCoWorker(coWorker,taskID,period);
+		if (coWorker==null) throw new WrongInputException("No employee exist with that ID");
+		if(!coWorker.isAvailable(period, database)){
+			throw new WrongInputException("Your co-worker is not available in this period.");
 		}
-		return false;
+		database.createBookingForCoWorker(coWorker,taskID,period);
+		return coWorker;
 	}
 	
 	public Employee setProjectLeader(int projectID, int employeeID) throws WrongInputException {
@@ -77,7 +77,6 @@ public class SysApp extends Observable {
 		if (project==null) throw new WrongInputException("There exist no project with this projectID");
 		Employee emp=database.getEmployee(employeeID);
 		if (emp==null) throw new WrongInputException("No employee exists with this employeeID");
-		
 		if (!(project.projectLeader==null)) {
 			if (!project.projectLeader.equals(currentEmp)) {
 				throw new WrongInputException("Project already has a project leader and it's not you.");
