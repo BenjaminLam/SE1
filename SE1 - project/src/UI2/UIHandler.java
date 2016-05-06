@@ -402,15 +402,17 @@ public class UIHandler extends Observable {
 		
 	}
 	private void createProjectReport (String userInput) {
-		
+		int projectID=Integer.parseInt(userInput);
+		try {
+			sysApp.createProjectReport(projectID);
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void createTaskReport (String userInput) {
 		
 	}
 
-	
-	
-	
 	
 	
 	private void logOff() {
