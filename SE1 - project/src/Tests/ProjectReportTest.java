@@ -23,6 +23,7 @@ import project.*;
  * old alternative scenario 1 is now alternative scenario 2
  * added alternative scenario 3
  */
+
 public class ProjectReportTest extends SampleDataSetupTest {
 	/*
 	 *Main scenario: 
@@ -35,6 +36,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	public void projectReportTestMain () {
 		Project project=database.projects.get(1);
 		assertNotNull(project);
+		int projectID = project.ID;
 		
 		Employee employee=database.employees.get(0);
 		assertTrue(project.isProjectLeader(employee));
@@ -42,7 +44,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 		List<String> projectReport=null;
 		
 		try {
-			projectReport=sysApp.getProjectReport(project, employee);
+			projectReport=sysApp.createProjectReport(projectID);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
@@ -61,13 +63,14 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	public void projectReportTestAlt1 () {
 		Project project=null;
 		assertNull(project);
+		int projectID = project.ID;
 		
 		Employee employee=database.employees.get(0);
 		
 		List<String> projectReport=null;
 		
 		try {
-			projectReport=sysApp.getProjectReport(project, employee);
+			projectReport=sysApp.createProjectReport(projectID);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
@@ -87,6 +90,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	public void projectReportTestAlt2() {
 		Project project=database.projects.get(1);
 		assertNotNull(project);
+		int projectID = project.ID;
 		
 		Employee employee=database.employees.get(1);
 		assertFalse(project.isProjectLeader(employee));
@@ -94,7 +98,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 		List<String> projectReport=null;
 		
 		try {
-			projectReport=sysApp.getProjectReport(project, employee);
+			projectReport=sysApp.createProjectReport(projectID);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
@@ -114,6 +118,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	public void projectReportTestAlt3() throws WrongInputException {
 		Project project=database.projects.get(1);
 		assertNotNull(project);
+		int projectID = project.ID;
 		
 		Task testTask=new Task (project,"testTask");
 		assertNotNull(testTask);
@@ -133,7 +138,7 @@ public class ProjectReportTest extends SampleDataSetupTest {
 		List<String> projectReport=null;
 		
 		try {
-			projectReport=sysApp.getProjectReport(project, employee);
+			projectReport=sysApp.createProjectReport(projectID);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
