@@ -121,7 +121,13 @@ public class Employee {
 		}
 		return true;
 	}
-	
+	public Employee setSickness (Database database, int employeeID){
+		Assignment ass = ;
+		
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
+		ass.addBooking(wp);
+		return ;
+	}	
 	
 	
 	
