@@ -114,23 +114,6 @@ public class Employee {
 		return false;
 	}
 
-	public boolean createAssignment (SysApp sysApp, Task task, Employee employee) throws WrongInputException {
-		if (task==null) { 
-			throw new WrongInputException("Task doesn't exist");	
-		}
-		if (employee==null) { 
-			throw new WrongInputException("Employee doesn't exist");	
-		}
-		Project project=database.getProject(task.projectID);
-		
-		if(!database.currentEmpIsProjectLeaderFor(project)) {
-			throw new WrongInputException("You are not the project leader of the selected project");
-		}
-		if (sysApp.assignmentExists(task.ID, employee.ID)) {
-			throw new WrongInputException("The assignment already exists in this project");
-		}
-		return sysApp.addAssignment(new Assignment (task, employee));
-	}
 		//checks if a employee is assigned a task.
 	public boolean isAssigned (SysApp sysApp, Task task, Employee employee){
 		if(database.getAssignment(task.ID , employee)== null){

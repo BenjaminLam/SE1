@@ -151,7 +151,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			Task task1 = super.database.getTask(0);
 			
 			try {
-				employee.createAssignment(sysApp, task1, employee);
+				sysApp.manTask(sysApp, task1, employee);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
