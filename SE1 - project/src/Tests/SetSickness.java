@@ -51,7 +51,7 @@ public class SetSickness extends SampleDataSetupTest {
 	
 	@Test
 	public void testCreateTaskAlt1(){
-Employee employee=super.sysApp.employees.get(1);
+Employee employee=super.database.employees.get(1);
 		
 		boolean sickness=true;
 		

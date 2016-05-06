@@ -42,7 +42,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			} catch (WrongInputException e) {
 			}
 			
-			assertEquals(sysApp.getNumberOfAssignments(), numberOfAssignments); //Ved ikke om vi skal indfører et ID for dette?
+			assertEquals(sysApp.getNumberOfAssignments(), numberOfAssignments); 
 			
 			Assignment assignment = super.database.assignments.get(numberOfAssignments+1);
 			
