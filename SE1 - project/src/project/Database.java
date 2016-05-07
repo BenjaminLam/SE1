@@ -13,6 +13,9 @@ public class Database {
 	public List<Project> projects;
 	private List<Task> tasks;
 	public List<Assignment> assignments;
+	int nextEmpID;
+	int nextTaskID;
+	int nextProjectID;
 	
 	public Database () {
 		this.employees=new ArrayList<Employee>();
@@ -20,6 +23,9 @@ public class Database {
 		this.tasks=new ArrayList<Task>();
 		this.assignments=new ArrayList<Assignment>();
 	
+		this.nextEmpID=0;
+		this.nextTaskID=0;
+		this.nextProjectID=0;
 	}
 	
 	public Employee getEmployee (int ID) {
@@ -49,7 +55,7 @@ public class Database {
 	
 	protected Project addProject (Project project) throws WrongInputException {
 		if (project==null) throw new WrongInputException("Project doesn't excist");
-		project.ID=projects.size();
+		project.ID=nextProjectID++;
 		projects.add(project);
 		return project;
 	}
@@ -124,7 +130,7 @@ public class Database {
 	
 	public Task addTask(Task task) throws WrongInputException{
 		if (task==null) throw new WrongInputException("Task doesn't exist, and therefore was not created or added");
-		task.ID=tasks.size();
+		task.ID=nextTaskID++;
 		tasks.add(task);
 		return task;
 	}
@@ -176,7 +182,7 @@ public class Database {
 	
 	public Employee addEmployee (Employee employee) throws WrongInputException {
 		if (employee==null) throw new WrongInputException("Employee doesn't excist");
-		employee.ID=employees.size();
+		employee.ID=nextEmpID++;
 		employees.add(employee);
 		return employee;
 	}
@@ -186,7 +192,6 @@ public class Database {
 		if (!employees.remove(employee)){
 			throw new WrongInputException ("Employee doesn't excist");
 		}
-		resetEmployeeID();
 		return employee;
 	}
 	
@@ -195,7 +200,6 @@ public class Database {
 		if (!projects.remove(project)){
 			throw new WrongInputException ("Project doesn't excist");
 		}
-		resetProjectID();
 		return project;
 	}
 	
@@ -204,7 +208,6 @@ public class Database {
 		if (!tasks.remove(task)){
 			throw new WrongInputException ("Task doesn't excist");
 		}
-		resetTaskID();
 		return task;
 	}
 	
@@ -217,25 +220,6 @@ public class Database {
 		return this.tasks.size();
 	}
 	
-	
-	//reset functions
-	private void resetEmployeeID() {
-		for (int i=1;i<=employees.size();i++){
-			employees.get(i).ID=i;
-		}
-	}
-	
-	private void resetTaskID() {
-		for (int i=1;i<=tasks.size();i++){
-			tasks.get(i).ID=i;
-		}
-	}
-	
-	private void resetProjectID() {
-		for (int i=1;i<=projects.size();i++){
-			projects.get(i).ID=i;
-		}
-	}
 	
 	
 	

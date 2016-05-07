@@ -449,8 +449,6 @@ public class UIHandler extends Observable {
 	private void createTaskReport (String userInput) {
 		
 	}
-
-	
 	
 	private void logOff() {
 		setStateResetSub(ScreenState.LoginState);
@@ -469,8 +467,6 @@ public class UIHandler extends Observable {
 	private void wrongInputFormat () {
 		error("The format of your input is not valid");
 	}
-	
-	
 	
 	
 	//methods changing state:
