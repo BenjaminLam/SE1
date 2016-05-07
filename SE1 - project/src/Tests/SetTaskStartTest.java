@@ -90,9 +90,13 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskStartAlt2b() throws WrongInputException{
-		Project project = database.getProject(1);
 		Employee employee = database.getEmployee(0);
+		Project project = database.getProject(1);
 		sysApp.logIn(employee.ID);
+		assertNotNull(employee);
+		assertNotNull(project);
+		assertEquals(employee, sysApp.currentEmp);
+		assertTrue(project.isProjectLeader(sysApp.currentEmp));
 		
 		assertTrue(project.isProjectLeader(employee));
 		

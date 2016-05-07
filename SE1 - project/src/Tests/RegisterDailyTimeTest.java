@@ -33,7 +33,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 	
 	@Test
 	public void registerDailyTimeMain() throws WrongInputException{
-		Employee employee = database.employees.get(9);
+		Employee employee = database.getEmployee(9);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
 		int lastAss=database.assignments.size()-1;
 		sysApp.logIn(employee.ID);
