@@ -96,7 +96,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(database, project.ID, taskName);
+				employee.createTask(database, -1, taskName);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) {
 			}

@@ -62,18 +62,15 @@ public class SeekAssistanceTest extends SampleDataSetupTest{
 	@Test
 	public void seekAssistanceTestAlt1() throws WrongInputException{
 		Employee employee=database.getEmployee(1);
-		Employee coWorker=null;
 		
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		WorkPeriod period = new WorkPeriod(day,9,11);
 		
 		assertNotNull(employee);
-		assertNull(coWorker);
 		
-		assertFalse(coWorker.isAvailable(period, database));
 		
 		try{
-			sysApp.seekAssistance(coWorker.ID,3,period);
+			sysApp.seekAssistance(-1,3,period);
 			Assert.fail();
 		} catch(WrongInputException e){
 			
