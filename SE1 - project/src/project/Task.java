@@ -70,25 +70,25 @@ public class Task {
 	
 	protected Task setEnd(CalWeek End, Employee employee, Database database) throws WrongInputException {
 		CalWeek currentWeek = Util.getCurrentWeek();
-		Project project = database.getProject(0);
+		Project project = database.getProject(this.projectID);
 		if (!project.isProjectLeader(employee)){
 			throw new WrongInputException("You are not the projectleader of this project");
 		}
 		if(project.start != null){
-			if(End.isBeforeOrWhile(project.start)){
+			if(End.isBefore(project.start)){
 				throw new WrongInputException("Invalid date; Date is before project start");
 			}
 		}
 		if(project.end != null){
-			if (End.isAfterOrWhile(project.end)){
+			if (End.isAfter(project.end)){
 				throw new WrongInputException("Invalid date; date is after project end");
 			}
 		}
-		if (End.isBeforeOrWhile(currentWeek)) {
+		if (End.isBefore(currentWeek)) {
 			throw new WrongInputException("Invalid date; Date is in the past");
 		}
 		if (this.start != null) {
-			if (End.isBeforeOrWhile(this.start)) {
+			if (End.isBefore(this.start)) {
 				throw new WrongInputException("Invalid date; Date is before start date");
 			}
 		}

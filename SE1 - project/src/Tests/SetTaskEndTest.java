@@ -140,7 +140,6 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 			sysApp.setTaskEnd(1, 2016, 1);
 			Assert.fail();
 		} catch (WrongInputException e) {
-			Assert.fail();
 		}
 		
 		assertNull(database.getTask(1).end);

@@ -23,20 +23,13 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 		Project project = database.getProject(1);
 		Employee employee = database.getEmployee(0);
 		sysApp.logIn(employee.ID);
-		CalWeek calWeek1 = new CalWeek(2016,31);
-		CalWeek calWeek2 = new CalWeek
-		project.start = calWeek1;
 		
 		assertNotNull(project);
 		
-		Task task1 = new Task(project, "task1");
-		
 		assertTrue(project.isProjectLeader(employee));	
-		assertNotNull(task1);
-		
-		
+				
 		try {
-			sysApp.setTaskStart(task1.ID, 2016, 43);
+			sysApp.setTaskStart(1, 2016, 43);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
@@ -97,11 +90,12 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskStartAlt2b() throws WrongInputException{
-		Employee employee=database.getEmployee(0);
-		Project project=database.getProject(0);
+		Project project = database.getProject(1);
+		Employee employee = database.getEmployee(0);
 		sysApp.logIn(employee.ID);
 		
 		assertTrue(project.isProjectLeader(employee));
+		
 		project.start.week = 36;
 		project.start.year = 2016;
 		try {
@@ -147,8 +141,8 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 		} catch (WrongInputException e){
 			Assert.fail();
 		}
-		assertEquals(database.getTask(0).start.year, 2016);
-		assertEquals(database.getTask(0).start.week, 42);
+		assertEquals(database.getTask(1).start.year, 2016);
+		assertEquals(database.getTask(1).start.week, 42);
 	}
 	
 	/*
@@ -158,7 +152,7 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	@Test
 	public void setTaskStartAlt2d() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
-		Project project=database.getProject(0);
+		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
 		
 		assertTrue(project.isProjectLeader(employee));

@@ -117,8 +117,8 @@ public class createTaskTest extends SampleDataSetupTest {
 		
 		@Test
 		public void testCreateTaskAlt3() throws WrongInputException{
-			Employee employee=super.database.employees.get(0);
-			Project project=super.database.projects.get(1);
+			Employee employee=database.getEmployee(0);
+			Project project=database.getProject(1);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
