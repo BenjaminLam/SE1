@@ -9,10 +9,8 @@ import java.util.Observable;
 import Exceptions_Enums.*;
 import project.*;
 
-//notify user fail of operation
-//needs all register method in employee state
+
 //register work: display list with bookings
-//Notify user succes of operation
 //when creating new employee/project/task: paste the id of the project
 
 
@@ -22,7 +20,7 @@ public class UIHandler extends Observable {
 	private SysApp sysApp;
 	public List<? extends Object> listToProces; //list extracted from database, stored to process
 	public MyMap mapToProcess; //MyMap extracted from database, stored to process
-	public String errorMessage;
+	public String errorMessage; //error message from catched exception, stored to process
 	
 	public UIHandler (MainUI mainUI) {
 		this.subState=0;

@@ -11,10 +11,6 @@ import java.util.Scanner;
 import Exceptions_Enums.*;
 
 
-//implementere hele moletjavsen med error i stedet for exception
-//når en metode fejler udskriver den error og returnerer false, så bruger kan prøve igen
-
-
 
 public class SysApp extends Observable {
 	public Employee currentEmp;

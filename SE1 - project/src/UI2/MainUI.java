@@ -16,7 +16,7 @@ import Exceptions_Enums.WrongInputException;
 
 
 //when user registers work for today print number of hours he has registered
-//mangler at displayer rigtige meddelelser
+
 
 
 public class MainUI implements Observer {
