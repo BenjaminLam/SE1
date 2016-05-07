@@ -42,6 +42,11 @@ public class MainUI implements Observer {
 	
 	@Override
 	public void update(Observable O, Object arg) {
+		if (O instanceof UIHandler) updateUI();
+		if (O instanceof SysApp) updateApp();
+	}
+	
+	public void updateUI() {
 		ScreenState currentState=uiHandler.currentState;
 		
 		switch (currentState) {
@@ -62,6 +67,98 @@ public class MainUI implements Observer {
 		break;
 		}
 	}
+	public void updateApp() {
+		if (arg==null) terminate();
+		
+		//print succes message
+		switch (((SysApp)o).lastSuccesfull) {
+		case EmployeesForTask:
+			break;
+		case ManTask:
+			break;
+		case NewBooking:
+			break;
+		case NewEmployee:
+			if (!(arg instanceof Employee)) terminate();
+			message=new String[] {
+					"Created employee succesfully",
+					("Employee name: " + ((Employee)arg).name),
+					("Employee ID: " + ((Employee) arg).ID)
+			};
+			break;
+		case NewProject:
+			if (!(arg instanceof Project)) terminate();
+			message=new String[] {
+					"Created project succesfully",
+					("Project name: " + ((Project)arg).name),
+					("Project ID: " + ((Project) arg).ID)
+			};
+			break;
+		case NewProjectLeader:
+			if (!(arg instanceof ObjectArray)) terminate();
+			
+			Object[] oa=((ObjectArray)arg).objects;
+			if (!(oa.length==2)) terminate();
+			if (! (oa[0] instanceof Project)) terminate();
+			if (! (oa[1] instanceof Employee)) terminate();
+			
+			message=new String[] {
+					"Set project leader succesfully",
+					("Project name: " + ((Project)oa[0]).name),
+					("Project ID: " + ((Project)oa[0]).ID),
+					("Employee name: " + ((Employee)oa[1]).name),
+					("Employee ID: " + ((Employee)oa[1]).ID)
+			};
+		case NewTask:
+			if (!(arg instanceof Task)) terminate();
+			message=new String[] {
+					"Created task succesfully",
+					("Task name: " + ((Task)arg).name),
+					("Task ID: " + ((Task) arg).ID)
+			};
+			break;
+		case ProjectEnd:
+			break;
+		case ProjectReport:
+			break;
+		case ProjectStart:
+			break;
+		case RegisterCourse:
+			break;
+		case RegisterSickness:
+			break;
+		case RegisterVacation:
+			break;
+		case RegisterWork:
+			break;
+		case RemoveBooking:
+			break;
+		case RemoveEmployee:
+			break;
+		case RemoveProject:
+			break;
+		case RemoveTask:
+			break;
+		case RenameProject:
+			break;
+		case RenameTask:
+			break;
+		case SeekAssistance:
+			break;
+		case TaskBudgetTime:
+			break;
+		case TaskEnd:
+			break;
+		case TaskReport:
+			break;
+		case TaskStart:
+			break;
+		default:
+			break;
+		}
+		setTempState(ScreenState.MessageState);
+	}
+	
 	
 	private void displayLoginScreen () {
 		out.println("Welcome to the tool for registration of hours and project management");

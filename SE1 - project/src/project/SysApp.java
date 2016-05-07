@@ -85,7 +85,7 @@ public class SysApp extends Observable {
 		changed(project,Operation.NewProject);
 		return project;
 	}
-	//unimplemented change
+	
 	public Employee setProjectLeader(int projectID, int employeeID) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException("There exist no project with this projectID");
@@ -98,8 +98,7 @@ public class SysApp extends Observable {
 		}
 		
 		project.projectLeader=emp;
-		new ObjectList()
-		//changed(emp);
+		changed(new ObjectArray(project,emp),Operation.NewProjectLeader);
 		return project.projectLeader;
 	}
 	
