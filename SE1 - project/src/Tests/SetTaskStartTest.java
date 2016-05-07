@@ -20,21 +20,23 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 	 */
 	@Test
 	public void setTaskStartMain() throws WrongInputException{
-		Project project1 = database.getProject(1);
+		Project project = database.getProject(1);
 		Employee employee = database.getEmployee(0);
 		sysApp.logIn(employee.ID);
+		CalWeek calWeek1 = new CalWeek(2016,31);
+		CalWeek calWeek2 = new CalWeek
+		project.start = calWeek1;
 		
-		assertNotNull(project1);
+		assertNotNull(project);
 		
-		assertTrue(project1.isProjectLeader(employee));
+		Task task1 = new Task(project, "task1");
+		
+		assertTrue(project.isProjectLeader(employee));	
+		assertNotNull(task1);
+		
+		
 		try {
-			sysApp.createTask(project1.ID, "task1");
-		} catch (WrongInputException e1) {
-			Assert.fail();
-		}
-		
-		try {
-			sysApp.setTaskStart(1, 2016, 43);
+			sysApp.setTaskStart(task1.ID, 2016, 43);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}

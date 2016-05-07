@@ -58,7 +58,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 	public void registerDailyTimeAlt1() throws WrongInputException{
 		Employee employee = database.employees.get(database.assignments.size()-1);
 		CalDay day = new CalDay(new CalWeek(2000,2),1);
-		sysApp.currentEmp=employee;
+		sysApp.logIn(employee.ID);
 		
 		assertNotNull(employee);
 		assertNotNull(day);
