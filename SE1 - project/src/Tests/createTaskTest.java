@@ -35,13 +35,19 @@ public class createTaskTest extends SampleDataSetupTest {
 			Employee employee=database.getEmployee(0);
 			Project project=database.getProject(1);
 			
+			try {
+				sysApp.logIn(employee.ID);
+			} catch (WrongInputException e1) {
+				Assert.fail();
+			}
+			
 			assertTrue(project.isProjectLeader(employee));
 			
 			String taskName="Task01";
 			
 			Task task = new Task(project, taskName);
 			try {
-				task = employee.createTask(database, project.ID, taskName);
+				task = sysApp.createTask(project.ID, taskName);
 			} catch (WrongInputException e) {
 			}
 			
@@ -64,14 +70,18 @@ public class createTaskTest extends SampleDataSetupTest {
 			int numberOfTasks = database.numberOfTasks();
 			Employee employee=super.database.employees.get(1);
 			Project project=super.database.projects.get(1);
-			
+			try {
+				sysApp.logIn(employee.ID);
+			} catch (WrongInputException e1) {
+				Assert.fail();
+			}
 			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(employee));
 			
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(database, project.ID, taskName);
+				sysApp.createTask(project.ID, taskName);
 				Assert.fail(); //checks exception is thrown
 			} catch (WrongInputException e) {
 			}
@@ -96,7 +106,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			String taskName="Task01";
 			
 			try {
-				employee.createTask(database, -1, taskName);
+				sysApp.createTask(-1, taskName);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) {
 			}
