@@ -257,7 +257,7 @@ public class MainUI implements Observer {
 	}
 
 	private void handleError() {
-		out.print(uiHandler.errorMessage);
+		out.println(uiHandler.errorMessage);
 	}
 
 	private void explainDoubleTime() {
