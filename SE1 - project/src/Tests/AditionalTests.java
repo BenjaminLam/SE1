@@ -1,13 +1,10 @@
 package Tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -61,4 +58,43 @@ public class AditionalTests extends SampleDataSetupTest {
 		
 		assertEquals(expected,calculated,0.1);
 	}
+	
+	/*
+	 * Test for copyBookingTimeRegister
+	 * 
+	 */
+	@Test
+	public void copyBookingToTimeRegisterTest() throws WrongInputException {
+		CalWeek week = new CalWeek(2016, 34);
+		CalDay day = new CalDay(week,5);
+		WorkPeriod workPeriod1 = new WorkPeriod(day, 8, 10);
+		
+		Assignment assignment = new Assignment(database.getTask(1), database.getEmployee(1));
+		Assignment assignment1 = new Assignment(database.getTask(2), database.getEmployee(2));
+		int size = assignment.timeRegisters.size();
+		assertNotNull(assignment.timeRegisters);
+		assertNotNull(workPeriod1);
+		try {
+			sysApp.copyBookingToTimeRegister(workPeriod1, assignment);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		assertNotEquals(size, assignment.timeRegisters.size());
+		
+		try {
+			sysApp.copyBookingToTimeRegister(null, assignment1);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		assertEquals(size, assignment1.timeRegisters.size());
+		try {
+			sysApp.copyBookingToTimeRegister(workPeriod1, null);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		assertEquals(size, assignment1.timeRegisters.size());
+	}
+	
+	
+	
 }

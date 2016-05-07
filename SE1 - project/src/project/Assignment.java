@@ -29,7 +29,7 @@ public class Assignment {
 	}
 	
 	protected WorkPeriod addTimeRegister (WorkPeriod wp) throws WrongInputException{
-		if (wp!=null) {
+		if (wp==null) {
 			throw new WrongInputException("Booking doesn't exist");
 		}
 		timeRegisters.add(wp);
