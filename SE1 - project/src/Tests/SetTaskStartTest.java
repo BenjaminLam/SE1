@@ -93,20 +93,15 @@ public class SetTaskStartTest extends SampleDataSetupTest {
 		Employee employee = database.getEmployee(0);
 		Project project = database.getProject(1);
 		sysApp.logIn(employee.ID);
-		assertNotNull(employee);
-		assertNotNull(project);
-		assertEquals(employee, sysApp.currentEmp);
-		assertTrue(project.isProjectLeader(sysApp.currentEmp));
 		
 		assertTrue(project.isProjectLeader(employee));
-		
-		project.start.week = 36;
-		project.start.year = 2016;
+		project.start = new CalWeek(2016, 38);
+
 		try {
 			sysApp.setTaskStart(1, 2016, 3);
 			Assert.fail();
 		} catch (WrongInputException e){}
-		assertNull(database.getTask(1));
+		
 		
 		try {
 			sysApp.setTaskStart(1, 2016, 38);
