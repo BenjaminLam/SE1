@@ -5,27 +5,29 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import Exceptions_Enums.*;
 import project.*;
 
 
-//register work: display list with bookings
 //when creating new employee/project/task: paste the id of the project
+//not use remove employee to remove yourself
+//if set yourself as project leader and you're not project leader already - change your isProjectLeaderStatus in sysApp
+//for stort try catch i handle input?
 
-
-public class UIHandler extends Observable {
+public class UIHandler extends Observable implements Observer {
 	public ScreenState currentState;
 	public int subState;
 	private SysApp sysApp;
 	public List<? extends Object> listToProces; //list extracted from database, stored to process
 	public MyMap mapToProcess; //MyMap extracted from database, stored to process
-	public String errorMessage; //error message from catched exception, stored to process
+	public String[] message; //error/succes message, stored to process
 	
 	public UIHandler (MainUI mainUI) {
 		this.subState=0;
 		this.sysApp=new SysApp();
-		sysApp.addObserver(mainUI);
+		sysApp.addObserver(this);
 	}
 	
 	public void init()  {
@@ -33,16 +35,27 @@ public class UIHandler extends Observable {
 	}
 
 	public void handleInput(String userInput) {
-		switch (currentState){
-		case LoginState:
-			logIn(userInput); break;
-		case EmployeeState:
-			handleEmployeeState(userInput); break;
-		case ProjectLeaderState:
-			handleProjectLeaderState(userInput); break;
-		default:
-			terminate();
+		if(userInput.equals("back") && this.subState!=0) {
+			setSubState(0); 
+			return;
 		}
+		if (userInput.equals("exit")) terminate();
+		
+		try {
+			switch (currentState){
+			case LoginState:
+				logIn(userInput); break;
+			case EmployeeState:
+				handleEmployeeState(userInput); break;
+			case ProjectLeaderState:
+				handleProjectLeaderState(userInput); break;
+			default:
+				terminate();
+			}
+		} catch (NumberFormatException e) {
+			wrongInputFormat();
+		}
+		
 	}
 	
 	private void logIn(String userInput) {
@@ -85,6 +98,11 @@ public class UIHandler extends Observable {
 			return;
 		}
 		
+		if (userChoice==1) {
+			this.mapToProcess=sysApp.todaysBookings();
+			this.listToProces=mapToProcess.asList();
+			setState(ScreenState.DisplayListState);
+		}
 		if (userChoice==8) {
 			try {
 				if (!sysApp.isProjectLeader) throw new WrongInputException ("You are not a project leader");
@@ -95,15 +113,13 @@ public class UIHandler extends Observable {
 				return;
 			}
 		}
-		
 		if (userChoice==11) logOff();
 		setSubState(userChoice);
 	}
 	private void registerWork(String userInput){
 		String[] userInputs=Util.splitString(userInput);
 		
-		Employee currentEmp=sysApp.currentEmp;
-		this.mapToProcess=sysApp.getTodaysBookings();
+		this.mapToProcess=sysApp.todaysBookings();
 	
 		switch (userInputs.length) {
 		case 1: registerWorkExcisting(userInputs); break;
@@ -453,19 +469,18 @@ public class UIHandler extends Observable {
 	}
 	
 	private void terminate() {
-		
+		System.exit(0);
 	}
 	
 	private void error (String errorMessage) {
 		if (errorMessage==null) terminate();
-		this.errorMessage=errorMessage;
-		errorState();
+		this.message=new String[]{errorMessage};
+		messageState();
 	}
 	
 	private void wrongInputFormat () {
 		error("The format of your input is not valid");
 	}
-	
 	
 	//methods changing state:
 	private void setTempState (ScreenState state) {
@@ -491,8 +506,92 @@ public class UIHandler extends Observable {
 		this.notifyObservers();
 	}
 
-	private void errorState() {
-		setTempState(ScreenState.ErrorState);
+	private void messageState() {
+		setTempState(ScreenState.MessageState);
+	}
+
+	
+	
+	//succesfull operation
+	@Override
+	public void update(Observable o, Object arg) {
+		if (arg==null) terminate();
+		if (!(o instanceof SysApp)) terminate();
+		
+		//print succes message
+		switch (((SysApp)o).lastSuccesfull) {
+		case EmployeesForTask:
+			break;
+		case ManTask:
+			break;
+		case NewBooking:
+			break;
+		case NewEmployee:
+			if (!(arg instanceof Employee)) terminate();
+			message=new String[] {
+					"Created employee succesfully",
+					("Employee name: " + ((Employee)arg).name),
+					("Employee ID: " + ((Employee) arg).ID)
+			};
+			break;
+		case NewProject:
+			if (!(arg instanceof Project)) terminate();
+			message=new String[] {
+					"Created project succesfully",
+					("Project name: " + ((Project)arg).name),
+					("Project ID: " + ((Project) arg).ID)
+			};
+			break;
+		case NewProjectLeader:
+			break;
+		case NewTask:
+			if (!(arg instanceof Task)) terminate();
+			message=new String[] {
+					"Created task succesfully",
+					("Task name: " + ((Task)arg).name),
+					("Task ID: " + ((Task) arg).ID)
+			};
+			break;
+		case ProjectEnd:
+			break;
+		case ProjectReport:
+			break;
+		case ProjectStart:
+			break;
+		case RegisterCourse:
+			break;
+		case RegisterSickness:
+			break;
+		case RegisterVacation:
+			break;
+		case RegisterWork:
+			break;
+		case RemoveBooking:
+			break;
+		case RemoveEmployee:
+			break;
+		case RemoveProject:
+			break;
+		case RemoveTask:
+			break;
+		case RenameProject:
+			break;
+		case RenameTask:
+			break;
+		case SeekAssistance:
+			break;
+		case TaskBudgetTime:
+			break;
+		case TaskEnd:
+			break;
+		case TaskReport:
+			break;
+		case TaskStart:
+			break;
+		default:
+			break;
+		}
+		setTempState(ScreenState.MessageState);
 	}
 	
 }

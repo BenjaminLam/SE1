@@ -36,52 +36,31 @@ public class MainUI implements Observer {
 	public void mainLoop () throws IOException, WrongInputException {
 		while (true) {
 			String userInput=in.readLine();
-			//if (Integer.parseInt(userInput)==0) break; //put somewhere else?
 			uiHandler.handleInput(userInput);
 		}
 	}	
 	
 	@Override
 	public void update(Observable O, Object arg) {
-		if (arg==null) {
-			ScreenState currentState=uiHandler.currentState;
-			
-			switch (currentState) {
-			case LoginState:
-				displayLoginScreen();
-			break;
-			case EmployeeState:
-				handleEmployeeScreen();
-			break;
-			case ProjectLeaderState:
-				handleProjectLeaderScreen();
-			break;
-			case DisplayListState:
-				handleList();
-			break;
-			case ErrorState:
-				handleError();
-			break;
-			}
-			
-		}
-		else {
-			if (arg instanceof String) {
-				out.println(arg);
-			}
-			if (arg instanceof Project) {
-				out.println("Created project succesfully");
-				out.print("Project name: "); out.println(((Project) arg).name);
-				out.print("Project ID: "); out.println(((Project) arg).ID);
-			}
-			if (arg instanceof WorkPeriod) {
-				out.println("Information registered succesfully");
-			}
-			if (arg instanceof Employee) {
-				out.println("The bluetooth device has connected succesfully");
-			}
-		}
+		ScreenState currentState=uiHandler.currentState;
 		
+		switch (currentState) {
+		case LoginState:
+			displayLoginScreen();
+		break;
+		case EmployeeState:
+			handleEmployeeScreen();
+		break;
+		case ProjectLeaderState:
+			handleProjectLeaderScreen();
+		break;
+		case DisplayListState:
+			handleList();
+		break;
+		case MessageState:
+			handleMessage();
+		break;
+		}
 	}
 	
 	private void displayLoginScreen () {
@@ -256,8 +235,10 @@ public class MainUI implements Observer {
 		}
 	}
 
-	private void handleError() {
-		out.println(uiHandler.errorMessage);
+	private void handleMessage() {
+		for (String string:uiHandler.message) {
+			out.println(string);
+		}
 	}
 
 	private void explainDoubleTime() {

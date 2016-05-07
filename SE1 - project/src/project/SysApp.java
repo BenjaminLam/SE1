@@ -10,12 +10,13 @@ import java.util.Scanner;
 
 import Exceptions_Enums.*;
 
-
+//unimplemented changed
 
 public class SysApp extends Observable {
 	public Employee currentEmp;
 	public boolean isProjectLeader;
 	private Database database;
+	public Operation lastSuccesfull;
 	
 	public SysApp () {
 		this.database=new Database();
@@ -27,9 +28,9 @@ public class SysApp extends Observable {
 	
 	public Employee logIn(int EmpID) throws WrongInputException {
 		Employee employee=database.getEmployee(EmpID);
-		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
+		//if (employee==null) throw new WrongInputException ("Employee doesn't excist");
 		currentEmp=employee;
-		isProjectLeader=employee.isProjectLeader(database);
+		//isProjectLeader=employee.isProjectLeader(database);
 		return employee;
 	}
 	
@@ -42,7 +43,7 @@ public class SysApp extends Observable {
 		if(assignment==null){
 			throw new WrongInputException("The assignment doesn't exist");
 		}
-		changed(booking);
+		changed(booking,Operation.RegisterWork);
 		return assignment.addTimeRegister(booking);
 	}
 
@@ -50,7 +51,7 @@ public class SysApp extends Observable {
 		Assignment tempAss=database.getAssignment(taskID,currentEmp.ID);
 		if(tempAss==null)throw new WrongInputException("You do not work on this assignemt");
 		WorkPeriod wp=new WorkPeriod(day,start,end);
-		changed(wp);
+		changed(wp,Operation.RegisterWork);
 		return tempAss.addTimeRegister(wp);
 	}
 
@@ -61,6 +62,7 @@ public class SysApp extends Observable {
 			throw new WrongInputException("Your co-worker is not available in this period.");
 		}
 		database.createBookingForCoWorker(coWorker,taskID,period);
+		changed(coWorker,Operation.SeekAssistance);
 		return coWorker;
 	}
 	
@@ -80,10 +82,10 @@ public class SysApp extends Observable {
 		if (database.projectExcists(name)) throw new WrongInputException("A project with that name already exists");
 		Project project=new Project(name);
 		database.addProject(project);
-		changed(project);
+		changed(project,Operation.NewProject);
 		return project;
 	}
-	
+	//unimplemented change
 	public Employee setProjectLeader(int projectID, int employeeID) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException("There exist no project with this projectID");
@@ -96,17 +98,21 @@ public class SysApp extends Observable {
 		}
 		
 		project.projectLeader=emp;
-		changed(emp);
+		new ObjectList()
+		//changed(emp);
 		return project.projectLeader;
 	}
 	
 	public Employee createEmployee (String name) throws WrongInputException {
 		Employee employee=new Employee (name);
-		return database.addEmployee(employee);
+		database.addEmployee(employee);
+		changed (employee,Operation.NewEmployee);
+		return null;
 	}
 	
 	public Employee removeEmployee (int empID) throws WrongInputException {
-		return database.removeEmployee(database.getEmployee(empID));
+		changed(database.removeEmployee(database.getEmployee(empID)),Operation.RemoveEmployee);
+		return null;
 	}
 	
 
@@ -237,8 +243,10 @@ public class SysApp extends Observable {
 	}
 	
 	
-	
-	
+	//help method for register work in uihandler
+	public MyMap todaysBookings() {
+		return currentEmp.dayBookings(Util.getCurrentDay(),database);
+	}
 	
 	
 	//Er under process:
@@ -255,9 +263,7 @@ public class SysApp extends Observable {
 		return currentEmp.isSick(database, employee);
 	}
 	
-	public MyMap getTodaysBookings() {
-		return currentEmp.dayBookings(Util.getCurrentDay(),database);
-	}
+	
 	
 	
 	
@@ -279,10 +285,10 @@ public class SysApp extends Observable {
 	}
 
 
-	public void changed(Object o) {
-		if (o==null) return;
+	public void changed(Object ob,Operation op) {
+		this.lastSuccesfull=op;
 		this.setChanged();
-		this.notifyObservers(o);
+		this.notifyObservers(ob);
 	}
 
 }

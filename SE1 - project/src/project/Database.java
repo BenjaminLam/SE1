@@ -182,7 +182,8 @@ public class Database {
 	
 	public Employee addEmployee (Employee employee) throws WrongInputException {
 		if (employee==null) throw new WrongInputException("Employee doesn't excist");
-		employee.ID=nextEmpID++;
+		employee.ID=nextEmpID;
+		nextEmpID++;
 		employees.add(employee);
 		return employee;
 	}
