@@ -156,12 +156,22 @@ public class SysApp {
 		};
 	}
 	
-	public void setProjectStart() {
-		
+	public String[] setProjectStart(int projectID, int year, int week) throws WrongInputException {
+		Project project=database.getProject(projectID);
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		project.setStart(new CalWeek(year,week), currentEmp, database);
+		return new String[] {
+			"Succesfully set start for project " + project.name + " to year: " + year + " week: " + week 	
+		};
 	}
 	
-	public void setProjectEnd() {
-		
+	public String[] setProjectEnd(int projectID, int year, int week) throws WrongInputException {
+		Project project=database.getProject(projectID);
+		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		project.setEnd(new CalWeek(year,week), currentEmp, database);
+		return new String[] {
+			"Succesfully set end for project " + project.name + " to year: " + year + " week: " + week 	
+		};
 	}
 	
 	public String[] removeProject (int projectID) throws WrongInputException {
