@@ -977,7 +977,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		String[] taskReport=null;
 		
 		try {
-			taskReport=sysApp.createTaskReport(task.ID);
+			taskReport = sysApp.createTaskReport(task.ID);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
@@ -1030,7 +1030,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		int projectID = task.projectID;
 		Project project = database.getProject(projectID);
 		
-		Employee employee=database.employees.get(0);
+		Employee employee=database.employees.get(2);
 		
 		sysApp.logIn(employee.ID);
 		
