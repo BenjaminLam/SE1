@@ -297,11 +297,7 @@ public class SysApp {
 		for (Task task:completedTasks) {
 			projectReport.add(task.name);
 		}
-		String[] a=new String[projectReport.size()];
-		Object[] test=projectReport.toArray();
-		a=(String[]) test;
-		
-		return a;
+		return Util.stringListToArray(projectReport);
 	}
 
 	public String[] createTaskReport(int taskID) throws WrongInputException {
