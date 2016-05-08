@@ -264,5 +264,28 @@ public class AditionalTests extends SampleDataSetupTest {
 		} catch (WrongInputException e) {
 		}
 	}
+	
+	/*
+	 * Test for removeTask
+	 */
+	@Test
+	public void removeTaskTest(){
+		Task task = database.getTask(1);
+		int size = database.numberOfTasks();
+		try {
+			sysApp.removeTask(task.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();	
+		}
+		assertNotEquals(size, database.numberOfTasks());
+		
+		int size1 = database.numberOfTasks();
+		try {
+			sysApp.removeTask(-1);
+			Assert.fail();
+		} catch (WrongInputException e){}
+		assertEquals(size1, database.numberOfTasks());	
+		
+	}
 }
 
