@@ -42,11 +42,12 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		
 		MyMap todaysBookings = employee.dayBookings(day, database);
 		
-		for(Object object: todaysBookings.mainInfo){
-			WorkPeriod booking=(WorkPeriod) object;
-			sysApp.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));	
+		for(int i=0;i<todaysBookings.mainInfo.size();i++){
+			sysApp.copyBookingToTimeRegister((WorkPeriod)todaysBookings.mainInfo.get(i),(Assignment)todaysBookings.secondaryInfo.get(i));
 		}
 		
+		//test that all bookings has been moved to the last assignments timeregister, since we in data setup 
+		//made all bookings for emp 9 in the last assignment. 
 		assertEquals(todaysBookings.mainInfo.size(),database.assignments.get(lastAss).timeRegisters.size());
 	}
 	
@@ -89,10 +90,12 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		
 		MyMap todaysBookings = employee.dayBookings(day, database);
 		
+		assertEquals(todaysBookings.mainInfo.size(),0);
+		
+		//since todays bookings is 0, the following for loop should not be entered
 		for(Object object: todaysBookings.mainInfo){
-			Assert.fail();
 			WorkPeriod booking=(WorkPeriod) object;
-			sysApp.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));	
+			sysApp.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));
 		}
 		
 		assertEquals(todaysBookings.mainInfo.size(),database.assignments.get(lastAss).timeRegisters.size());
