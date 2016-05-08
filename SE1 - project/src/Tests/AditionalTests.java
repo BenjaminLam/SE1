@@ -956,7 +956,95 @@ public class AditionalTests extends SampleDataSetupTest {
 			Assert.fail();
 		}
 	}
+	/*
+	 * taskReport Tests
+	 */
 	
+	@Test
+	public void taskReportTest () throws WrongInputException {
+		Task task = database.task.get(3);
+		assertNotNull(task);
+		
+		int projectID = task.projectID;
+		Project project = database.getTask(projectID);
+		
+		Employee employee=database.employees.get(0);
+		
+		sysApp.logIn(employee.ID);
+		
+		assertTrue(project.isProjectLeader(employee));
+		
+		String[] taskReport=null;
+		
+		try {
+			taskReport=sysApp.createTaskReport(task.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		assertNotNull(taskReport);	
+	}
+	
+	/*
+	 *Alternative scenario1: 
+	 * task doesn't exist
+	 * employee tries to create report
+	 * exception is thrown
+	 * report is not created
+	 */
+	
+	@Test
+	public void TaskReportTestAlt1 () throws WrongInputException {
+		Task task = null;
+		assertNull(task);
+		
+		int taskID= -1;
+		
+		Employee employee=database.employees.get(0);
+		
+		sysApp.logIn(employee.ID);
+		
+		String[] taskReport=null;
+		
+		try {
+			taskReport=sysApp.createTaskReport(taskID);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		assertNull(taskReport);	
+	}
+	
+	/*
+	 *Alternative scenario2: 
+	 * task exists
+	 * employee is not project leader
+	 * employee tries to create report
+	 * exception is thrown
+	 * report is not created
+	 */
+	
+	@Test
+	public void taskReportTestAlt2() throws WrongInputException {
+		Task task = database.task.get(3);
+		assertNotNull(task);
+		
+		int projectID = task.projectID;
+		Project project = database.getTask(projectID);
+		
+		Employee employee=database.employees.get(0);
+		
+		sysApp.logIn(employee.ID);
+		
+		assertFalse(project.isProjectLeader(employee));
+		
+		String[] taskReport=null;
+		
+		try {
+			taskReport=sysApp.createTaskReport(task.ID);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		assertNull(taskReport);	
+	}
 	
 }
 
