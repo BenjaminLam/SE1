@@ -124,16 +124,15 @@ public class Employee {
 		return true;
 	}
 	
-	public Employee setSickness (Database database, Employee employee) throws WrongInputException{
+	public Employee setSickness (Database database) throws WrongInputException{
 		int taskID = 0;
-		int employeeID = employee.ID;
-		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.5);
 		for (Assignment ass:database.assignments) {
-			if(employeeID == ass.employeeID && ass.taskID==taskID){
+			if(this.ID == ass.employeeID && ass.taskID==taskID){
 				ass.addBooking(wp);
 			}
 		}
-		return employee;
+		return this;
 	}	
 	
 	public boolean isSick(Database database, Employee employee) throws WrongInputException{
