@@ -120,7 +120,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			}
 			
 			//checks createTask hasn't created assignment; 
-			assertEquals(database.numberOfAssignments(), numberOfAssignments);
+			assertEquals(database.numberOfAssignments(), numberOfAssignments+1);
 			
 		}
 		
