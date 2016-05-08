@@ -37,14 +37,17 @@ public class SampleDataSetupTest {
 	@Before
 	public void setup() throws WrongInputException {
 		sysApp.init();
+		
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		for (int i=0;i<10;i++){
 			sysApp.createEmployee("Employee"+i);
 			Employee tempEmp=database.getEmployee(i);
 			sysApp.createProject("project"+(i+1));
 			Project tempPro=database.getProject(i+1);
-			Task tempTask=new Task(tempPro,"Task" + i);
-			database.addTask(tempTask);
+			sysApp.logIn(i);
+			database.projects.get(i+1).projectLeader=database.employees.get(i);
+			sysApp.createTask((i+1), "task"+i);
+			Task tempTask=(database.getTask(database.numberOfTasks()-1));
 			Assignment tempAss=new Assignment(tempTask,tempEmp);
 			database.assignments.add(tempAss);
 			WorkPeriod tempWP=new WorkPeriod (day,9,9+i);
@@ -56,7 +59,6 @@ public class SampleDataSetupTest {
 				}
 			}
 		}
-		database.projects.get(1).projectLeader=database.employees.get(0);
 		
-	}	
+	} 
 }

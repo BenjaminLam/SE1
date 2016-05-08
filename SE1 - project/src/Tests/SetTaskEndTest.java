@@ -22,13 +22,15 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	public void setTaskEndMain() throws WrongInputException{
 		
 		Employee employee=database.getEmployee(0);
-		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
-		
-		assertTrue(project.isProjectLeader(employee));
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		project.projectLeader=employee;
+		assertTrue(project.isProjectLeader(sysApp.currentEmp));
+		assertEquals(database.getProject(task.projectID), project);
 		
 		try {
-			sysApp.setTaskEnd(1, 2016, 43);
+			sysApp.setTaskEnd(task.ID, 2016, 43);
 		} catch (WrongInputException e) {
 			Assert.fail ();
 		}
@@ -65,9 +67,12 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	@Test
 	public void setTaskEndAlt2a() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
-		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
-		assertTrue(project.isProjectLeader(employee));
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		project.projectLeader=employee;
+		assertTrue(project.isProjectLeader(sysApp.currentEmp));
+		assertEquals(database.getProject(task.projectID), project);
 		
 		try {
 			sysApp.setTaskStart(1, 2016, 43);		
@@ -99,8 +104,12 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	@Test
 	public void setTaskEndAlt2b() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
-		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		project.projectLeader=employee;
+		assertTrue(project.isProjectLeader(sysApp.currentEmp));
+		assertEquals(database.getProject(task.projectID), project);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		project.end = calWeek1;
 		
@@ -131,11 +140,14 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	
 	@Test
 	public void setTaskEndAlt2c() throws WrongInputException {
-		Employee employee=super.database.employees.get(0);
-		Project project=super.database.projects.get(1);
+		Employee employee=database.getEmployee(0);
 		sysApp.logIn(employee.ID);
-		assertTrue(project.isProjectLeader(employee));
-
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		project.projectLeader=employee;
+		assertTrue(project.isProjectLeader(sysApp.currentEmp));
+		assertEquals(database.getProject(task.projectID), project);
+		
 		try {
 			sysApp.setTaskEnd(1, 2016, 1);
 			Assert.fail();
@@ -161,8 +173,12 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 	@Test
 	public void setTaskEndAlt2d() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
-		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		project.projectLeader=employee;
+		assertTrue(project.isProjectLeader(sysApp.currentEmp));
+		assertEquals(database.getProject(task.projectID), project);
 		CalWeek calWeek1 = new CalWeek(2016,43);
 		project.start = calWeek1;
 		
@@ -185,6 +201,30 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 		assertEquals(database.getTask(1).end.week, 44);
 	}
 	
+	/*
+	 * Alternative 3 - Task is null
+	 */
+	@Test
+	public void setTaskEndAlt3() {
+		Employee employee=database.getEmployee(0);
+		try {
+			sysApp.logIn(employee.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		project.projectLeader=employee;
+		assertTrue(project.isProjectLeader(sysApp.currentEmp));
+		assertEquals(database.getProject(task.projectID), project);
+		
+		try {
+			sysApp.setTaskEnd(-1, 2016, 44);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		
+	}
 	
 }
 

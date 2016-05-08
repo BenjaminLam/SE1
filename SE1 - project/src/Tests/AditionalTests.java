@@ -243,13 +243,19 @@ public class AditionalTests extends SampleDataSetupTest {
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
-		assertEquals(sysApp.currentEmp, employee2);	
+		assertEquals(sysApp.currentEmp, employee2);
+		assertFalse(project.isProjectLeader(employee2));
 		try {
 			sysApp.removeProject(project.ID);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
 		assertEquals(size1, database.projects.size());
+		try {
+			sysApp.removeProject(-1);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
 	}
 }
 
