@@ -39,22 +39,27 @@ public class SysApp {
 	
 	
 	//nedenstående er brugt af UI Employee state
-	public WorkPeriod copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment) throws WrongInputException{
+	public String[] copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment) throws WrongInputException{
 		if (booking==null){
 			throw new WrongInputException("The booking doesn't exist");
 		}
 		if(assignment==null){
 			throw new WrongInputException("The assignment doesn't exist");
 		}
-		
-		return assignment.addTimeRegister(booking);
+		assignment.addTimeRegister(booking);
+		return new String[]{
+				"Added time register succesfully to database",
+		};
 	}
 
-	public WorkPeriod registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
+	public String[] registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
 		Assignment tempAss=database.getAssignment(taskID,currentEmp.ID);
 		if(tempAss==null)throw new WrongInputException("You do not work on this assignemt");
 		WorkPeriod wp=new WorkPeriod(day,start,end);
-		return tempAss.addTimeRegister(wp);
+		tempAss.addTimeRegister(wp);
+		return new String[]{
+			"Registered work succesfully from " + start + " to " + end + "for task: " + database.getTask(taskID).name	
+		};
 	}
 
 	public Object[] seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
