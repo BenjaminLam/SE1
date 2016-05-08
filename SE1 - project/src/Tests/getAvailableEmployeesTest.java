@@ -115,6 +115,9 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	public void getAvailableEmployeesAlt2() throws WrongInputException {
 		Employee employee=database.employees.get(0);
 		int taskID = -1;
+		
+		Task task = database.getTask(taskID);
+		assertNull(task);
 			
 		String[] employeesAvailable=null;
 		try {
