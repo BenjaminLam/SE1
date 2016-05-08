@@ -123,7 +123,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		}
 		Employee employee2 = database.getEmployee(7);
 		assertFalse(project.isProjectLeader(employee));
-		
+		project.projectLeader = employee;
 		try {
 			sysApp.setProjectLeader(project.ID, employee.ID);
 		} catch (WrongInputException e) {
@@ -155,6 +155,13 @@ public class AditionalTests extends SampleDataSetupTest {
 				Assert.fail();
 			} catch (WrongInputException e){}
 		assertFalse(project.isProjectLeader(employee));
+		
+		project.projectLeader = null;
+		try {
+			sysApp.setProjectLeader(project.ID, employee.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
 		}
 	
 	/*
