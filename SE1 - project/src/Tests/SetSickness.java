@@ -30,6 +30,8 @@ public class SetSickness extends SampleDataSetupTest {
 	public void testSetSicknessMain () throws WrongInputException {
 		Employee employee=super.database.employees.get(0);
 		
+		sysApp.logIn(employee.ID);
+		
 		assertFalse(sysApp.isSick(database, employee.ID)); //metoden skal laves
 		
 		try { //tror heller ikke at dette er nødvendigt
@@ -52,6 +54,10 @@ public class SetSickness extends SampleDataSetupTest {
 	@Test
 	public void testSetSicknessAlt1() throws WrongInputException{
 		Employee employee=super.database.employees.get(1);
+		
+		sysApp.logIn(employee.ID);
+		
+		sysApp.setSickness(database, employee.ID);
 		
 		assertTrue(sysApp.isSick(database, employee.ID));
 		

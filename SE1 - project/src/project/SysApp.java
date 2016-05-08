@@ -74,8 +74,9 @@ public class SysApp {
 		return new Object[]{coWorker,task,period};
 	}
 	
-	public void registerSickness () {
-		
+	public void registerSickness () throws WrongInputException {
+		CalDay today = Util.getCurrentDay();
+		currentEmp.setSickness(database);
 	}
 	
 	public void registerVacation () {
@@ -273,7 +274,7 @@ public class SysApp {
 	public Employee setSickness (Database database, int employeeID) throws WrongInputException{
 		Employee employee=database.getEmployee(employeeID);
 		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
-		return currentEmp.setSickness(database, employee);
+		return currentEmp.setSickness(database);
 	}
 
 	public boolean isSick (Database database, int employeeID) throws WrongInputException{
