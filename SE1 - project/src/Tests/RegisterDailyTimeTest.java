@@ -40,7 +40,8 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		assertNotNull(employee);
 		assertNotNull(day);
 		
-		MyMap todaysBookings = (MyMap) employee.dayBookings(day, database).mainInfo;
+		MyMap todaysBookings = employee.dayBookings(day, database);
+		
 		for(Object object: todaysBookings.mainInfo){
 			WorkPeriod booking=(WorkPeriod) object;
 			sysApp.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));	
@@ -63,8 +64,11 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		assertNotNull(employee);
 		assertNotNull(day);
 		
-		//This should be null since employee 9 not works on task 0. (see sampledatasetup)
-		assertNull(sysApp.registerWorkManually(0, 9, 11, day));
+		try {
+			sysApp.registerWorkManually(3, 9, 11, day);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		};
 		
 	}
 	
@@ -83,8 +87,10 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 
 		assertEquals(employee.dayBookings(day, database).mainInfo.size(),0);
 		
-		MyMap todaysBookings = (MyMap) employee.dayBookings(day, database).mainInfo;
+		MyMap todaysBookings = employee.dayBookings(day, database);
+		
 		for(Object object: todaysBookings.mainInfo){
+			Assert.fail();
 			WorkPeriod booking=(WorkPeriod) object;
 			sysApp.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));	
 		}
