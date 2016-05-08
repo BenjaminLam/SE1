@@ -70,17 +70,27 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 	
 	/*
 	 * Test that employee gets an empty array if the day is not today
+	 * and tries to register bookings for that day
 	 */
 	@Test
-	public void registerDailyTimeDayNotToday(){
+	public void registerDailyTimeDayNotToday() throws WrongInputException{
 		Employee employee = database.employees.get(database.assignments.size()-1);
 		CalDay day = new CalDay(new CalWeek(2050,2),5);
 		sysApp.currentEmp=employee;
-		
+		int lastAss=database.assignments.size()-1;
 		assertNotNull(employee);
 		assertNotNull(day);
 
 		assertEquals(employee.dayBookings(day, database).mainInfo.size(),0);
+		
+		MyMap todaysBookings = (MyMap) employee.dayBookings(day, database).mainInfo;
+		for(Object object: todaysBookings.mainInfo){
+			WorkPeriod booking=(WorkPeriod) object;
+			sysApp.copyBookingToTimeRegister(booking,database.assignments.get(lastAss));	
+		}
+		
+		assertEquals(todaysBookings.mainInfo.size(),database.assignments.get(lastAss).timeRegisters.size());
+		
 	}
 	
 }
