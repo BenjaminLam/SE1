@@ -138,7 +138,7 @@ public class Employee {
 	public boolean isSick(Database database, Employee employee) throws WrongInputException{
 		int taskID = 0;
 		int employeeID = employee.ID;
-		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.5);
 		for (Assignment ass:database.assignments) {
 			if(employeeID == ass.employeeID && ass.taskID==taskID){
 				if(ass.bookings.equals(wp)){
