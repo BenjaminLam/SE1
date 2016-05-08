@@ -359,6 +359,73 @@ public class AditionalTests extends SampleDataSetupTest {
 			Assert.fail();		
 		}
 	}
+	/*
+	 * Test for setTaskBudgetTime
+	 */
 	
+	@Test
+	public void setTaskBudgetTimeTest(){
+		Employee employee = database.getEmployee(1);
+		sysApp.currentEmp = employee;
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		project.projectLeader = employee;
+		double budget = 17.5; 
+		try {
+			sysApp.setTaskBudgetTime(task.ID, budget);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertNotNull(task.timeBudget);
+		
+		Employee employee1 = database.getEmployee(0);
+		sysApp.currentEmp = employee1;
+		
+		try {
+			sysApp.setTaskBudgetTime(task.ID, budget);
+			Assert.fail();
+		} catch (WrongInputException e){}
+		
+		try {
+			sysApp.setTaskBudgetTime(-1, budget);
+			Assert.fail();
+		} catch (WrongInputException e){}
+	}
+	
+	/*
+	 * Test for renameTask
+	 */
+	@Test
+	public void renameTaskTest(){
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		Employee employee = database.getEmployee(1);
+		project.projectLeader = employee;
+		sysApp.currentEmp = employee;
+		String name = "projectnavn";
+		assertNotEquals(task.name, name);
+		try {
+			sysApp.renameTask(task.ID, name);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertEquals(task.name, name);
+		//Testing for task = null
+		try {
+			sysApp.renameTask(-1, name);
+			Assert.fail();
+		} catch (WrongInputException e){}
+		
+		//Testing for currentEmp not projectleader
+		Employee employee1 = database.getEmployee(2);
+		sysApp.currentEmp = employee1;
+		assertFalse(project.isProjectLeader(employee1));
+		try {
+			sysApp.renameTask(task.ID, name);
+			Assert.fail();
+		} catch (WrongInputException e){}
+		
+		assertEquals(task.name, name);
+	}
 }
 
