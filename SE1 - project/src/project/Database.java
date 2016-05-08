@@ -8,7 +8,7 @@ import Exceptions_Enums.WrongInputException;
 public class Database {
 	public List<Employee> employees;
 	public List<Project> projects;
-	private List<Task> tasks;
+	public List<Task> tasks;
 	public List<Assignment> assignments;
 	int nextEmpID;
 	int nextTaskID;
