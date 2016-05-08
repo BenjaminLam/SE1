@@ -186,7 +186,7 @@ public class Employee {
 		return hoursRegistered;
 	}
 		
-	private double hoursBooked (Database database, CalWeek start, CalWeek end) {
+	protected double hoursBooked (Database database, CalWeek start, CalWeek end) {
 		double hoursBooked=0;
 		List<Assignment> assignments = database.getEmployeeAssignments(this);
 		

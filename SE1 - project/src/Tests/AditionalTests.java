@@ -35,7 +35,7 @@ public class AditionalTests extends SampleDataSetupTest {
 				}
 			}
 		}
-		assertEquals(hoursBooked,sysApp.hoursBooked(employee,start,end),0.1);
+		assertEquals(hoursBooked,employee.hoursBooked(database,start,end),0.1);
 	}
 	
 	/*
@@ -315,7 +315,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Test for register vacation
 	 */
 	@Test
-	public void registerVacationTest(){
+	public void registerVacationTest() throws WrongInputException{
 		Employee employee = database.getEmployee(1);
 		CalWeek week1 = new CalWeek(2016,31);
 		CalWeek week2 = new CalWeek(2016,33);
@@ -339,7 +339,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Test for register course
 	 */
 	@Test
-	public void registerCourseTest(){
+	public void registerCourseTest() throws WrongInputException{
 		Employee employee = database.getEmployee(1);
 		CalWeek week1 = new CalWeek(2016,31);
 		CalWeek week2 = new CalWeek(2016,31);
@@ -938,10 +938,16 @@ public class AditionalTests extends SampleDataSetupTest {
 		
 	}
 	
-	/*^
-	 * 
+	/*
+	 *Test for EmployeesForTask 
 	 */
-	
+	@Test
+	public void employeesForTaskTest(){
+		Task task = database.getTask(1);
+		Employee employee = database.getEmployee(1);
+		Project project = database.getProject(task.ID);
+		project.projectLeader = employee;
+	}
 	
 	
 }
