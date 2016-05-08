@@ -427,5 +427,108 @@ public class AditionalTests extends SampleDataSetupTest {
 		
 		assertEquals(task.name, name);
 	}
+	
+	/*
+	 * Test for createBooking
+	 */
+	@Test
+	public void createBookingTest(){
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		Employee employee = database.getEmployee(1);
+		project.projectLeader = employee;
+		sysApp.currentEmp = employee;
+		Employee employee1 = database.getEmployee(2);
+		int size = database.getAssignment(task.ID, employee1.ID).bookings.size();
+		try{
+			sysApp.createBooking(employee1.ID, task.ID, 2016, 34, 3, 9.30, 12.30);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertNotEquals(size, database.getAssignment(task.ID, employee1.ID).bookings.size());
+		//Employee not projectleader
+		sysApp.currentEmp = employee1;
+		int size1 = database.getAssignment(task.ID, employee.ID).bookings.size();
+		try{
+			sysApp.createBooking(employee.ID, task.ID, 2016, 34, 3, 9.30, 12.30);
+			Assert.fail();
+		} catch (WrongInputException e){
+		}
+		assertEquals(size1, database.getAssignment(task.ID, employee.ID).bookings.size());
+		
+		// Task is null
+		sysApp.currentEmp = employee;
+		try{
+			sysApp.createBooking(employee.ID, -1, 2016, 34, 3, 9.30, 12.30);
+			Assert.fail();
+		} catch (WrongInputException e){
+		}
+		assertEquals(size1, database.getAssignment(task.ID, employee.ID).bookings.size());
+		
+		//Employee is null
+		try{
+			sysApp.createBooking(-1, task.ID, 2016, 34, 3, 9.30, 12.30);
+			Assert.fail();
+		} catch (WrongInputException e){
+		}
+	}
+	
+	/*
+	 * Test for removeBooking
+	 */
+	@Test
+	public void removeBookingTest() {
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		Employee employee = database.getEmployee(1);
+		project.projectLeader = employee;
+		sysApp.currentEmp = employee;
+		Employee employee1 = database.getEmployee(2);
+		int size = database.getAssignment(task.ID, employee1.ID).bookings.size();
+		
+		try{
+			sysApp.createBooking(employee1.ID, task.ID, 2016, 34, 3, 9.30, 12.30);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertNotEquals(size, database.getAssignment(task.ID, employee1.ID).bookings.size());
+		
+		//Employee is not projectleader
+		sysApp.currentEmp = employee1;
+		
+		try{
+			sysApp.removeBooking(employee1.ID, task.ID, 2016, 34, 3, 9.30, 12.30);
+			Assert.fail();
+		} catch (WrongInputException e){
+		}
+		assertNotEquals(size, database.getAssignment(task.ID, employee1.ID).bookings.size());
+		
+		//Task is null
+		sysApp.currentEmp = employee;
+		try{
+			sysApp.removeBooking(employee1.ID, -1, 2016, 34, 3, 9.30, 12.30);
+			Assert.fail();
+		} catch (WrongInputException e){
+		}
+		assertNotEquals(size, database.getAssignment(task.ID, employee1.ID).bookings.size());
+		
+		//Employee is null
+		
+		try{
+			sysApp.removeBooking(-1, task.ID, 2016, 34, 3, 9.30, 12.30);
+			Assert.fail();
+		} catch (WrongInputException e){
+		}
+		assertNotEquals(size, database.getAssignment(task.ID, employee1.ID).bookings.size());
+		
+		try{
+			sysApp.removeBooking(employee1.ID, task.ID, 2016, 34, 3, 9.30, 12.30);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertEquals(size, database.getAssignment(task.ID, employee1.ID).bookings.size());
+	}
+	
+	
 }
 
