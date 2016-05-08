@@ -79,16 +79,23 @@ public class SysApp {
 	}
 	
 	public void registerSickness () throws WrongInputException {
-		CalDay today = Util.getCurrentDay();
 		currentEmp.setSickness(database);
 	}
 	
-	public void registerVacation () {
+	public void registerVacation (CalDay start, CalDay end) throws WrongInputException {
+		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
+		for(CalDay day: daysBetween){
+			currentEmp.setVacation(database, day);
+		}
 	}
 	
-	public void registerCourse () {
+	public void registerCourse (CalDay start, CalDay end) throws WrongInputException {
+		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
+		for(CalDay day: daysBetween){
+			currentEmp.setCourse(database, day);
+		}
 	}
 	
 	public String[] createProject (String name) throws WrongInputException {
@@ -290,8 +297,11 @@ public class SysApp {
 		for (Task task:completedTasks) {
 			projectReport.add(task.name);
 		}
+		String[] a=new String[projectReport.size()];
+		Object[] test=projectReport.toArray();
+		a=(String[]) test;
 		
-		return (String[]) projectReport.toArray();
+		return a;
 	}
 
 	public String[] createTaskReport(int taskID) throws WrongInputException {
