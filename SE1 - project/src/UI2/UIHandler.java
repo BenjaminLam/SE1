@@ -61,7 +61,7 @@ public class UIHandler extends Observable  {
 			default:
 				terminate();
 			}
-		} catch (NumberFormatException|ArrayIndexOutOfBoundsException e) {
+		} catch (NumberFormatException|IndexOutOfBoundsException e) {
 			wrongInputFormat();
 		} catch (WrongInputException e){
 			error(e.getMessage());

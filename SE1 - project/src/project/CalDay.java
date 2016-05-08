@@ -13,7 +13,7 @@ public class CalDay {
 		this.week=week;
 		this.day=day;
 		
-		if (day<0 || day>7) throw new WrongInputException ("Weekday has to be a number between 1 and 7");
+		if (day<1 || day>7) throw new WrongInputException ("Weekday has to be a number between 1 and 7");
 	}
 	
 	public boolean equals(CalDay other){
