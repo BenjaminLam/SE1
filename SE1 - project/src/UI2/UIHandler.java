@@ -102,7 +102,7 @@ public class UIHandler extends Observable  {
 	private void selectEmployeeSubstate (String userInput) {
 		int userChoice=Integer.parseInt(userInput);
 		
-		if (userChoice<0 || userChoice>11) {
+		if (userChoice<1 || userChoice>11) {
 			error("Illegal choice");
 			return;
 		}
@@ -123,7 +123,6 @@ public class UIHandler extends Observable  {
 		}
 		setSubState(userChoice);
 	}
-
 	private void plScreen() {
 		if (!sysApp.isProjectLeader) error("You are not a project leader");
 		else setStateResetSub(ScreenState.ProjectLeaderState);
@@ -331,13 +330,11 @@ public class UIHandler extends Observable  {
 	}
 	private void selectProjectLeaderSubstate(String userInput) {
 		int userChoice=(Integer.parseInt(userInput));
-		try {
-			if (userChoice<1 || userChoice >17) throw new WrongInputException ("Illegal choice");
-		}
-		catch (WrongInputException e) {
-			error(e.getMessage());
+		if (userChoice<1 || userChoice >17){
+			error("Illegal choice");
 			return;
 		}
+		
 		if (userChoice==17) setStateResetSub(ScreenState.EmployeeState); 
 		else setSubState(userChoice);
 	}
@@ -587,6 +584,7 @@ public class UIHandler extends Observable  {
 		}
 	}
 	
+	//help methods:
 	private void logOff() {
 		setStateResetSub(ScreenState.LoginState);
 	}

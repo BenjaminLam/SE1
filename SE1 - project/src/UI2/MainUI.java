@@ -60,6 +60,9 @@ public class MainUI implements Observer {
 	
 	private void displayLoginScreen () {
 		out.println("Welcome to the tool for registration of hours and project management");
+		out.println("To quit program type \"exit\" at any time");
+		out.println("Use the menu numbers to navigate between menu");
+		out.println("If you're not prompted for a menu number, you can type \"back\"");
 		out.println("Please enter your employee ID: ");
 	}
 	
@@ -68,8 +71,7 @@ public class MainUI implements Observer {
 		case 0:  displayEmployeeScreen(); break;
 		case 1:  displayRegisterWork(); break;
 		case 2:  displaySeekAssistance(); break;
-		case 3:  displayRegisterVacation(); break;
-		case 4:  displayRegisterSickness(); break;
+		case 4:  displayRegisterVacation(); break;
 		case 5:  displayRegisterCourse (); break;
 		case 6:  displayCreateNewProject (); break;
 		case 7:  displaySetProjectLeader (); break;
@@ -78,11 +80,10 @@ public class MainUI implements Observer {
 		}
 	}
 	private void displayEmployeeScreen () {
-		out.println("	0) exit");
 		out.println("	1) Register work");
 		out.println("	2) Seek assistance");
-		out.println("	3) Register vacation");
-		out.println("	4) Register sickness");
+		out.println("	3) Register sickness");
+		out.println("	4) Register vacation");
 		out.println("	5) Register course");
 		out.println("	6) Create new project");
 		out.println("	7) Set project leader");
@@ -111,13 +112,15 @@ public class MainUI implements Observer {
 	
 	}
 	private void displayRegisterVacation(){
-		out.println("3");
-	}
-	private void displayRegisterSickness(){
-		out.println("4");
+		out.println("Please input start year, start week and start weekday follow by");
+		out.println("end year, end week and end weekday of vacation period");
+		out.println("inputs should be seperated by a space");
 	}
 	private void displayRegisterCourse (){
-		out.println("5");
+		out.println("Please input start year, start week and start weekday follow by");
+		out.println("end year, end week and end weekday of course period");
+		out.println("inputs should be seperated by a space");
+	
 	}
 	private void displayCreateNewProject(){
 		out.println("Please enter name of project to create");
@@ -155,7 +158,6 @@ public class MainUI implements Observer {
 		}
 	}
 	private void displayProjectLeaderScreen () {
-		out.println("   0) exit");
 		out.println("   1) Rename project");
 		out.println("   2) Set project start");
 		out.println("   3) Set project end");
@@ -177,19 +179,19 @@ public class MainUI implements Observer {
         out.println("Select a number (0-17): ");
 	}
 	private void displayRenameProject() {
-		
+		out.print("Please input project ID followed by new name of project");
 	}
 	private void displaySetProjectStart(){
-		
+		out.println("Please input project ID followed by start year and start week of project");
 	}
 	private void displaySetProjectEnd() {
-		
+		out.println("Please input project ID followed by end year and end week of project");
 	}
 	private void displayRemoveProject() {
-		
+		out.println("Please input project ID");
 	}
 	private void displayCreatetask () {
-	
+		out.println("Please input project ID and task name");
 	}
 	private void displaySetTaskBudgetTime () {
 		out.println("Please enter task ID and budget time seperated by a space");
@@ -202,28 +204,30 @@ public class MainUI implements Observer {
 		out.println("Please enter task ID, task end year and task end week, each info seperated by a space");
 	}
 	private void displayRemoveTask() {
-		
+		out.println("Please input task ID");
 	}
 	private void displayEmployeesForTask () {
 		out.println("Please enter ID for task to display employees for");
 	}
 	private void displayRenameTask() {
-		
+		out.println("Please input task ID and new task name");
 	}
 	private void displayManTask () {
 		out.println("Please enter task id and employee id seperated by a space");
 	}
 	private void displayCreateBooking() {
-		
+		out.println("Please input employee ID, task ID, year, week, weekday, start and end");
+		explainDoubleTime();
 	}
 	private void displayRemoveBooking() {
-		
+		out.println("Please input employee ID, task ID, year, week, weekday, start and end");	
+		explainDoubleTime();
 	}
 	private void displayProjectReport() {
-		
+		out.println("Please input project id");	
 	}
 	private void displayTaskReport() {
-		
+		out.println("Please input task id");
 	}
 
 	private void handleMessage() {
