@@ -32,15 +32,18 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void projectReportTestMain () {
+	public void projectReportTestMain () throws WrongInputException {
 		Project project=database.projects.get(1);
 		assertNotNull(project);
 		int projectID = project.ID;
 		
 		Employee employee=database.employees.get(0);
+		
+		sysApp.logIn(employee.ID);
+		
 		assertTrue(project.isProjectLeader(employee));
 		
-		List<String> projectReport=null;
+		String[] projectReport=null;
 		
 		try {
 			projectReport=sysApp.createProjectReport(projectID);
@@ -59,14 +62,17 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void projectReportTestAlt1 () {
+	public void projectReportTestAlt1 () throws WrongInputException {
 		Project project=null;
 		assertNull(project);
-		int projectID = project.ID;
+		
+		int projectID = -1;
 		
 		Employee employee=database.employees.get(0);
 		
-		List<String> projectReport=null;
+		sysApp.logIn(employee.ID);
+		
+		String[] projectReport=null;
 		
 		try {
 			projectReport=sysApp.createProjectReport(projectID);
@@ -86,15 +92,18 @@ public class ProjectReportTest extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void projectReportTestAlt2() {
+	public void projectReportTestAlt2() throws WrongInputException {
 		Project project=database.projects.get(1);
 		assertNotNull(project);
 		int projectID = project.ID;
 		
 		Employee employee=database.employees.get(1);
+		
+		sysApp.logIn(employee.ID);
+		
 		assertFalse(project.isProjectLeader(employee));
 		
-		List<String> projectReport=null;
+		String[] projectReport=null;
 		
 		try {
 			projectReport=sysApp.createProjectReport(projectID);
