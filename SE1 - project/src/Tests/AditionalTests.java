@@ -18,7 +18,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Existing calWeek (end) is inputed
 	 * method returns number of hours the person is booked in the interval
 	 */
-	
+	/*
 	@Test 
 	public void hoursBookedTest() {
 		Employee employee=database.employees.get(0);
@@ -43,7 +43,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Existing calWeek (end) is inputed
 	 * method returns number of hours the person is available in the interval
 	 */
-	
+	/*
 	@Test
 	public void hoursAvailableTest() {
 		CalWeek start=new CalWeek(2000,1);
@@ -61,6 +61,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	/*
 	 * Test for createProject
 	 */
+	/*
 	@Test
 	public void createProjectTest() {
 		Project project1 = database.getProject(1);
@@ -1062,6 +1063,33 @@ public class AditionalTests extends SampleDataSetupTest {
 		
 		database.isProjectLeader(employee);	
 		assertNotEquals(project.projectLeader, employee);
+	}
+	
+	@Test
+	public void registerWorkManuallyTest() throws WrongInputException{
+		Task task = database.getTask(4);
+		Employee employee = database.getEmployee(1);
+		//Project project = database.getProject(task.projectID);
+		sysApp.currentEmp = employee;
+		CalWeek week = new CalWeek(2016,44);
+		CalDay day = new CalDay(week, 4);
+		Employee employee3 = database.getEmployee(2);
+		sysApp.manTask(task.ID, employee3.ID);
+		
+		try {
+		sysApp.registerWorkManually(task.ID, 9.5, 13.5, day);
+		} catch (WrongInputException e){
+		Assert.fail();
+		}
+		//Alternative scenario - Not assigned.
+		Employee employee1 = database.getEmployee(4);
+		sysApp.currentEmp = employee1;
+		
+		try {
+		sysApp.registerWorkManually(task.ID, 9.5 , 13.5, day);
+		Assert.fail();
+		} catch (WrongInputException e){}
+		
 	}
 }
 
