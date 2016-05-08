@@ -58,7 +58,21 @@ public class AditionalTests extends SampleDataSetupTest {
 		
 		assertEquals(expected,calculated,0.1);
 	}
-	
+	/*
+	 * Test for createProject
+	 */
+	@Test
+	public void createProjectTest() {
+		Project project1 = database.getProject(1);
+		project1.name = "Programming";
+		int size = database.projects.size();
+		try {
+			sysApp.createProject("Programming");
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		assertEquals(size, database.projects.size());
+	}
 	/*
 	 * Test for copyBookingTimeRegister
 	 * 
@@ -143,6 +157,62 @@ public class AditionalTests extends SampleDataSetupTest {
 		assertFalse(project.isProjectLeader(employee));
 		}
 	
+	/*
+	 * Test for removeEmployee
+	 */
+	@Test
+	public void removeEmployeeTest() {
+		Employee employee = database.getEmployee(0);
+		Employee employee1 = database.getEmployee(1);
+		assertNotNull(employee);
+		assertNotNull(employee1);
+		try {
+			sysApp.logIn(employee1.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		try {
+			sysApp.removeEmployee(employee.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		assertFalse(database.employees.contains(employee));
+		
+		try {
+			sysApp.removeEmployee(employee1.ID);
+			Assert.fail();
+		} catch (WrongInputException e){}
+	}
 	
+	/*
+	 * Test for renameProject
+	 */
+	@Test
+	public void renameProjectTest(){
+		Project project = database.getProject(1);
+		String name = "projectID";
+		
+		try {
+			sysApp.renameProject(project.ID, name);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		assertEquals(project.name, name);
+		
+		Project project1 = database.getProject(2);
+		project1.name = "project1";
+		
+		try {
+			sysApp.renameProject(project.ID, "project1");
+			Assert.fail();
+		} catch (WrongInputException e){}
+		assertNotEquals("project1", project.name);
+		
+		try {
+			sysApp.renameProject(-1, name);
+			Assert.fail();
+		} catch (WrongInputException e){}
+		assertEquals(project.name, name);
+	}
 }
 

@@ -225,7 +225,7 @@ public class Database {
 	}
 	
 	protected Employee removeEmployee (Employee employee) throws WrongInputException {
-		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
+		if (employee==null) throw new WrongInputException ("Employee doesn't exist");
 		if (!employees.remove(employee)){
 			throw new WrongInputException ("Employee doesn't excist");
 		}
