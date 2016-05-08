@@ -203,6 +203,11 @@ public class Database {
 		employee.ID=nextEmpID;
 		nextEmpID++;
 		employees.add(employee);
+		
+		//creates sickness,vacation and course
+		for(int i=0;i<3;i++){
+			createAssignment(employee, getTask(i));
+		}
 		return employee;
 	}
 	
