@@ -300,7 +300,7 @@ public class UIHandler extends Observable  {
 		int projectID=Integer.parseInt(userInputs[0]);
 		String name=userInputs[1];
 		try {
-			succes(renameProject(projectID,name));
+			succes(sysApp.renameProject(projectID,name));
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}

@@ -142,7 +142,7 @@ public class SysApp {
 		if (database.projectExcists(name)) throw new WrongInputException ("Project with that name already excists");
 		project.name=name;
 		return new String[]{
-			"Succesfully renamed project with project id " + project.ID + " to: " + project.name;	
+			"Succesfully renamed project with project id " + project.ID + " to: " + project.name	
 		};
 	}
 	
@@ -154,61 +154,90 @@ public class SysApp {
 		
 	}
 	
-	public Project removeProject (int projectID) throws WrongInputException {
+	public String[] removeProject (int projectID) throws WrongInputException {
 		Project project = database.getProject(projectID);
 		if(project == null) throw new WrongInputException ("Project doesn't exist");
 		if(!project.projectLeader.equals(currentEmp)) throw new WrongInputException("You are not the project leader of this project");
-		return database.removeProject(database.getProject(projectID));
+		database.removeProject(database.getProject(projectID));
+		return new String[]{
+			"Succesfully removed project " + project.name	
+		};
 	}
 	
-	public Task createTask (int projectID, String name) throws WrongInputException {
-		return currentEmp.createTask(database, projectID, name);
+	public String[] createTask (int projectID, String name) throws WrongInputException {
+		Task task=currentEmp.createTask(database, projectID, name);
+		return new String[]{
+			"Succesfully created task "	+ task.name + " with task id: " + task.ID
+		};
 	}
 	
-	public Task setTaskBudgetTime(int taskID, double timeBudget) throws WrongInputException {
+	public String[] setTaskBudgetTime(int taskID, double timeBudget) throws WrongInputException {
 		Task task=database.getTask(taskID);
 		if (task==null) throw new WrongInputException("Task doesn't exist.");
-		return currentEmp.setTaskBudgetTime(database, task,timeBudget);
+		currentEmp.setTaskBudgetTime(database, task,timeBudget);
+		return new String[]{
+			"Succesfully set budget time for task " + task.name + " to " + task.timeBudget	
+		};
 	}
 	
-	public Task setTaskStart (int taskID, int year, int week) throws WrongInputException {
+	public String[] setTaskStart (int taskID, int year, int week) throws WrongInputException {
 		Task task=database.getTask(taskID);
 		if (task==null) throw new WrongInputException("Task doesn't exist");
-		return task.setStart(new CalWeek (year,week), currentEmp, database);
+		task.setStart(new CalWeek (year,week), currentEmp, database);
+		return new String[] {
+			"Succesfully set task start for " + task.name + " to year " + year + " and week " + week 	
+		};
 	}
 	
-	public Task setTaskEnd (int taskID, int year, int week) throws WrongInputException {
+	public String[] setTaskEnd (int taskID, int year, int week) throws WrongInputException {
 		Task task=database.getTask(taskID);
 		if (task==null){
 			throw new WrongInputException ("Wrong input: Task doesn't exist");
+		}
+		task.setEnd(new CalWeek (year,week), currentEmp, database);
+		return new String[] {
+			"Succesfully set task end for  " + task.name + " to year " + year + " and week " + week 	
 		};
-		return task.setEnd(new CalWeek (year,week), currentEmp, database);
 	}
 	
-	public Task removeTask (int taskID) throws WrongInputException {
-		return database.removeTask(database.getTask(taskID));
+	public String[] removeTask (int taskID) throws WrongInputException {
+		database.removeTask(database.getTask(taskID));
+		return new String[]{
+				
+		};
 	}
 
-	public List<String> employeesForTask(int taskID) throws WrongInputException {
+	public String[] employeesForTask(int taskID) throws WrongInputException {
 		Task task=database.getTask(taskID);
 		if (task==null) throw new WrongInputException ("Task doesn't excist");
 		
 		List<String> availableEmps=task.getAvailableEmployees(currentEmp, database);
 		if (availableEmps.isEmpty()) {
-			List<String> noEmps=new ArrayList<String>();
-			noEmps.add("No employees are avilable");
-			return noEmps;
+			return new String[] {
+				"No employees are avilable"	
+			};
 		}
+		
 		availableEmps.add(0, "Following employees are available for the task: ");
-		return availableEmps;
+		
+		return (String[]) availableEmps.toArray();
 	}
 
-	public void renameTask() {
+	public String[] renameTask(int taskID, String name) throws WrongInputException {
+		Task task=database.getTask(taskID);
+		if (task==null) throw new WrongInputException ("Task doesn't excist");
+		task.rename(database, currentEmp, name);
 		
+		return new String[]{
+			"Succesfully changed name of task with task id " + task.ID + " to " + task.name
+		};
 	}
 	
-	public Assignment manTask (int taskID, int employeeID) throws WrongInputException {
-		return currentEmp.manTask(database, taskID,employeeID);
+	public String[] manTask (int taskID, int employeeID) throws WrongInputException {
+		currentEmp.manTask(database, taskID,employeeID);
+		return new String[] {
+			"Succesfully attached " + database.getEmployee(employeeID).name + " to " + database.getTask(taskID).name	
+		};
 	}
 	
 	public void createBooking () {
@@ -219,7 +248,7 @@ public class SysApp {
 		
 	}
 	
-	public List<String> createProjectReport(int projectID) throws WrongInputException {
+	public String[] createProjectReport(int projectID) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException ("Project doesn't excist");
 		if (!project.isProjectLeader(currentEmp)) throw new WrongInputException ("You are not the project leader of this project");
@@ -254,10 +283,10 @@ public class SysApp {
 			projectReport.add(task.name);
 		}
 		
-		return projectReport;
+		return (String[]) projectReport.toArray();
 	}
 
-	public List<String> createTaskReport(int taskID) throws WrongInputException {
+	public String[] createTaskReport(int taskID) throws WrongInputException {
 		Task task = database.getTask(taskID);
 		if(task==null) throw new WrongInputException("Task doens't exist");
 		if(!database.getProject(task.projectID).isProjectLeader(currentEmp)) throw new WrongInputException("You are not the project leader of this project");
@@ -275,7 +304,7 @@ public class SysApp {
 		taskReport.add("Time budget for this task:" + task.timeBudget);
 		
 		taskReport.add("Total time spent on this project: " + task.hoursSpent(database));
-		return taskReport;
+		return (String[]) taskReport.toArray();
 	}
 	
 	
