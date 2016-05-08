@@ -214,5 +214,42 @@ public class AditionalTests extends SampleDataSetupTest {
 		} catch (WrongInputException e){}
 		assertEquals(project.name, name);
 	}
+	
+	/*
+	 * Test for removeProject
+	 */
+	@Test
+	public void removeProject() {
+		Project project = database.getProject(1);
+		Employee employee = database.getEmployee(0);
+		int size = database.projects.size();
+		try {
+			sysApp.logIn(employee.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		assertEquals(sysApp.currentEmp, employee);
+		
+		try {
+			sysApp.removeProject(project.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		assertNotEquals(size, database.projects.size());
+		Employee employee2 = database.getEmployee(3);
+		int size1 = database.projects.size();
+		try {
+			sysApp.logIn(employee2.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		assertEquals(sysApp.currentEmp, employee2);	
+		try {
+			sysApp.removeProject(project.ID);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		assertEquals(size1, database.projects.size());
+	}
 }
 

@@ -58,6 +58,8 @@ public class Employee {
 		Project project=database.getProject(task.projectID);
 		if (project==null) throw new WrongInputException("No project exists corresponding to that task");
 		
+		if (employee.isAssigned(database, task, employee)) throw new WrongInputException ("An assignment for this task and employee already exists");
+		
 		if (!project.isProjectLeader(this)) throw new WrongInputException("You are not projectleader of this project, therefore you can not man this task.");
 		return database.createAssignment(employee,task);
 	}
@@ -122,25 +124,25 @@ public class Employee {
 		return true;
 	}
 	
-	public Employee setSickness (Database database, Employee employee) throws WrongInputException{
+	public Employee setSickness (Database database) throws WrongInputException{
 		int taskID = 0;
-		int employeeID = employee.ID;
-		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.5);
 		for (Assignment ass:database.assignments) {
-			if(employeeID == ass.employeeID && ass.taskID==taskID){
+			if(this.ID == ass.employeeID && ass.taskID==taskID){
 				ass.addBooking(wp);
 			}
 		}
-		return employee;
+		return this;
 	}	
 	
 	public boolean isSick(Database database, Employee employee) throws WrongInputException{
 		int taskID = 0;
 		int employeeID = employee.ID;
-		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.0);
+		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.5);
 		for (Assignment ass:database.assignments) {
 			if(employeeID == ass.employeeID && ass.taskID==taskID){
-				if(ass.bookings.equals(wp)){
+			for(WorkPeriod booking:ass.bookings)	
+				if(booking.equals(wp)){
 					return true;
 					}
 				}

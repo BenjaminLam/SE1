@@ -78,8 +78,9 @@ public class SysApp {
 		};
 	}
 	
-	public void registerSickness () {
-		
+	public void registerSickness () throws WrongInputException {
+		CalDay today = Util.getCurrentDay();
+		currentEmp.setSickness(database);
 	}
 	
 	public void registerVacation () {
@@ -154,11 +155,9 @@ public class SysApp {
 	}
 	
 	public Project removeProject (int projectID) throws WrongInputException {
-		try {
-			if (!database.getProject(projectID).projectLeader.equals(currentEmp)) throw new WrongInputException("You are not the project leader of this project");
-		} catch (NullPointerException e) {
-			throw new WrongInputException ("Project doesn't excist");
-		}
+		Project project = database.getProject(projectID);
+		if(project == null) throw new WrongInputException ("Project doesn't exist");
+		if(!project.projectLeader.equals(currentEmp)) throw new WrongInputException("You are not the project leader of this project");
 		return database.removeProject(database.getProject(projectID));
 	}
 	
@@ -291,7 +290,7 @@ public class SysApp {
 	public Employee setSickness (Database database, int employeeID) throws WrongInputException{
 		Employee employee=database.getEmployee(employeeID);
 		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
-		return currentEmp.setSickness(database, employee);
+		return currentEmp.setSickness(database);
 	}
 
 	public boolean isSick (Database database, int employeeID) throws WrongInputException{
