@@ -17,7 +17,7 @@ public class Database {
 	int nextTaskID;
 	int nextProjectID;
 	
-	public Database () throws WrongInputException {
+	public Database () {
 		this.employees=new ArrayList<Employee>();
 		this.projects=new ArrayList<Project>();
 		this.tasks=new ArrayList<Task>();
@@ -26,7 +26,6 @@ public class Database {
 		this.nextEmpID=0;
 		this.nextTaskID=0;
 		this.nextProjectID=0;
-		initDatabase();
 	}
 	
 	public void initDatabase () throws WrongInputException {

@@ -17,7 +17,7 @@ public class SysApp {
 	public boolean isProjectLeader;
 	private Database database;
 	
-	public SysApp () throws WrongInputException {
+	public SysApp () {
 		this.database=new Database();
 	}
 	
