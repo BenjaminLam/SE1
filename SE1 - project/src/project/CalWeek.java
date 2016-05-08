@@ -11,7 +11,7 @@ public class CalWeek {
 		this.week=week;
 		
 		if (week<1 || week>53) throw new WrongInputException ("Week has to be a number between 1 and 53");
-		if (year<1 || week>2050) throw new WrongInputException("Year has to be a number between 1 and 2050");
+		if (year<1 || year>2050) throw new WrongInputException("Year has to be a number between 1 and 2050");
 	}
 	
 	public boolean isAfterOrWhile (CalWeek week) {
