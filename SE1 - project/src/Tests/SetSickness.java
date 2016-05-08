@@ -32,15 +32,15 @@ public class SetSickness extends SampleDataSetupTest {
 		
 		sysApp.logIn(employee.ID);
 		
-		assertFalse(sysApp.isSick(database, employee.ID)); //metoden skal laves
+		assertFalse(employee.isSick(database, employee)); //metoden skal laves
 		
 		try { //tror heller ikke at dette er nødvendigt
-			sysApp.setSickness(database, employee.ID); //skal laves
+			sysApp.registerSickness(); //skal laves
 		} catch (WrongInputException e) {
 		}
 		
 		//checks if employee is sick
-		assertTrue(sysApp.isSick(database, employee.ID));
+		assertTrue(employee.isSick(database, employee));
 	}
 	
 	/*
@@ -57,12 +57,12 @@ public class SetSickness extends SampleDataSetupTest {
 		
 		sysApp.logIn(employee.ID);
 		
-		sysApp.setSickness(database, employee.ID);
+		sysApp.registerSickness();
 		
-		assertTrue(sysApp.isSick(database, employee.ID));
+		assertTrue(employee.isSick(database, employee));
 		
 		try { 
-			sysApp.setSickness(database, employee.ID);
+			sysApp.registerSickness();
 			Assert.fail(); //checks if exception is thrown
 		} catch (WrongInputException e) { //exception skal laves
 		}
