@@ -28,6 +28,22 @@ public class Database {
 		this.nextProjectID=0;
 	}
 	
+	public void initDatabase () throws WrongInputException {
+		//creates the powerful secret project
+		Project project = new Project("project0");
+		addProject(project);
+		
+		Task sickness = new Task(project, "Sickness");
+		addTask(sickness);
+		
+		Task vacation = new Task(project, "Vacation");
+		addTask(vacation);		
+		
+		Task course = new Task(project, "Course");
+		addTask(course);
+	}
+
+	
 	public Employee getEmployee (int ID) {
 		for (Employee employee:employees) {
 			if (employee.ID==ID) return employee;
@@ -254,21 +270,7 @@ public class Database {
 			return taskAss;
 		}
 		
-	public void initDatabase () throws WrongInputException {
-		//creates the powerful secret project
-		Project project = new Project("project0");
-		addProject(project);
-		
-		Task sickness = new Task(project, "Sickness");
-		addTask(sickness);
-		
-		Task vacation = new Task(project, "Vacation");
-		addTask(vacation);		
-		
-		Task course = new Task(project, "Course");
-		addTask(course);
-	}
-	
+
 }
 
 
