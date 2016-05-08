@@ -75,9 +75,10 @@ public class Project {
 		if (!this.isProjectLeader(employee)) throw new WrongInputException ("You are not the project leader of this project");
 		
 		for (Task task:database.projectGetTasks(this)) {
+			if (task.start != null){
 			if (task.start.isBefore(start)) throw new WrongInputException ("One or more of the projects tasks has a start date before your entered project start date");
 		}
-		
+		}
 		if (this.end!=null && this.end.isBefore(start)) throw new WrongInputException ("The end date of the project is before the selected start date");
 		
 		if (start.isBefore(Util.getCurrentWeek())) throw new WrongInputException ("You can't select a start date which lies in the past");
@@ -88,11 +89,11 @@ public class Project {
 	
 	public Project setEnd (CalWeek end, Employee employee, Database database) throws WrongInputException {
 		if (!this.isProjectLeader(employee)) throw new WrongInputException ("You are not the project leader of this project");
-		
 		for (Task task:database.projectGetTasks(this)) {
+			if (task.end != null){
 			if (task.end.isAfter(end)) throw new WrongInputException ("One or more of the projects tasks has an end date after your entered project end date");
 		}
-		
+		}
 		if (this.start!=null && this.start.isAfter(end)) throw new WrongInputException ("You can't select an end date which is before the projects start date");
 		
 		if (end.isBefore(Util.getCurrentWeek())) throw new WrongInputException ("You can't select an end date which lies in the past");

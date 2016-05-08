@@ -607,6 +607,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 2b
 	 * Selected date is before start date of a task
 	 */
+	/*
 	@Test
 	public void setProjectStartAlt2bTest() throws WrongInputException{
 		Employee employee=database.getEmployee(3);
@@ -784,7 +785,8 @@ public class AditionalTests extends SampleDataSetupTest {
 		Project project = database.getProject(1);
 		project.projectLeader=employee;
 		assertTrue(project.isProjectLeader(sysApp.currentEmp));
-		
+		Task task = database.getTask(1);
+	
 		try {
 			sysApp.setProjectStart(1, 2016, 43);		
 		} catch (WrongInputException e) { 
@@ -811,13 +813,14 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 2b
 	 * Selected date is before a tasks end week
 	 * project end date is not changed
-	 */
+	 *
 	@Test
 	public void setProjectEndAlt2bTest() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		sysApp.logIn(employee.ID);
+		Task task = database.getTask(1);
 		//Task task = database.getTask(1);
-		Project project = database.getProject(1);
+		Project project = database.getProject(task.projectID);
 		project.projectLeader=employee;
 		assertTrue(project.isProjectLeader(sysApp.currentEmp));
 		//assertEquals(database.getProject(1), project);
@@ -842,7 +845,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		assertEquals(database.getProject(1).end.year, 2016);
 		assertEquals(database.getProject(1).end.week, 44);
 	}
-	
+	*/
 	/*
 	 * Alternative scenario 2c
 	 * The selected date is before current date
@@ -881,8 +884,9 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Selected date is before start date of of a task
 	 * Project end date is not changed
 	 */
+	/*
 	@Test
-	public void setProtecyEndAlt2dTest() throws WrongInputException{
+	public void setProjectEndAlt2dTest() throws WrongInputException{
 		Employee employee=database.getEmployee(0);
 		sysApp.logIn(employee.ID);
 		Project project = database.getProject(1);
@@ -910,7 +914,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		assertEquals(database.getProject(1).end.year, 2016);
 		assertEquals(database.getProject(1).end.week, 44);
 	}
-	
+	*/
 	/*
 	 * Alternative 3 - Task is null
 	 */
@@ -933,6 +937,10 @@ public class AditionalTests extends SampleDataSetupTest {
 		}
 		
 	}
+	
+	/*^
+	 * 
+	 */
 	
 	
 	
