@@ -141,7 +141,8 @@ public class Employee {
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.5);
 		for (Assignment ass:database.assignments) {
 			if(employeeID == ass.employeeID && ass.taskID==taskID){
-				if(ass.bookings.equals(wp)){
+			for(WorkPeriod booking:ass.bookings)	
+				if(booking.equals(wp)){
 					return true;
 					}
 				}
