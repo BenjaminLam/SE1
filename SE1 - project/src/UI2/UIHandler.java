@@ -14,10 +14,6 @@ import project.Util;
 import project.Assignment;
 import project.WorkPeriod;
 
-
-//when registering time, show how many hours registered today
-//look every method through: only using syApp object - parse rest as int/double info
-
 public class UIHandler extends Observable  {
 	public ScreenState currentState;
 	public int subState;

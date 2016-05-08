@@ -44,6 +44,7 @@ public class SysApp {
 	}
 	
 	//nedenstående er brugt af UI Employee state
+	//changes in this section should also lead to changes in MainUI employee state
 	public String[] copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment) throws WrongInputException{
 		if (booking==null){
 			throw new WrongInputException("The booking doesn't exist");
@@ -170,7 +171,7 @@ public class SysApp {
 	
 
 	//nedenstående er brugt at UI project leader state
-	
+	//changes in this section should also lead to changes in MainUI project leader state
 	public String[] renameProject(int projectID, String name) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException ("Project doesn't excist");
