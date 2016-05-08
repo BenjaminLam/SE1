@@ -52,12 +52,20 @@ public class Assignment {
 		return todaysBookings;
 	}
 	
-	protected void removeBooking(CalDay calDay, double start, double end) {
-		
+	protected WorkPeriod removeBooking(CalDay calDay, double start, double end) throws WrongInputException {
+		WorkPeriod wp=getBooking(calDay,start,end);
+		if(wp==null) throw new WrongInputException ("Booking doesn't excist");
+		bookings.remove(wp);
+		return wp; 
 	}
-//	public WorkPeriod getBooking () {
-//		
-//	}
+	public WorkPeriod getBooking (CalDay calDay, double start, double end) {
+		for (WorkPeriod wp:bookings) {
+			if (wp.day.equals(calDay) && start == start && end ==end){
+				return wp;
+			}
+		}
+		return null;
+	}
 	
 	
 	

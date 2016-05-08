@@ -259,9 +259,17 @@ public class SysApp {
 		};
 	}
 	
-//	public void removeBooking (int empID,int taskID, int year, int week, int day, double start, double end) {
-//		database.
-//	}
+	public String[] removeBooking (int empID,int taskID, int year, int week, int day, double start, double end) throws WrongInputException {
+		Task task=database.getTask(taskID);
+		if (task==null) throw new WrongInputException("Task doesn't excist");
+		Employee emp=database.getEmployee(empID);
+		if (emp==null) throw new WrongInputException("Employee doesn't excist");
+		if (!database.getProject(task.projectID).isProjectLeader(currentEmp)) throw new WrongInputException ("You are not the project leader of project for task");
+		database.removeBooking(task, emp, new CalDay(new CalWeek(year,week),day), start, end);
+		return new String[]{
+			"Succesfully removed booking for employee " + emp.name + " at year: " + year + " week: " + week + " weekday " + day + " for task " + task.name	
+			};
+	}
 	
 	public String[] createProjectReport(int projectID) throws WrongInputException {
 		Project project=database.getProject(projectID);
@@ -329,24 +337,10 @@ public class SysApp {
 	
 	
 	//Er under process:
-	
-	public Employee setSickness (Database database, int employeeID) throws WrongInputException{
-		Employee employee=database.getEmployee(employeeID);
-		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
-		return currentEmp.setSickness(database);
-	}
-
 	public boolean isSick (Database database, int employeeID) throws WrongInputException{
 		Employee employee=database.getEmployee(employeeID);
 		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
 		return currentEmp.isSick(database, employee);
 	}
 	
-	
-	
-	
-	
-	
-	
-
 }
