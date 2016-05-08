@@ -287,5 +287,77 @@ public class AditionalTests extends SampleDataSetupTest {
 		assertEquals(size1, database.numberOfTasks());	
 		
 	}
+	
+	/*
+	 * Test for register sickness
+	 */
+	@Test
+	public void registerSicknessTest(){
+		Employee employee = database.getEmployee(0);
+		try {
+			sysApp.logIn(employee.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		try {
+			sysApp.registerSickness();
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		try {
+			assertTrue(employee.isSick(database, employee));
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		
+	}
+	/*
+	 * Test for register vacation
+	 */
+	@Test
+	public void registerVacationTest(){
+		Employee employee = database.getEmployee(1);
+		CalWeek week1 = new CalWeek(2016,31);
+		CalWeek week2 = new CalWeek(2016,33);
+		CalDay day1 = new CalDay(week1, 3);
+		CalDay day2 = new CalDay(week2, 3);
+		
+		sysApp.currentEmp = employee;
+		
+		try {
+			sysApp.registerVacation(day1, day2);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		try {
+			assertTrue(employee.isOnVacation(database, employee, day1));
+		} catch (WrongInputException e) {
+			Assert.fail();		
+		}
+	}
+	/*
+	 * Test for register course
+	 */
+	@Test
+	public void registerCourseTest(){
+		Employee employee = database.getEmployee(1);
+		CalWeek week1 = new CalWeek(2016,31);
+		CalWeek week2 = new CalWeek(2016,31);
+		CalDay day1 = new CalDay(week1, 3);
+		CalDay day2 = new CalDay(week2, 5);
+		
+		sysApp.currentEmp = employee;
+		
+		try {
+			sysApp.registerCourse(day1, day2);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		try {
+			assertTrue(employee.isOnCourse(database, employee, day1));
+		} catch (WrongInputException e) {
+			Assert.fail();		
+		}
+	}
 }
 
