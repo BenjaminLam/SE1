@@ -77,7 +77,11 @@ public class Employee {
 		return task.setTimeBudget(timeBudget);
 	}
 	
-	
+	protected WorkPeriod createBooking (Database database, Task task, CalDay calDay, double start, double end) throws WrongInputException {
+		WorkPeriod wp=new WorkPeriod(calDay, start, end);
+		database.getAssignment(task.ID, this.ID).addBooking(wp);
+		return wp;
+	}
 	
 	
 	
@@ -140,6 +144,60 @@ public class Employee {
 		int taskID = 0;
 		int employeeID = employee.ID;
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.5);
+		for (Assignment ass:database.assignments) {
+			if(employeeID == ass.employeeID && ass.taskID==taskID){
+			for(WorkPeriod booking:ass.bookings)	
+				if(booking.equals(wp)){
+					return true;
+					}
+				}
+			}
+		return false;
+	}
+	
+	public Employee setVacation(Database database,CalDay day) throws WrongInputException{
+		int taskID = 1;
+		WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
+		if(isOnVacation(database,this,day)) throw new WrongInputException("You are already registered as on vacation.");
+		for (Assignment ass:database.assignments) {
+			if(this.ID == ass.employeeID && ass.taskID==taskID){
+				ass.addBooking(wp);
+			}
+		}
+		return this;
+	}
+	
+	public boolean isOnVacation(Database database, Employee employee,CalDay day) throws WrongInputException{
+		int taskID = 1;
+		int employeeID = employee.ID;
+		WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
+		for (Assignment ass:database.assignments) {
+			if(employeeID == ass.employeeID && ass.taskID==taskID){
+			for(WorkPeriod booking:ass.bookings)	
+				if(booking.equals(wp)){
+					return true;
+					}
+				}
+			}
+		return false;
+	}
+	
+	public Employee setCourse(Database database,CalDay day) throws WrongInputException{
+		int taskID = 1;
+		WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
+		if(isOnCourse(database,this,day)) throw new WrongInputException("You are already registered as on vacation.");
+		for (Assignment ass:database.assignments) {
+			if(this.ID == ass.employeeID && ass.taskID==taskID){
+				ass.addBooking(wp);
+			}
+		}
+		return this;
+	}
+	
+	public boolean isOnCourse(Database database, Employee employee,CalDay day) throws WrongInputException{
+		int taskID = 1;
+		int employeeID = employee.ID;
+		WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
 		for (Assignment ass:database.assignments) {
 			if(employeeID == ass.employeeID && ass.taskID==taskID){
 			for(WorkPeriod booking:ass.bookings)	

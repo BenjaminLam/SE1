@@ -79,16 +79,23 @@ public class SysApp {
 	}
 	
 	public void registerSickness () throws WrongInputException {
-		CalDay today = Util.getCurrentDay();
 		currentEmp.setSickness(database);
 	}
 	
-	public void registerVacation () {
+	public void registerVacation (CalDay start, CalDay end) throws WrongInputException {
+		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
+		for(CalDay day: daysBetween){
+			currentEmp.setVacation(database, day);
+		}
 	}
 	
-	public void registerCourse () {
+	public void registerCourse (CalDay start, CalDay end) throws WrongInputException {
+		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
+		for(CalDay day: daysBetween){
+			currentEmp.setCourse(database, day);
+		}
 	}
 	
 	public String[] createProject (String name) throws WrongInputException {
@@ -191,9 +198,7 @@ public class SysApp {
 	
 	public String[] setTaskEnd (int taskID, int year, int week) throws WrongInputException {
 		Task task=database.getTask(taskID);
-		if (task==null){
-			throw new WrongInputException ("Wrong input: Task doesn't exist");
-		}
+		if (task==null)throw new WrongInputException ("Wrong input: Task doesn't exist");
 		task.setEnd(new CalWeek (year,week), currentEmp, database);
 		return new String[] {
 			"Succesfully set task end for  " + task.name + " to year " + year + " and week " + week 	
@@ -240,8 +245,18 @@ public class SysApp {
 		};
 	}
 	
-	public void createBooking () {
+	public String[] createBooking (int empID, int taskID, int year, int week, int day, double start, double end) throws WrongInputException {
+		Employee employee=database.getEmployee(empID);
+		Task task=database.getTask(taskID);
+		if (task==null) throw new WrongInputException ("Task doesn't excist");
+		if (!database.getProject(task.projectID).isProjectLeader(currentEmp)) throw new WrongInputException ("You are not the leader of this project");
+		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
+		CalDay calDay=new CalDay(new CalWeek(year,week),day);
 		
+		employee.createBooking(database, task,calDay,start,end);
+		return new String[]{
+			"Succesfully created a booking for employee " + employee.name + " at year: " + year + " week: " + week + " weekday " + day + " for task " + task.name	
+		};
 	}
 	
 	public void removeBooking () {
