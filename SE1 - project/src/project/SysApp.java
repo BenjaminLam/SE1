@@ -25,6 +25,10 @@ public class SysApp {
 		this.database=database;
 	}
 	
+	public void init() throws WrongInputException{
+		database.initDatabase();
+	}
+	
 	public Employee logIn(int EmpID) throws WrongInputException {
 		Employee employee=database.getEmployee(EmpID);
 		//if (employee==null) throw new WrongInputException ("Employee doesn't excist");
@@ -232,8 +236,22 @@ public class SysApp {
 		return projectReport;
 	}
 
-	public void createTaskReport() {
+	public List<String> createTaskReport(int taskID) throws WrongInputException {
+		Task task = database.getTask(taskID);
+		if(task==null) throw new WrongInputException("Task doens't exist");
+		if(!database.getProject(task.projectID).isProjectLeader(currentEmp)) throw new WrongInputException("You are not the project leader of this project");
+		List<String> taskReport = new ArrayList<String>();
 		
+		taskReport.add("Task report for: " + task.name + " with taskID "+task.ID+".");
+		
+		List<Employee> taskEmployees=database.getEmployeesForTask(task);
+		
+		taskReport.add("This task has)
+		for(Employee employee:taskEmployees){
+			
+		}
+		
+		return taskReport;
 	}
 	
 	

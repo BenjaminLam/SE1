@@ -22,11 +22,30 @@ public class Database {
 		this.projects=new ArrayList<Project>();
 		this.tasks=new ArrayList<Task>();
 		this.assignments=new ArrayList<Assignment>();
-	
+		
 		this.nextEmpID=0;
 		this.nextTaskID=0;
 		this.nextProjectID=0;
 	}
+	
+	public void initDatabase () throws WrongInputException {
+		//creates the powerful secret project
+		Project project = new Project("project0");
+		addProject(project);
+		
+		//Sickness has taskID=0 and is under projectID=0
+		Task sickness = new Task(project, "Sickness");
+		addTask(sickness);
+		
+		//Vacation has taskID=1 and is under projectID=0
+		Task vacation = new Task(project, "Vacation");
+		addTask(vacation);		
+		
+		//Course has taskID=2 and is under projectID=0
+		Task course = new Task(project, "Course");
+		addTask(course);
+	}
+
 	
 	public Employee getEmployee (int ID) {
 		for (Employee employee:employees) {
@@ -179,11 +198,29 @@ public class Database {
 		return projectEmployees;
 	}
 	
+	protected List<Employee> getEmployeesForTask (Task task) throws WrongInputException {
+		if (task==null) throw new WrongInputException ("Task doesn't exist");
+		
+		List<Employee> taskEmployees = new ArrayList<Employee>();			
+		for (Assignment assignment:assignments) {
+			if (assignment.taskID==task.ID) {
+				Employee tempEmp=getEmployee(assignment.employeeID);
+				if (!taskEmployees.contains(tempEmp)) taskEmployees.add(tempEmp);
+			}
+		}
+		return taskEmployees;
+	}
+	
+	
 	public Employee addEmployee (Employee employee) throws WrongInputException {
 		if (employee==null) throw new WrongInputException("Employee doesn't excist");
 		employee.ID=nextEmpID;
 		nextEmpID++;
 		employees.add(employee);
+		//creates sickness,vacation and course
+		for(int i=0;i<3;i++){
+			createAssignment(employee, getTask(i));
+		}
 		return employee;
 	}
 	
@@ -254,21 +291,7 @@ public class Database {
 			return taskAss;
 		}
 		
-	public void initDatabase () throws WrongInputException {
-		//creates the powerful secret project
-		Project project = new Project("project0");
-		addProject(project);
-		
-		Task sickness = new Task(project, "Sickness");
-		addTask(sickness);
-		
-		Task vacation = new Task(project, "Vacation");
-		addTask(vacation);		
-		
-		Task course = new Task(project, "Course");
-		addTask(course);
-	}
-	
+
 }
 
 
