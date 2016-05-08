@@ -259,9 +259,9 @@ public class SysApp {
 		};
 	}
 	
-	public void removeBooking (int empID,int taskID, int year, int week, int day, double start, double end) {
-		database.
-	}
+//	public void removeBooking (int empID,int taskID, int year, int week, int day, double start, double end) {
+//		database.
+//	}
 	
 	public String[] createProjectReport(int projectID) throws WrongInputException {
 		Project project=database.getProject(projectID);
