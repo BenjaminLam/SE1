@@ -127,6 +127,7 @@ public class Employee {
 	public Employee setSickness (Database database) throws WrongInputException{
 		int taskID = 0;
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.5);
+		if(isSick(database,this)) throw new WrongInputException("You are already registered as sick today.");
 		for (Assignment ass:database.assignments) {
 			if(this.ID == ass.employeeID && ass.taskID==taskID){
 				ass.addBooking(wp);
