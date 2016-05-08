@@ -19,6 +19,7 @@ import project.*;
 public class UIHandler extends Observable implements Observer {
 	public ScreenState currentState;
 	public int subState;
+	public Operation lastSuccesfull;
 	private SysApp sysApp;
 	public List<? extends Object> listToProces; //list extracted from database, stored to process
 	public MyMap mapToProcess; //MyMap extracted from database, stored to process

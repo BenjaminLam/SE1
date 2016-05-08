@@ -12,11 +12,10 @@ import Exceptions_Enums.*;
 
 //unimplemented changed
 
-public class SysApp extends Observable {
+public class SysApp {
 	public Employee currentEmp;
 	public boolean isProjectLeader;
 	private Database database;
-	public Operation lastSuccesfull;
 	
 	public SysApp () {
 		this.database=new Database();
@@ -43,7 +42,6 @@ public class SysApp extends Observable {
 		if(assignment==null){
 			throw new WrongInputException("The assignment doesn't exist");
 		}
-		changed(booking,Operation.RegisterWork);
 		return assignment.addTimeRegister(booking);
 	}
 
@@ -51,19 +49,19 @@ public class SysApp extends Observable {
 		Assignment tempAss=database.getAssignment(taskID,currentEmp.ID);
 		if(tempAss==null)throw new WrongInputException("You do not work on this assignemt");
 		WorkPeriod wp=new WorkPeriod(day,start,end);
-		changed(wp,Operation.RegisterWork);
 		return tempAss.addTimeRegister(wp);
 	}
 
-	public Employee seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
+	public Object[] seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
 		Employee coWorker=database.getEmployee(empID);
 		if (coWorker==null) throw new WrongInputException("No employee exist with that ID");
 		if(!coWorker.isAvailable(period, database)){
 			throw new WrongInputException("Your co-worker is not available in this period.");
 		}
-		database.createBookingForCoWorker(coWorker,taskID,period);
-		changed(coWorker,Operation.SeekAssistance);
-		return coWorker;
+		Task task=database.getTask(taskID);
+		database.createBookingForCoWorker(coWorker,task,period);
+		
+		return new Object[]{coWorker,task,period};
 	}
 	
 	public void registerSickness () {
@@ -82,11 +80,10 @@ public class SysApp extends Observable {
 		if (database.projectExcists(name)) throw new WrongInputException("A project with that name already exists");
 		Project project=new Project(name);
 		database.addProject(project);
-		changed(project,Operation.NewProject);
 		return project;
 	}
 	
-	public Employee setProjectLeader(int projectID, int employeeID) throws WrongInputException {
+	public Object[] setProjectLeader(int projectID, int employeeID) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException("There exist no project with this projectID");
 		Employee emp=database.getEmployee(employeeID);
@@ -96,17 +93,14 @@ public class SysApp extends Observable {
 				throw new WrongInputException("Project already has a project leader and it's not you.");
 			}
 		}
-		
 		project.projectLeader=emp;
-		changed(new ObjectArray(project,emp),Operation.NewProjectLeader);
-		return project.projectLeader;
+		return new Object[]{project,emp};
 	}
 	
 	public Employee createEmployee (String name) throws WrongInputException {
 		Employee employee=new Employee (name);
 		database.addEmployee(employee);
-		changed (employee,Operation.NewEmployee);
-		return null;
+		return employee;
 	}
 	
 	public Employee removeEmployee (int empID) throws WrongInputException {
@@ -283,11 +277,5 @@ public class SysApp extends Observable {
 		this.tasks.add(course);
 	}
 
-
-	public void changed(Object ob,Operation op) {
-		this.lastSuccesfull=op;
-		this.setChanged();
-		this.notifyObservers(ob);
-	}
 
 }
