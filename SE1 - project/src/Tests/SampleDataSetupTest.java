@@ -36,6 +36,7 @@ public class SampleDataSetupTest {
 	 */
 	@Before
 	public void setup() throws WrongInputException {
+		sysApp.init();
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		for (int i=0;i<10;i++){
 			Employee tempEmp=sysApp.createEmployee("Employee"+i);
