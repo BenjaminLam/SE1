@@ -240,8 +240,18 @@ public class SysApp {
 		};
 	}
 	
-	public void createBooking () {
+	public String[] createBooking (int empID, int taskID, int year, int week, int day, double start, double end) throws WrongInputException {
+		Employee employee=database.getEmployee(empID);
+		Task task=database.getTask(taskID);
+		if (task==null) throw new WrongInputException ("Task doesn't excist");
+		if (!database.getProject(task.projectID).isProjectLeader(currentEmp)) throw new WrongInputException ("You are not the leader of this project");
+		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
+		CalDay calDay=new CalDay(new CalWeek(year,week),day);
 		
+		employee.createBooking(database, task,calDay,start,end);
+		return new String[]{
+			"Succesfully created a booking for employee " + employee.name + " at year: " + year + " week: " + week + " weekday " + day + " for task " + task.name	
+		};
 	}
 	
 	public void removeBooking () {
