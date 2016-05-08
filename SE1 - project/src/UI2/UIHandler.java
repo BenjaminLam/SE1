@@ -229,7 +229,6 @@ public class UIHandler extends Observable  {
 	private void createProject(String userInput){		
 		try {
 			sysApp.createProject(userInput);
-			lastSuccesfull=Operation.NewProject;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -246,7 +245,6 @@ public class UIHandler extends Observable  {
 		
 		try {
 			sysApp.setProjectLeader(projectID, employeeID);
-			lastSuccesfull=Operation.NewProjectLeader;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -254,8 +252,6 @@ public class UIHandler extends Observable  {
 	private void createEmployee (String userInput) {
 		try {
 			sysApp.createEmployee(userInput);
-			lastSuccesfull=Operation.NewEmployee;
-			
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -264,7 +260,6 @@ public class UIHandler extends Observable  {
 		int empID=Integer.parseInt(userInput);
 		try {
 			sysApp.removeEmployee(empID);
-			lastSuccesfull=Operation.RemoveEmployee;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -316,7 +311,6 @@ public class UIHandler extends Observable  {
 		String name=userInputs[1];
 		try {
 			sysApp.renameProject(projectID,name);
-			lastSuccesfull=Operation.RenameProject;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -331,7 +325,6 @@ public class UIHandler extends Observable  {
 		int projectID=Integer.parseInt(userInput);
 		try {
 			sysApp.removeProject(projectID);
-			lastSuccesfull=Operation.RemoveProject;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -348,7 +341,6 @@ public class UIHandler extends Observable  {
 		
 		try {
 			sysApp.createTask(projectID,taskName);
-			lastSuccesfull=Operation.NewTask;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -364,7 +356,6 @@ public class UIHandler extends Observable  {
 		double timeBudget=Double.parseDouble(userInputs[1]);
 		try {
 			sysApp.setTaskBudgetTime(taskID, timeBudget);
-			lastSuccesfull=Operation.TaskBudgetTime;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -384,7 +375,6 @@ public class UIHandler extends Observable  {
 		
 		try {
 			sysApp.setTaskStart(taskID, Util.getCurrentYear(), week);
-			lastSuccesfull=Operation.TaskStart;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -395,7 +385,6 @@ public class UIHandler extends Observable  {
 		int week=Integer.parseInt(inputs[2]);
 		try {
 			sysApp.setTaskStart(taskID,year,week);
-			lastSuccesfull=Operation.TaskStart;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -415,7 +404,6 @@ public class UIHandler extends Observable  {
 		
 		try {
 			sysApp.setTaskEnd(taskID, Util.getCurrentYear(), week);
-			lastSuccesfull=Operation.TaskEnd;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -426,7 +414,6 @@ public class UIHandler extends Observable  {
 		int week=Integer.parseInt(inputs[2]);
 		try {
 			sysApp.setTaskEnd(taskID,year,week);
-			lastSuccesfull=Operation.TaskEnd;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -435,7 +422,6 @@ public class UIHandler extends Observable  {
 		int taskID=Integer.parseInt(userInput);
 		try {
 			sysApp.removeTask(taskID);
-			lastSuccesfull=Operation.RemoveTask;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -447,7 +433,6 @@ public class UIHandler extends Observable  {
 			employeesForTask.add(0, "Following employees are available for the task: ");
 			this.message=new String[employeesForTask.size()];
 			this.message=(String[]) employeesForTask.toArray();
-			lastSuccesfull=Operation.EmployeesForTask;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -467,7 +452,6 @@ public class UIHandler extends Observable  {
 		
 		try {
 			sysApp.manTask(taskID,empID);
-			lastSuccesfull=Operation.ManTask;
 		} catch (WrongInputException e) {
 			error (e.getMessage());
 		}
@@ -482,13 +466,11 @@ public class UIHandler extends Observable  {
 		int projectID=Integer.parseInt(userInput);
 		try {
 			sysApp.createProjectReport(projectID);
-			lastSuccesfull=Operation.ProjectReport;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
 	}
 	private void createTaskReport (String userInput) {
-		lastSuccesfull=Operation.TaskReport;
 	}
 	
 	private void logOff() {
