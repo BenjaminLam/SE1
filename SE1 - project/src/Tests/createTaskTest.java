@@ -150,7 +150,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			
 			//adding task with new name to main project
 			try {
-				employee.createTask(database, project.ID, "Task01");
+				sysApp.createTask(project.ID, "Task01");
 			} catch (WrongInputException e) {
 				Assert.fail();
 			}
@@ -158,7 +158,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			//adding task with already existing name in project
 			int numberOfTasks = database.numberOfTasks();
 			try {
-				employee.createTask(database, project.ID, "Task01");
+				sysApp.createTask(project.ID, "Task01");
 				Assert.fail();
 			} catch (WrongInputException e) {
 			}
