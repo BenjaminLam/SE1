@@ -50,7 +50,7 @@ public class Database {
 		return null;
 	}
 	
-	protected boolean isProjectLeader (Employee employee) {
+	public boolean isProjectLeader (Employee employee) {
 		for (Project project:projects) {
 			if (project.isProjectLeader(employee)) return true;
 		}

@@ -942,19 +942,20 @@ public class AditionalTests extends SampleDataSetupTest {
 	 *Test for EmployeesForTask 
 	 */
 	@Test
-	public void employeesForTaskTest(){
-		Task task = database.getTask(1);
+	public void employeesForTaskTest() throws WrongInputException{
+		Task task = database.getTask(4);
 		Employee employee = database.getEmployee(1);
 		Project project = database.getProject(task.ID);
-		project.projectLeader = employee;
 		sysApp.currentEmp = employee;
+		project.projectLeader = employee;
 		assertTrue(project.isProjectLeader(employee));
-		
 		try {
-			sysApp.employeesForTask(task.ID);
+			sysApp.employeesForTask(-1);
 		} catch (WrongInputException e){
 			Assert.fail();
 		}
+		
+		
 	}
 	/*
 	 * taskReport Tests
@@ -1045,7 +1046,23 @@ public class AditionalTests extends SampleDataSetupTest {
 		}
 		assertNull(taskReport);	
 	}
+	@Test
+	public void isProjectLeader1Test(){
+		Employee employee = database.getEmployee(0);
+		Project project = database.getProject(1);
+
+		database.isProjectLeader(employee);	
+		assertEquals(project.projectLeader, employee);
+	}
 	
+	@Test
+	public void isProjectLeader2Test(){
+		Employee employee = database.getEmployee(1);
+		Project project = database.getProject(1);
+		
+		database.isProjectLeader(employee);	
+		assertNotEquals(project.projectLeader, employee);
+	}
 }
 
 	
