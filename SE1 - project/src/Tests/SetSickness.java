@@ -66,6 +66,5 @@ public class SetSickness extends SampleDataSetupTest {
 			Assert.fail(); //checks if exception is thrown
 		} catch (WrongInputException e) { //exception skal laves
 		}
-		
 	}
 }

@@ -39,8 +39,10 @@ public class SampleDataSetupTest {
 		sysApp.init();
 		CalDay day=new CalDay(new CalWeek(2000,2),1);
 		for (int i=0;i<10;i++){
-			Employee tempEmp=sysApp.createEmployee("Employee"+i);
-			Project tempPro=sysApp.createProject("project"+(i+1));
+			sysApp.createEmployee("Employee"+i);
+			Employee tempEmp=database.getEmployee(i);
+			sysApp.createProject("project"+(i+1));
+			Project tempPro=database.getProject(i+1);
 			Task tempTask=new Task(tempPro,"Task" + i);
 			database.addTask(tempTask);
 			Assignment tempAss=new Assignment(tempTask,tempEmp);
