@@ -77,7 +77,11 @@ public class Employee {
 		return task.setTimeBudget(timeBudget);
 	}
 	
-	
+	protected WorkPeriod createBooking (Database database, Task task, CalDay calDay, double start, double end) throws WrongInputException {
+		WorkPeriod wp=new WorkPeriod(calDay, start, end);
+		database.getAssignment(task.ID, this.ID).addBooking(wp);
+		return wp;
+	}
 	
 	
 	
