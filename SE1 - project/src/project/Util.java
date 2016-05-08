@@ -2,6 +2,7 @@ package project;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Util {
 	public static CalDay getCurrentDay () {
@@ -43,5 +44,13 @@ public class Util {
 
 	public static String[] splitString (String input) {
 		return input.split(" ");
+	}
+	
+	public static String[] stringListToArray (List<String> strings) {
+		String[] array=new String[strings.size()];
+		for (int i=0;i<strings.size();i++) {
+			array[i]=strings.get(i);
+		}
+		return array;
 	}
 }

@@ -254,7 +254,7 @@ public class SysApp {
 		};
 	}
 	
-	public void removeBooking () {
+	public void removeBooking (int empID, ) {
 		
 	}
 	

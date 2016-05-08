@@ -211,8 +211,13 @@ public class Database {
 		return taskEmployees;
 	}
 	
+	protected WorkPeriod removeBooking (Task task, Employee employee, CalDay calDay, double start, double end) {
+		Assignment assignment=getAssignment(task.ID,employee.ID);
+		if (assignment==null) throw new WrongInputException ("The selected employee is now working on the task");
+		return assignment.removeBooking(calDay, start, end);
+	}
 	
-	public Employee addEmployee (Employee employee) throws WrongInputException {
+	protected Employee addEmployee (Employee employee) throws WrongInputException {
 		if (employee==null) throw new WrongInputException("Employee doesn't excist");
 		employee.ID=nextEmpID;
 		nextEmpID++;

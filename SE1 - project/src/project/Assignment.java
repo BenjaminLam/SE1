@@ -52,6 +52,10 @@ public class Assignment {
 		return todaysBookings;
 	}
 	
+	protected void removeBooking(CalDay calDay, double start, double end) {
+		
+	}
+	public WorkPeriod getBooking ()
 	
 	
 	
