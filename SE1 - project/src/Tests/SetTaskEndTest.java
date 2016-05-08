@@ -26,6 +26,7 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 		sysApp.logIn(employee.ID);
 		
 		assertTrue(project.isProjectLeader(employee));
+		assertEquals(sysApp.currentEmp, employee);
 		
 		try {
 			sysApp.setTaskEnd(1, 2016, 43);
