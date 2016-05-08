@@ -224,15 +224,15 @@ public class Database {
 	protected Employee removeEmployee (Employee employee) throws WrongInputException {
 		if (employee==null) throw new WrongInputException ("Employee doesn't exist");
 		if (!employees.remove(employee)){
-			throw new WrongInputException ("Employee doesn't excist");
+			throw new WrongInputException ("Employee doesn't exist");
 		}
 		return employee;
 	}
 	
 	protected Project removeProject (Project project) throws WrongInputException {
-		if (project==null) throw new WrongInputException ("Project doesn't excist");
+		if (project==null) throw new WrongInputException ("Project doesn't exist");
 		if (!projects.remove(project)){
-			throw new WrongInputException ("Project doesn't excist");
+			throw new WrongInputException ("Project doesn't exist");
 		}
 		removeProjectTasks(project);
 		return project;
