@@ -962,11 +962,11 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	@Test
 	public void taskReportTest () throws WrongInputException {
-		Task task = database.task.get(3);
+		Task task = database.getTask(3);
 		assertNotNull(task);
 		
 		int projectID = task.projectID;
-		Project project = database.getTask(projectID);
+		Project project = database.getProject(projectID);
 		
 		Employee employee=database.employees.get(0);
 		
@@ -1024,11 +1024,11 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	@Test
 	public void taskReportTestAlt2() throws WrongInputException {
-		Task task = database.task.get(3);
+		Task task = database.getTask(3);
 		assertNotNull(task);
 		
 		int projectID = task.projectID;
-		Project project = database.getTask(projectID);
+		Project project = database.getProject(projectID);
 		
 		Employee employee=database.employees.get(0);
 		
