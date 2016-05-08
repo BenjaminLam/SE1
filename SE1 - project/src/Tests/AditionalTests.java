@@ -993,7 +993,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void TaskReportTestAlt1 () throws WrongInputException {
+	public void TaskReportAlt1Test () throws WrongInputException {
 		Task task = null;
 		assertNull(task);
 		
@@ -1023,7 +1023,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 */
 	
 	@Test
-	public void taskReportTestAlt2() throws WrongInputException {
+	public void taskReportAlt2Test() throws WrongInputException {
 		Task task = database.getTask(3);
 		assertNotNull(task);
 		
