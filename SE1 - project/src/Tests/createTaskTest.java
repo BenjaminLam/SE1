@@ -68,8 +68,8 @@ public class createTaskTest extends SampleDataSetupTest {
 		@Test
 		public void testCreateTaskAlt1(){
 			int numberOfTasks = database.numberOfTasks();
-			Employee employee=super.database.employees.get(1);
-			Project project=super.database.projects.get(1);
+			Employee employee=database.getEmployee(1);
+			Project project=database.getProject(1);
 			try {
 				sysApp.logIn(employee.ID);
 			} catch (WrongInputException e1) {
