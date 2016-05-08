@@ -33,12 +33,15 @@ public class Database {
 		Project project = new Project("project0");
 		addProject(project);
 		
+		//Sickness has taskID=0 and is under projectID=0
 		Task sickness = new Task(project, "Sickness");
 		addTask(sickness);
 		
+		//Vacation has taskID=1 and is under projectID=0
 		Task vacation = new Task(project, "Vacation");
 		addTask(vacation);		
 		
+		//Course has taskID=2 and is under projectID=0
 		Task course = new Task(project, "Course");
 		addTask(course);
 	}
