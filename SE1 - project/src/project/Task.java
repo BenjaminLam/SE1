@@ -101,5 +101,15 @@ public class Task {
 		this.timeBudget=timeBudget;
 		return this;
 	}
+
+	public double hoursSpent(Database database) {
+		double hoursSpent=0;
+		
+		for (Assignment assignment:database.assignments) {
+			if (assignment.taskID==this.ID) hoursSpent+=assignment.getCumulativeTimeRegisters();
+		}
+
+		return hoursSpent;
+	}
 	
 }
