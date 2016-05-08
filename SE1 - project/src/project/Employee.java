@@ -120,7 +120,7 @@ public class Employee {
 	}
 
 
-		//checks if a employee is assigned a task.
+	//checks if a employee is assigned a task.
 	public boolean isAssigned (Database database, Task task, Employee employee){
 		if(database.getAssignment(task.ID , employee.ID)== null){
 			return false;
