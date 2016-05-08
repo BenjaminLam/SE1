@@ -83,16 +83,20 @@ public class SysApp {
 		currentEmp.setSickness(database);
 	}
 	
-	public void registerVacation (CalDay start, CalDay end) {
+	public void registerVacation (CalDay start, CalDay end) throws WrongInputException {
 		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
 		for(CalDay day: daysBetween){
-			
+			currentEmp.setVacation(database, day);
 		}
 	}
 	
-	public void registerCourse () {
+	public void registerCourse (CalDay start, CalDay end) throws WrongInputException {
+		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
+		for(CalDay day: daysBetween){
+			currentEmp.setCourse(database, day);
+		}
 	}
 	
 	public String[] createProject (String name) throws WrongInputException {
