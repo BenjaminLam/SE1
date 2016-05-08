@@ -47,7 +47,7 @@ public class createTaskTest extends SampleDataSetupTest {
 			
 			Task task = new Task(project, taskName);
 			try {
-				task = sysApp.createTask(project.ID, taskName);
+				sysApp.createTask(project.ID, taskName);
 			} catch (WrongInputException e) {
 			}
 			
