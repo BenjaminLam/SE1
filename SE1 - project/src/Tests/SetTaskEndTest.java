@@ -24,12 +24,11 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 		Employee employee=database.getEmployee(0);
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
-		
-		assertTrue(project.isProjectLeader(employee));
-		assertEquals(sysApp.currentEmp, employee);
+		Task task = database.getTask(1);
+		assertTrue(project.isProjectLeader(sysApp.currentEmp));
 		
 		try {
-			sysApp.setTaskEnd(1, 2016, 43);
+			sysApp.setTaskEnd(task.ID, 2016, 43);
 		} catch (WrongInputException e) {
 			Assert.fail ();
 		}
@@ -69,6 +68,7 @@ public class SetTaskEndTest extends SampleDataSetupTest {
 		Project project=database.getProject(1);
 		sysApp.logIn(employee.ID);
 		assertTrue(project.isProjectLeader(employee));
+		assertNotNull(database.getTask(1));
 		
 		try {
 			sysApp.setTaskStart(1, 2016, 43);		

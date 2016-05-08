@@ -191,9 +191,7 @@ public class SysApp {
 	
 	public String[] setTaskEnd (int taskID, int year, int week) throws WrongInputException {
 		Task task=database.getTask(taskID);
-		if (task==null){
-			throw new WrongInputException ("Wrong input: Task doesn't exist");
-		}
+		if (task==null)throw new WrongInputException ("Wrong input: Task doesn't exist");
 		task.setEnd(new CalWeek (year,week), currentEmp, database);
 		return new String[] {
 			"Succesfully set task end for  " + task.name + " to year " + year + " and week " + week 	
