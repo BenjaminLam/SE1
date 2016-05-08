@@ -45,7 +45,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		for(int i=0;i<todaysBookings.mainInfo.size();i++){
 			sysApp.copyBookingToTimeRegister((WorkPeriod)todaysBookings.mainInfo.get(i),(Assignment)todaysBookings.secondaryInfo.get(i));
 		}
-		
+	
 		//test that all bookings has been moved to the last assignments timeregister, since we in data setup 
 		//made all bookings for emp 9 in the last assignment. 
 		assertEquals(todaysBookings.mainInfo.size(),database.assignments.get(lastAss).timeRegisters.size());
@@ -66,7 +66,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		assertNotNull(day);
 		
 		try {
-			sysApp.registerWorkManually(3, 9, 11, day);
+			sysApp.registerWorkManually(3, 9, 11, 2000, 2, 1);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		};
