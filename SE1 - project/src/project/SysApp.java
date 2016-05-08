@@ -62,7 +62,7 @@ public class SysApp {
 		};
 	}
 
-	public Object[] seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
+	public String[] seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
 		Employee coWorker=database.getEmployee(empID);
 		if (coWorker==null) throw new WrongInputException("No employee exist with that ID");
 		if(!coWorker.isAvailable(period, database)){
@@ -71,7 +71,11 @@ public class SysApp {
 		Task task=database.getTask(taskID);
 		database.createBookingForCoWorker(coWorker,task,period);
 		
-		return new Object[]{coWorker,task,period};
+		return new String[]{
+				"You succesfully seeked assistance by " + coWorker.name,
+				"With task " + task.ID,
+				"From " + period.start + " to " + period.end
+		};
 	}
 	
 	public void registerSickness () {
@@ -86,14 +90,16 @@ public class SysApp {
 		
 	}
 	
-	public Project createProject (String name) throws WrongInputException {
+	public String[] createProject (String name) throws WrongInputException {
 		if (database.projectExcists(name)) throw new WrongInputException("A project with that name already exists");
 		Project project=new Project(name);
 		database.addProject(project);
-		return project;
+		return new String[]{
+			"You succesfully created a new project with project name " + project.name + " and project id " + project.ID	
+		};
 	}
 	
-	public Object[] setProjectLeader(int projectID, int employeeID) throws WrongInputException {
+	public String[] setProjectLeader(int projectID, int employeeID) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException("There exist no project with this projectID");
 		Employee emp=database.getEmployee(employeeID);
@@ -104,30 +110,39 @@ public class SysApp {
 			}
 		}
 		project.projectLeader=emp;
-		return new Object[]{project,emp};
+		return new String[] {
+			"Succesfully assigned " + emp.name	+ " as project leader for " + project.name
+		};
 	}
 	
-	public Employee createEmployee (String name) throws WrongInputException {
+	public String[] createEmployee (String name) throws WrongInputException {
 		Employee employee=new Employee (name);
 		database.addEmployee(employee);
-		return employee;
+		return new String[] {
+				"Succesfully created employee " + employee.name + "with employee ID " + employee.ID
+		};
 	}
 	
-	public Employee removeEmployee (int empID) throws WrongInputException {
+	public String[] removeEmployee (int empID) throws WrongInputException {
 		Employee employee=database.getEmployee(empID);
 		if (employee.equals(currentEmp)) throw new WrongInputException("You can't remove yourself from the database");
-		return database.removeEmployee(employee);
+		database.removeEmployee(employee);
+		return new String[] {
+			"Succesfully remove employee " + employee.name + " with earlier employee ID: " + employee.ID	
+		};
 	}
 	
 
 	//nedenstående er brugt at UI project leader state
 	
-	public Project renameProject(int projectID, String name) throws WrongInputException {
+	public String[] renameProject(int projectID, String name) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException ("Project doesn't excist");
 		if (database.projectExcists(name)) throw new WrongInputException ("Project with that name already excists");
 		project.name=name;
-		return project;
+		return new String[]{
+			"Succesfully renamed project with project id " + project.ID + " to: " + project.name;	
+		};
 	}
 	
 	public void setProjectStart() {
@@ -185,6 +200,7 @@ public class SysApp {
 			noEmps.add("No employees are avilable");
 			return noEmps;
 		}
+		availableEmps.add(0, "Following employees are available for the task: ");
 		return availableEmps;
 	}
 
