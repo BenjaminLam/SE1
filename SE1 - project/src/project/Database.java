@@ -5,9 +5,6 @@ import java.util.List;
 
 import Exceptions_Enums.WrongInputException;
 
-
-
-
 public class Database {
 	public List<Employee> employees;
 	public List<Project> projects;
@@ -46,7 +43,6 @@ public class Database {
 		addTask(course);
 	}
 
-	
 	public Employee getEmployee (int ID) {
 		for (Employee employee:employees) {
 			if (employee.ID==ID) return employee;
@@ -66,10 +62,6 @@ public class Database {
 			if (project.name.equals(name)) return true;
 		}
 		return false;
-	}
-	
-	protected int getNextProjectNumber() {
-		return projects.size();
 	}
 	
 	protected Project addProject (Project project) throws WrongInputException {
@@ -242,7 +234,16 @@ public class Database {
 		if (!projects.remove(project)){
 			throw new WrongInputException ("Project doesn't excist");
 		}
+		removeProjectTasks(project);
 		return project;
+	}
+	
+	protected void removeProjectTasks (Project project) throws WrongInputException {
+		for (int i=tasks.size()-1;i>=0;i--){
+			if (tasks.get(i).projectID==project.ID){
+				removeTask(tasks.get(i));
+			}
+		}
 	}
 	
 	protected Task removeTask (Task task) throws WrongInputException {
@@ -250,30 +251,22 @@ public class Database {
 		if (!tasks.remove(task)){
 			throw new WrongInputException ("Task doesn't exist");
 		}
+		removeTaskAssignments(task);
 		return task;
 	}
 	
-	// methods only used for testing:
-	public int numberOfAssignments () {
-		return this.assignments.size();
+	protected void removeTaskAssignments(Task task) {
+		for (int i=assignments.size()-1;i>=0;i--) {
+			if (assignments.get(i).taskID==task.ID) {
+				assignments.remove(i);
+			}
+		}
 	}
 	
-	public int numberOfTasks() {
-		return this.tasks.size();
+	protected boolean noEmployeeExcists() {
+		return employees.isEmpty();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
- 	protected boolean noEmployeeExcists() {
-		return (employees.size()==0);
-	}
-
 	public List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
 		List<String> employeesAvailable= new ArrayList<String>();
 		
@@ -283,19 +276,16 @@ public class Database {
 		}
 		return employeesAvailable;
 	}
-
-	//unused??
-	protected List<Assignment> getTaskAssignments(Task task){
-			List<Assignment> taskAss = new ArrayList<Assignment>();
-			
-			for(Assignment ass:assignments){
-				if(ass.taskID==task.ID){
-					taskAss.add(ass);
-				}
-			}
-			return taskAss;
-		}
-		
+	
+	
+	// methods used only for testing:
+	public int numberOfAssignments () {
+		return this.assignments.size();
+	}
+	
+	public int numberOfTasks() {
+		return this.tasks.size();
+	}
 
 }
 

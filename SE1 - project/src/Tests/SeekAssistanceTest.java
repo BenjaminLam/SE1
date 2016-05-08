@@ -98,6 +98,10 @@ public class SeekAssistanceTest extends SampleDataSetupTest{
 		
 		assertFalse(coWorker.isAvailable(period, database));
 		
-		
+		try{
+			sysApp.seekAssistance(coWorker.ID,3,period);
+			Assert.fail();
+		} catch(WrongInputException e){
+		}
 	}
 }

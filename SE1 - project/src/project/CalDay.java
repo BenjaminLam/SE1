@@ -3,13 +3,17 @@ package project;
 import java.util.ArrayList;
 import java.util.List;
 
+import Exceptions_Enums.WrongInputException;
+
 public class CalDay {
 	public CalWeek week;
 	public int day;
 	
-	public CalDay (CalWeek week, int day) {
+	public CalDay (CalWeek week, int day) throws WrongInputException {
 		this.week=week;
 		this.day=day;
+		
+		if (day<1 || day>7) throw new WrongInputException ("Weekday has to be a number between 1 and 7");
 	}
 	
 	public boolean equals(CalDay other){
@@ -19,7 +23,7 @@ public class CalDay {
 		return false;
 	}
 	
-	public List<CalDay> getDaysBetween(CalDay other){
+	public List<CalDay> getDaysBetween(CalDay other) throws WrongInputException{
 		List<CalDay> daysBetween = new ArrayList<CalDay>();
 		int thisWeek = this.week.week;
 		int otherWeek = other.week.week;

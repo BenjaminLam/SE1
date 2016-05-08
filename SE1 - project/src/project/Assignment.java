@@ -18,6 +18,10 @@ public class Assignment {
 		
 	}
 	
+	public String toString () {
+		return "Task id: " + taskID + " employee id " + employeeID;
+	}
+	
 	public double getCumulativeTimeRegisters () {
 		double cumulativeValue=0;
 		
@@ -66,13 +70,5 @@ public class Assignment {
 		}
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

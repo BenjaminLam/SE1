@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import Exceptions_Enums.*;
 
-//unimplemented changed
+
 
 public class SysApp {
 	public Employee currentEmp;
@@ -29,16 +29,22 @@ public class SysApp {
 		database.initDatabase();
 	}
 	
-	public Employee logIn(int EmpID) throws WrongInputException {
+	public String[] logIn(int EmpID) throws WrongInputException {
 		Employee employee=database.getEmployee(EmpID);
-		//if (employee==null) throw new WrongInputException ("Employee doesn't excist");
+		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
 		currentEmp=employee;
-		//isProjectLeader=employee.isProjectLeader(database);
-		return employee;
+		isProjectLeader=employee.isProjectLeader(database);
+		return new String[] {
+			"Logged in as " + employee.name + " with id " + employee.ID	
+		};
 	}
 	
+	public boolean noEmployeesExcists() {
+		return database.noEmployeeExcists();
+	}
 	
 	//nedenstående er brugt af UI Employee state
+	//changes in this section should also lead to changes in MainUI employee state
 	public String[] copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment) throws WrongInputException{
 		if (booking==null){
 			throw new WrongInputException("The booking doesn't exist");
@@ -46,23 +52,33 @@ public class SysApp {
 		if(assignment==null){
 			throw new WrongInputException("The assignment doesn't exist");
 		}
+		double hoursRegisteredToday=currentEmp.hoursRegisteredToday(database);
 		assignment.addTimeRegister(booking);
+		hoursRegisteredToday+=booking.getLength();
 		return new String[]{
 				"Added time register succesfully to database",
+				"You've registered " + hoursRegisteredToday  + " hours today"
 		};
 	}
 
-	public String[] registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
+	public String[] registerWorkManually(int taskID, double start, double end,int year, int week, int weekday ) throws WrongInputException{
+		CalDay day=new CalDay(new CalWeek(year,week),weekday);
 		Assignment tempAss=database.getAssignment(taskID,currentEmp.ID);
 		if(tempAss==null)throw new WrongInputException("You do not work on this assignemt");
 		WorkPeriod wp=new WorkPeriod(day,start,end);
+		
+		double hoursRegisteredToday=currentEmp.hoursRegisteredToday(database);
 		tempAss.addTimeRegister(wp);
+		hoursRegisteredToday+=wp.getLength();
 		return new String[]{
-			"Registered work succesfully from " + start + " to " + end + "for task: " + database.getTask(taskID).name	
+			"Registered work succesfully from " + start + " to " + end + "for task: " + database.getTask(taskID).name,
+			"You've registered " + hoursRegisteredToday  + " hours today"
 		};
 	}
 
-	public String[] seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
+	public String[] seekAssistance(int empID,int taskID,int year, int week, int weekday, double start, double end) throws WrongInputException{
+		WorkPeriod period=new WorkPeriod(new CalDay(new CalWeek(year,week),weekday),start,end);
+		
 		Employee coWorker=database.getEmployee(empID);
 		if (coWorker==null) throw new WrongInputException("No employee exist with that ID");
 		if(!coWorker.isAvailable(period, database)){
@@ -85,7 +101,10 @@ public class SysApp {
 		};
 	}
 	
-	public String[] registerVacation (CalDay start, CalDay end) throws WrongInputException {
+	public String[] registerVacation (int startYear, int startWeek, int startDay, int endYear, int endWeek, int endDay) throws WrongInputException {
+		CalDay start=new CalDay(new CalWeek(startYear,startWeek),startDay);
+		CalDay end=new CalDay(new CalWeek(endYear,endWeek),endDay);
+		
 		currentEmp.setVacation(database, start, end);
 		return new String[] {
 				"Succesfully set you on vacation from year: " + start.week.year + " week: " + start.week + " weekday " + start.day,
@@ -93,7 +112,10 @@ public class SysApp {
 		};
 	}
 	
-	public String[] registerCourse (CalDay start, CalDay end) throws WrongInputException {
+	public String[] registerCourse (int startYear, int startWeek, int startDay, int endYear, int endWeek, int endDay) throws WrongInputException {
+		CalDay start=new CalDay(new CalWeek(startYear,startWeek),startDay);
+		CalDay end=new CalDay(new CalWeek(endYear,endWeek),endDay);
+		
 		currentEmp.setCourse(database, start, end);
 		return new String[] {
 				"Succesfully registered your course from year: " + start.week.year + " week: " + start.week + " weekday " + start.day,
@@ -121,6 +143,10 @@ public class SysApp {
 			}
 		}
 		project.projectLeader=emp;
+		
+		if (emp.equals(currentEmp)) this.isProjectLeader=true;
+		else this.isProjectLeader=database.isProjectLeader(currentEmp); 
+		
 		return new String[] {
 			"Succesfully assigned " + emp.name	+ " as project leader for " + project.name
 		};
@@ -130,7 +156,7 @@ public class SysApp {
 		Employee employee=new Employee (name);
 		database.addEmployee(employee);
 		return new String[] {
-				"Succesfully created employee " + employee.name + "with employee ID " + employee.ID
+				"Succesfully created employee " + employee.name + " with employee ID " + employee.ID
 		};
 	}
 	
@@ -145,7 +171,7 @@ public class SysApp {
 	
 
 	//nedenstående er brugt at UI project leader state
-	
+	//changes in this section should also lead to changes in MainUI project leader state
 	public String[] renameProject(int projectID, String name) throws WrongInputException {
 		Project project=database.getProject(projectID);
 		if (project==null) throw new WrongInputException ("Project doesn't excist");
@@ -344,7 +370,7 @@ public class SysApp {
 	
 	
 	//help method for register work in uihandler
-	public MyMap todaysBookings() {
+	public MyMap todaysBookings() throws WrongInputException {
 		return currentEmp.dayBookings(Util.getCurrentDay(),database);
 	}
 

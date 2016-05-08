@@ -39,7 +39,7 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	@Test
 	public void getAvailableEmployeesMain() throws WrongInputException {
 		Employee employee=database.employees.get(0);
-		Task task=database.getTask(0);
+		Task task=database.getTask(3);
 		
 		assertNotNull(task);
 		
@@ -75,7 +75,7 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	@Test
 	public void getAvailableEmployeesAlt1() throws WrongInputException {
 		Employee employee=database.employees.get(1);
-		Task task=database.getTask(0);
+		Task task=database.getTask(3);
 		
 		assertNotNull(task);
 		
@@ -140,7 +140,7 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	@Test
 	public void getAvailableEmployeesAlt3() throws WrongInputException {
 		Employee employee=database.employees.get(0);
-		Task task=database.getTask(1);
+		Task task=database.getTask(3);
 		
 		assertNotNull(task);
 		
@@ -179,7 +179,7 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	@Test
 	public void getAvailableEmployeesAlt4() throws WrongInputException {
 		Employee employee=database.employees.get(0);
-		Task task=database.getTask(0);
+		Task task=database.getTask(3);
 		
 		assertNotNull(task);
 		

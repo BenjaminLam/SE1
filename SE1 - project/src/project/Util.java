@@ -4,14 +4,18 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import Exceptions_Enums.WrongInputException;
+
 public class Util {
-	public static CalDay getCurrentDay () {
+	public static CalDay getCurrentDay () throws WrongInputException {
 		Calendar calendar=new GregorianCalendar();
 		int year=calendar.get(Calendar.YEAR);
 		int week=calendar.get(Calendar.WEEK_OF_YEAR);
 		int day=calendar.get(Calendar.DAY_OF_WEEK);
-		
-		return new CalDay(new CalWeek(year,week),day);
+		//the gregorian calendars sees sunday as day 1
+		//we've pushed every day 1 time - so day 1 in week is monday
+		if (day==7) return new CalDay(new CalWeek(year,week),1);
+		return new CalDay(new CalWeek(year,week),day+1);
 	}
 	
 	public static int getCurrentYear() {
@@ -19,7 +23,7 @@ public class Util {
 		return calendar.get(Calendar.YEAR);
 	}
 	
-	public static CalWeek getCurrentWeek() {
+	public static CalWeek getCurrentWeek() throws WrongInputException {
 		Calendar calendar = new GregorianCalendar();
 		int year = calendar.get(Calendar.YEAR);
 		int week = calendar.get(Calendar.WEEK_OF_YEAR);

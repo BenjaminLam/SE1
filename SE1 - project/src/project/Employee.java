@@ -13,6 +13,12 @@ public class Employee {
 		this.name=name;
 	}
 	
+	public boolean equals (Employee employee) {
+		if (employee==null) return false;
+		if (this.ID==employee.ID) return true;
+		return false;
+	}
+
 	protected boolean isProjectLeader(Database database) {
 		return database.isProjectLeader(this);
 	}
@@ -77,48 +83,12 @@ public class Employee {
 	
 	protected WorkPeriod createBooking (Database database, Task task, CalDay calDay, double start, double end) throws WrongInputException {
 		WorkPeriod wp=new WorkPeriod(calDay, start, end);
-		database.getAssignment(task.ID, this.ID).addBooking(wp);
+		Assignment assignment=database.getAssignment(task.ID, this.ID);
+		if (assignment==null) throw new WrongInputException ("Employee is not working at selected task");
+		assignment.addBooking(wp);
 		return wp;
 	}
-	
-	
-	
-	
-	
-	
-	private double hoursBooked (Database database, CalWeek start, CalWeek end) {
-		double hoursBooked=0;
-		List<Assignment> assignments = database.getEmployeeAssignments(this);
 		
-		for (Assignment assignment: assignments) {
-			if (assignment.employeeID==this.ID) {
-				for (WorkPeriod wp:assignment.bookings) {
-					if (wp.isWhile(start,end)) hoursBooked+=wp.getLength(); 
-				}
-			}
-		}
-		return hoursBooked;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//not handling null value
-	public boolean equals (Employee employee) {
-		if (employee==null) return false;
-		if (this.ID==employee.ID) return true;
-		return false;
-	}
-
-
-	//checks if a employee is assigned a task.
 	public boolean isAssigned (Database database, Task task, Employee employee){
 		if(database.getAssignment(task.ID , employee.ID)== null){
 			return false;
@@ -126,7 +96,7 @@ public class Employee {
 		return true;
 	}
 	
-	public void setSickness (Database database) throws WrongInputException{
+	protected void setSickness (Database database) throws WrongInputException{
 		if(isSick(database,this)) throw new WrongInputException("You are already registered as sick today.");
 		WorkPeriod wp = new WorkPeriod(Util.getCurrentDay(),9.0,16.5);
 		database.getAssignment(0, this.ID).addBooking(wp);
@@ -149,6 +119,9 @@ public class Employee {
 	
 	public void setVacation(Database database, CalDay start, CalDay end) throws WrongInputException{
 		List<CalDay> daysBetween = start.getDaysBetween(end);
+		
+		if (end.week.isBefore(start.week)) throw new WrongInputException ("End of vacation can't be before start");
+		if (end.week.equals(start.week) && end.day<=start.day) throw new WrongInputException ("Start of vacation must be after end of vacation");
 		
 		for(CalDay day: daysBetween){
 			WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
@@ -175,6 +148,10 @@ public class Employee {
 	public void setCourse(Database database,CalDay start, CalDay end) throws WrongInputException{
 		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
+		if (end.week.isBefore(start.week)) throw new WrongInputException ("End of course can't be before start");
+		if (end.week.equals(start.week) && end.day<=start.day) throw new WrongInputException ("Start of course must be after end of vacation");
+		
+		
 		for(CalDay day: daysBetween){
 			WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
 			if(isOnCourse(database,this,day)) throw new WrongInputException("You are already registered as on course.");
@@ -196,4 +173,31 @@ public class Employee {
 			}
 		return false;
 	}
-}
+
+	protected double hoursRegisteredToday (Database database) throws WrongInputException {
+		List<Assignment> assignments=database.getEmployeeAssignments(this);
+		double hoursRegistered=0;
+		
+		for (Assignment assignment:assignments) {
+			for (WorkPeriod wp:assignment.timeRegisters) {
+				if (wp.isDay(Util.getCurrentDay())) hoursRegistered+=wp.getLength();
+			}
+		}
+		return hoursRegistered;
+	}
+		
+	private double hoursBooked (Database database, CalWeek start, CalWeek end) {
+		double hoursBooked=0;
+		List<Assignment> assignments = database.getEmployeeAssignments(this);
+		
+		for (Assignment assignment: assignments) {
+			if (assignment.employeeID==this.ID) {
+				for (WorkPeriod wp:assignment.bookings) {
+					if (wp.isWhile(start,end)) hoursBooked+=wp.getLength(); 
+				}
+			}
+		}
+		return hoursBooked;
+	}
+	
+	}

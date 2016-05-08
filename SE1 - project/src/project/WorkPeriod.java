@@ -23,9 +23,14 @@ public class WorkPeriod extends Object {
 		if(end>24){
 			throw new WrongInputException("End cannot be more than 24, due to the fact that there is only 24 hours each day.");
 		}
+		if (start>end) throw new WrongInputException("End can't be before start");
 		this.day=day;
 		this.start=start;
 		this.end=end;
+	}
+	
+	public String toString () {
+		return day.day + "/" + day.week.week + "/" + day.week.year + " start: " + start + " end " + end;  
 	}
 	
 	public double getLength () {
@@ -63,11 +68,5 @@ public class WorkPeriod extends Object {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
 }
 
