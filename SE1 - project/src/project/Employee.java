@@ -154,4 +154,31 @@ public class Employee {
 			}
 		return false;
 	}
+	
+	public Employee setVacation(Database database,CalDay day) throws WrongInputException{
+		int taskID = 1;
+		WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
+		if(isOnVacation(database,this,day)) throw new WrongInputException("You are already registered as on vacation.");
+		for (Assignment ass:database.assignments) {
+			if(this.ID == ass.employeeID && ass.taskID==taskID){
+				ass.addBooking(wp);
+			}
+		}
+		return this;
+	}
+	
+	public boolean isOnVacation(Database database, Employee employee,CalDay day) throws WrongInputException{
+		int taskID = 1;
+		int employeeID = employee.ID;
+		WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
+		for (Assignment ass:database.assignments) {
+			if(employeeID == ass.employeeID && ass.taskID==taskID){
+			for(WorkPeriod booking:ass.bookings)	
+				if(booking.equals(wp)){
+					return true;
+					}
+				}
+			}
+		return false;
+	}
 }

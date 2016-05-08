@@ -83,8 +83,12 @@ public class SysApp {
 		currentEmp.setSickness(database);
 	}
 	
-	public void registerVacation () {
+	public void registerVacation (CalDay start, CalDay end) {
+		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
+		for(CalDay day: daysBetween){
+			
+		}
 	}
 	
 	public void registerCourse () {
