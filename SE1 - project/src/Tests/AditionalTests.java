@@ -947,6 +947,14 @@ public class AditionalTests extends SampleDataSetupTest {
 		Employee employee = database.getEmployee(1);
 		Project project = database.getProject(task.ID);
 		project.projectLeader = employee;
+		sysApp.currentEmp = employee;
+		assertTrue(project.isProjectLeader(employee));
+		
+		try {
+			sysApp.employeesForTask(task.ID);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
 	}
 	
 	
