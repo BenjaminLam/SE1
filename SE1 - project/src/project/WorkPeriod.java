@@ -7,8 +7,8 @@ import Exceptions_Enums.WrongInputException;
 
 public class WorkPeriod extends Object {
 	public CalDay day;
-	private double start;
-	private double end;
+	public double start;
+	public double end;
 	
 	public WorkPeriod (CalDay day, double start, double end) throws WrongInputException {
 		if (start<0) {

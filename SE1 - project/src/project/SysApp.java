@@ -258,4 +258,25 @@ public class SysApp {
 	}
 	
 	
+	
+	
+	
+	
+	//ikke tjekket endnu:
+	public void initDatabase () {
+		//creates the powerful secret project
+		Project project = new Project("project0",0);
+		this.projects.add(project);
+		
+		Task sickness = new Task(project, "Sickness");
+		this.tasks.add(sickness);
+		
+		Task vacation = new Task(project, "Vacation");
+		this.tasks.add(vacation);
+		
+		Task course = new Task(project, "Course");
+		this.tasks.add(course);
+	}
+
+
 }

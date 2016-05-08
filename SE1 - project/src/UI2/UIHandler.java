@@ -16,12 +16,11 @@ import project.*;
 //if set yourself as project leader and you're not project leader already - change your isProjectLeaderStatus in sysApp
 //for stort try catch i handle input?
 //when creating employee - create assignment for sick/vacation/course
+//select employee substate outcommented
 
-
-public class UIHandler extends Observable implements Observer {
+public class UIHandler extends Observable  {
 	public ScreenState currentState;
 	public int subState;
-	public Operation lastSuccesfull;
 	private SysApp sysApp;
 	public List<? extends Object> listToProces; //list extracted from database, stored to process
 	public MyMap mapToProcess; //MyMap extracted from database, stored to process
@@ -30,7 +29,11 @@ public class UIHandler extends Observable implements Observer {
 	public UIHandler (MainUI mainUI) {
 		this.subState=0;
 		this.sysApp=new SysApp();
-		sysApp.addObserver(this);
+		try {
+			sysApp.init();
+		} catch (WrongInputException e) {
+			terminate();
+		}
 	}
 	
 	public void init()  {
@@ -104,7 +107,7 @@ public class UIHandler extends Observable implements Observer {
 		if (userChoice==1) {
 			this.mapToProcess=sysApp.todaysBookings();
 			this.listToProces=mapToProcess.asList();
-			setState(ScreenState.DisplayListState);
+			//setState(ScreenState.DisplayListState);
 		}
 		if (userChoice==8) {
 			try {
@@ -130,6 +133,7 @@ public class UIHandler extends Observable implements Observer {
 		case 6: registerWorkAnyDay(userInputs); break;
 		default: wrongInputFormat(); break;
 		}
+		
 	}
 	private void registerWorkExcisting(String[] userinputs) {
 		int userChoice=Integer.parseInt(userinputs[0]);
@@ -137,6 +141,7 @@ public class UIHandler extends Observable implements Observer {
 		WorkPeriod wp=(WorkPeriod) mapToProcess.mainInfo.get(userChoice-1);
 		try {
 			sysApp.copyBookingToTimeRegister(wp, assignment);
+			this.message=new String[] {"Work registered succesfully"};
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -224,6 +229,7 @@ public class UIHandler extends Observable implements Observer {
 	private void createProject(String userInput){		
 		try {
 			sysApp.createProject(userInput);
+			lastSuccesfull=Operation.NewProject;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -240,6 +246,7 @@ public class UIHandler extends Observable implements Observer {
 		
 		try {
 			sysApp.setProjectLeader(projectID, employeeID);
+			lastSuccesfull=Operation.NewProjectLeader;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -247,6 +254,8 @@ public class UIHandler extends Observable implements Observer {
 	private void createEmployee (String userInput) {
 		try {
 			sysApp.createEmployee(userInput);
+			lastSuccesfull=Operation.NewEmployee;
+			
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -255,6 +264,7 @@ public class UIHandler extends Observable implements Observer {
 		int empID=Integer.parseInt(userInput);
 		try {
 			sysApp.removeEmployee(empID);
+			lastSuccesfull=Operation.RemoveEmployee;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -306,6 +316,7 @@ public class UIHandler extends Observable implements Observer {
 		String name=userInputs[1];
 		try {
 			sysApp.renameProject(projectID,name);
+			lastSuccesfull=Operation.RenameProject;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -320,6 +331,7 @@ public class UIHandler extends Observable implements Observer {
 		int projectID=Integer.parseInt(userInput);
 		try {
 			sysApp.removeProject(projectID);
+			lastSuccesfull=Operation.RemoveProject;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -336,6 +348,7 @@ public class UIHandler extends Observable implements Observer {
 		
 		try {
 			sysApp.createTask(projectID,taskName);
+			lastSuccesfull=Operation.NewTask;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -351,6 +364,7 @@ public class UIHandler extends Observable implements Observer {
 		double timeBudget=Double.parseDouble(userInputs[1]);
 		try {
 			sysApp.setTaskBudgetTime(taskID, timeBudget);
+			lastSuccesfull=Operation.TaskBudgetTime;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -370,6 +384,7 @@ public class UIHandler extends Observable implements Observer {
 		
 		try {
 			sysApp.setTaskStart(taskID, Util.getCurrentYear(), week);
+			lastSuccesfull=Operation.TaskStart;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -380,6 +395,7 @@ public class UIHandler extends Observable implements Observer {
 		int week=Integer.parseInt(inputs[2]);
 		try {
 			sysApp.setTaskStart(taskID,year,week);
+			lastSuccesfull=Operation.TaskStart;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -399,6 +415,7 @@ public class UIHandler extends Observable implements Observer {
 		
 		try {
 			sysApp.setTaskEnd(taskID, Util.getCurrentYear(), week);
+			lastSuccesfull=Operation.TaskEnd;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -409,6 +426,7 @@ public class UIHandler extends Observable implements Observer {
 		int week=Integer.parseInt(inputs[2]);
 		try {
 			sysApp.setTaskEnd(taskID,year,week);
+			lastSuccesfull=Operation.TaskEnd;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -417,6 +435,7 @@ public class UIHandler extends Observable implements Observer {
 		int taskID=Integer.parseInt(userInput);
 		try {
 			sysApp.removeTask(taskID);
+			lastSuccesfull=Operation.RemoveTask;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -424,8 +443,11 @@ public class UIHandler extends Observable implements Observer {
 	private void employeesForTask(String userInput) {
 		int taskID=Integer.parseInt(userInput);
 		try {
-			this.listToProces=sysApp.employeesForTask(taskID);
-			setTempState(ScreenState.DisplayListState);
+			List<String> employeesForTask=sysApp.employeesForTask(taskID);
+			employeesForTask.add(0, "Following employees are available for the task: ");
+			this.message=new String[employeesForTask.size()];
+			this.message=(String[]) employeesForTask.toArray();
+			lastSuccesfull=Operation.EmployeesForTask;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -445,6 +467,7 @@ public class UIHandler extends Observable implements Observer {
 		
 		try {
 			sysApp.manTask(taskID,empID);
+			lastSuccesfull=Operation.ManTask;
 		} catch (WrongInputException e) {
 			error (e.getMessage());
 		}
@@ -459,12 +482,13 @@ public class UIHandler extends Observable implements Observer {
 		int projectID=Integer.parseInt(userInput);
 		try {
 			sysApp.createProjectReport(projectID);
+			lastSuccesfull=Operation.ProjectReport;
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
 	}
 	private void createTaskReport (String userInput) {
-		
+		lastSuccesfull=Operation.TaskReport;
 	}
 	
 	private void logOff() {
@@ -513,12 +537,5 @@ public class UIHandler extends Observable implements Observer {
 		setTempState(ScreenState.MessageState);
 	}
 
-	
-	
-	//succesfull operation
-	@Override
-	public void update(Observable o, Object arg) {
 		
-	}
-	
 }
