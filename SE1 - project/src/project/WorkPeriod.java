@@ -64,11 +64,5 @@ public class WorkPeriod extends Object {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
 }
 

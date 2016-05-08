@@ -117,5 +117,5 @@ public class Task {
 
 		return hoursSpent;
 	}
-	
+
 }

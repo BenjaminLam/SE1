@@ -91,7 +91,7 @@ public class MainUI implements Observer {
 		out.println("	9) create new employee");
 		out.println("	10) remove employee ");
 		out.println("	11) Log off");
-        out.println("Select a number (0-11): ");
+        out.println("Select a number (1-11): ");
 	}
 	private void displayRegisterWork(){
 		out.println("Select one of the following entries if you want to register your time according to your timebooking");
@@ -176,7 +176,7 @@ public class MainUI implements Observer {
         out.println("   16) Create task report");
         out.println("   17) back to employee screen");
         
-        out.println("Select a number (0-17): ");
+        out.println("Select a number (1-17): ");
 	}
 	private void displayRenameProject() {
 		out.print("Please input project ID followed by new name of project");

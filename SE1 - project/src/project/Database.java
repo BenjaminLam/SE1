@@ -5,9 +5,6 @@ import java.util.List;
 
 import Exceptions_Enums.WrongInputException;
 
-
-
-
 public class Database {
 	public List<Employee> employees;
 	public List<Project> projects;
@@ -65,10 +62,6 @@ public class Database {
 			if (project.name.equals(name)) return true;
 		}
 		return false;
-	}
-	
-	protected int getNextProjectNumber() {
-		return projects.size();
 	}
 	
 	protected Project addProject (Project project) throws WrongInputException {
@@ -274,27 +267,6 @@ public class Database {
 		return employees.isEmpty();
 	}
 	
-	
-	
-	// methods only used for testing:
-	public int numberOfAssignments () {
-		return this.assignments.size();
-	}
-	
-	public int numberOfTasks() {
-		return this.tasks.size();
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
- 	
-
 	public List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
 		List<String> employeesAvailable= new ArrayList<String>();
 		
@@ -305,18 +277,16 @@ public class Database {
 		return employeesAvailable;
 	}
 
-	//unused??
-	protected List<Assignment> getTaskAssignments(Task task){
-			List<Assignment> taskAss = new ArrayList<Assignment>();
-			
-			for(Assignment ass:assignments){
-				if(ass.taskID==task.ID){
-					taskAss.add(ass);
-				}
-			}
-			return taskAss;
-		}
-		
+	
+	
+	// methods used only for testing:
+	public int numberOfAssignments () {
+		return this.assignments.size();
+	}
+	
+	public int numberOfTasks() {
+		return this.tasks.size();
+	}
 
 }
 

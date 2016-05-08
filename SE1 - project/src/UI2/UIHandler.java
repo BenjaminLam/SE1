@@ -15,11 +15,6 @@ import project.Assignment;
 import project.WorkPeriod;
 
 
-//when creating new employee/project/task: paste the id of the project
-//if set yourself as project leader and you're not project leader already - change your isProjectLeaderStatus in sysApp
-//for stort try catch i handle input?
-//when creating employee - create assignment for sick/vacation/course
-//select employee substate outcommented
 //when registering time, show how many hours registered today
 //look every method through: only using syApp object - parse rest as int/double info
 

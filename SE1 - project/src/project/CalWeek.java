@@ -14,7 +14,6 @@ public class CalWeek {
 		if (year<0 || week>2050) throw new WrongInputException("Year has to be a number between 0 and 2050");
 	}
 	
-	
 	public boolean isAfterOrWhile (CalWeek week) {
 		return (isAfter(week)||isWhile(week));
 	}

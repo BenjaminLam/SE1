@@ -16,7 +16,6 @@ public class Project {
 		this.name=name;
 	}
 	
-	//not handling null value
 	public boolean isProjectLeader(Employee employee) {
 		if (employee.equals(projectLeader)) return true;
 		return false;
