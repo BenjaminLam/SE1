@@ -120,6 +120,9 @@ public class Employee {
 	public void setVacation(Database database, CalDay start, CalDay end) throws WrongInputException{
 		List<CalDay> daysBetween = start.getDaysBetween(end);
 		
+		if (end.week.isBefore(start.week)) throw new WrongInputException ("End of vacation can't be before start");
+		if (end.week.equals(start.week) && end.day<=start.day) throw new WrongInputException ("Start of vacation must be after end of vacation");
+		
 		for(CalDay day: daysBetween){
 			WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
 			if(isOnVacation(database,this,day)) throw new WrongInputException("You are already registered as on vacation.");
@@ -144,6 +147,10 @@ public class Employee {
 	
 	public void setCourse(Database database,CalDay start, CalDay end) throws WrongInputException{
 		List<CalDay> daysBetween = start.getDaysBetween(end);
+		
+		if (end.week.isBefore(start.week)) throw new WrongInputException ("End of course can't be before start");
+		if (end.week.equals(start.week) && end.day<=start.day) throw new WrongInputException ("Start of course must be after end of vacation");
+		
 		
 		for(CalDay day: daysBetween){
 			WorkPeriod wp = new WorkPeriod(day,9.0,16.5);
@@ -178,12 +185,7 @@ public class Employee {
 		}
 		return hoursRegistered;
 	}
-	
-	
-	
-	
-	
-	
+		
 	private double hoursBooked (Database database, CalWeek start, CalWeek end) {
 		double hoursBooked=0;
 		List<Assignment> assignments = database.getEmployeeAssignments(this);
@@ -197,15 +199,5 @@ public class Employee {
 		}
 		return hoursBooked;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	}

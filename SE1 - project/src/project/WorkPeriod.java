@@ -29,6 +29,10 @@ public class WorkPeriod extends Object {
 		this.end=end;
 	}
 	
+	public String toString () {
+		return day.day + "/" + day.week.week + "/" + day.week.year + " start: " + start + " end " + end;  
+	}
+	
 	public double getLength () {
 		return end-start;
 	}
