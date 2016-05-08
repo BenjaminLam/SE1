@@ -102,6 +102,12 @@ public class Task {
 		return this;
 	}
 
+	protected void rename (Database database, Employee employee, String name) throws WrongInputException {
+		Project project=database.getProject(this.projectID);
+		if (!project.projectLeader.equals(employee)) throw new WrongInputException ("You are not the project leader of this project");
+		project.name=name;
+	}
+
 	public double hoursSpent(Database database) {
 		double hoursSpent=0;
 		

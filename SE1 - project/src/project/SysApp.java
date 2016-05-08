@@ -223,12 +223,14 @@ public class SysApp {
 		return (String[]) availableEmps.toArray();
 	}
 
-	public void renameTask(int taskID) {
+	public String[] renameTask(int taskID, String name) throws WrongInputException {
 		Task task=database.getTask(taskID);
+		if (task==null) throw new WrongInputException ("Task doesn't excist");
+		task.rename(database, currentEmp, name);
 		
-		
-		//task doesn't excist
-		//employee not project leader of project of task
+		return new String[]{
+			"Succesfully changed name of task with task id " + task.ID + " to " + task.name
+		};
 	}
 	
 	public String[] manTask (int taskID, int employeeID) throws WrongInputException {
