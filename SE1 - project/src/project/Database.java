@@ -17,15 +17,16 @@ public class Database {
 	int nextTaskID;
 	int nextProjectID;
 	
-	public Database () {
+	public Database () throws WrongInputException {
 		this.employees=new ArrayList<Employee>();
 		this.projects=new ArrayList<Project>();
 		this.tasks=new ArrayList<Task>();
 		this.assignments=new ArrayList<Assignment>();
-	
+		
 		this.nextEmpID=0;
 		this.nextTaskID=0;
 		this.nextProjectID=0;
+		initDatabase();
 	}
 	
 	public void initDatabase () throws WrongInputException {
@@ -198,12 +199,25 @@ public class Database {
 		return projectEmployees;
 	}
 	
+	protected List<Employee> getEmployeesForTask (Task task) throws WrongInputException {
+		if (task==null) throw new WrongInputException ("Task doesn't exist");
+		
+		List<Employee> taskEmployees = new ArrayList<Employee>();			
+		for (Assignment assignment:assignments) {
+			if (assignment.taskID==task.ID) {
+				Employee tempEmp=getEmployee(assignment.employeeID);
+				if (!taskEmployees.contains(tempEmp)) taskEmployees.add(tempEmp);
+			}
+		}
+		return taskEmployees;
+	}
+	
+	
 	public Employee addEmployee (Employee employee) throws WrongInputException {
 		if (employee==null) throw new WrongInputException("Employee doesn't excist");
 		employee.ID=nextEmpID;
 		nextEmpID++;
 		employees.add(employee);
-		
 		//creates sickness,vacation and course
 		for(int i=0;i<3;i++){
 			createAssignment(employee, getTask(i));
