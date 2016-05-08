@@ -57,6 +57,7 @@ public class Employee {
 		
 		if (employee.isAssigned(database, task, employee)) throw new WrongInputException ("An assignment for this task and employee already exists");
 		
+		Project project=database.getProject(task.projectID);
 		if (!project.isProjectLeader(this)) throw new WrongInputException("You are not projectleader of this project, therefore you can not man this task.");
 		return database.createAssignment(employee,task);
 	}
