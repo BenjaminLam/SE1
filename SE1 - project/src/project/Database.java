@@ -46,7 +46,6 @@ public class Database {
 		addTask(course);
 	}
 
-	
 	public Employee getEmployee (int ID) {
 		for (Employee employee:employees) {
 			if (employee.ID==ID) return employee;
@@ -242,7 +241,16 @@ public class Database {
 		if (!projects.remove(project)){
 			throw new WrongInputException ("Project doesn't excist");
 		}
+		removeProjectTasks(project);
 		return project;
+	}
+	
+	protected void removeProjectTasks (Project project) throws WrongInputException {
+		for (int i=tasks.size()-1;i>=0;i--){
+			if (tasks.get(i).projectID==project.ID){
+				removeTask(tasks.get(i));
+			}
+		}
 	}
 	
 	protected Task removeTask (Task task) throws WrongInputException {
@@ -250,8 +258,23 @@ public class Database {
 		if (!tasks.remove(task)){
 			throw new WrongInputException ("Task doesn't exist");
 		}
+		removeTaskAssignments(task);
 		return task;
 	}
+	
+	protected void removeTaskAssignments(Task task) {
+		for (int i=assignments.size()-1;i>=0;i--) {
+			if (assignments.get(i).taskID==task.ID) {
+				assignments.remove(i);
+			}
+		}
+	}
+	
+	protected boolean noEmployeeExcists() {
+		return employees.isEmpty();
+	}
+	
+	
 	
 	// methods only used for testing:
 	public int numberOfAssignments () {
@@ -270,9 +293,7 @@ public class Database {
 	
 	
 	
- 	protected boolean noEmployeeExcists() {
-		return (employees.size()==0);
-	}
+ 	
 
 	public List<String> getAvailableEmployees(CalWeek start, CalWeek end) {
 		List<String> employeesAvailable= new ArrayList<String>();

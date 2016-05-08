@@ -37,6 +37,14 @@ public class UIHandler extends Observable  {
 	}
 	
 	public void init()  {
+		try {
+		if (sysApp.noEmployeesExcists()) {
+			message=(sysApp.createEmployee("admin"));
+			setState (ScreenState.MessageState);
+		}
+		} catch (WrongInputException e) {
+			terminate();
+		}
 		setState (ScreenState.LoginState);
 	}
 
@@ -47,23 +55,27 @@ public class UIHandler extends Observable  {
 		}
 		if (userInput.equals("exit")) terminate();
 		
-		
-		switch (currentState){
-		case LoginState:
-			logIn(userInput); break;
-		case EmployeeState:
-			handleEmployeeState(userInput); break;
-		case ProjectLeaderState:
-			handleProjectLeaderState(userInput); break;
-		default:
-			terminate();
+		try {
+			switch (currentState){
+			case LoginState:
+				logIn(userInput); break;
+			case EmployeeState:
+				handleEmployeeState(userInput); break;
+			case ProjectLeaderState:
+				handleProjectLeaderState(userInput); break;
+			default:
+				terminate();
+			}
+		} catch (NumberFormatException e) {
+			wrongInputFormat();
 		}
 	}
 	
 	private void logIn(String userInput) {
 		int empID=Integer.parseInt(userInput);
 		try {
-			sysApp.logIn(empID);
+			this.message=sysApp.logIn(empID);
+			setState(ScreenState.MessageState);
 			setState(ScreenState.EmployeeState);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
@@ -76,9 +88,8 @@ public class UIHandler extends Observable  {
 		switch (this.subState) {
 		case 0:  selectEmployeeSubstate(userInput); break; 	
 		case 1:  registerWork(userInput); break; 
-		case 2:  seekAssistance(userInput); break; 
-		case 3:  registerVacation(userInput); break; 
-		case 4:  registerSickness(userInput); break; 
+		case 2:  seekAssistance(userInput); break;   
+		case 4:  registerVacation(userInput); break;
 		case 5:  registerCourse (userInput); break; 
 		case 6:  createProject (userInput); break; 
 		case 7:  setProjectLeader (userInput); break;
@@ -91,30 +102,31 @@ public class UIHandler extends Observable  {
 	private void selectEmployeeSubstate (String userInput) {
 		int userChoice=Integer.parseInt(userInput);
 		
-		try {
-			if (userChoice<0 || userChoice>11) {
-				throw new WrongInputException ("Illegal choice");
-			}
-		} catch (WrongInputException e) {
-			error(e.getMessage());
+		if (userChoice<0 || userChoice>11) {
+			error("Illegal choice");
 			return;
 		}
 		
-		if (userChoice==1) {
+		switch (userChoice) {
+		case 1:
 			this.mapToProcess=sysApp.todaysBookings();
+			break;
+		case 3:
+			registerSickness();
+			return;
+		case 8:
+			plScreen();
+			return;
+		case 11:
+			logOff();
+			return;
 		}
-		if (userChoice==8) {
-			try {
-				if (!sysApp.isProjectLeader) throw new WrongInputException ("You are not a project leader");
-				setStateResetSub(ScreenState.ProjectLeaderState);
-				return;
-			} catch (WrongInputException e) {
-				error(e.getMessage());
-				return;
-			}
-		}
-		if (userChoice==11) logOff();
 		setSubState(userChoice);
+	}
+
+	private void plScreen() {
+		if (!sysApp.isProjectLeader) error("You are not a project leader");
+		else setStateResetSub(ScreenState.ProjectLeaderState);
 	}
 	private void registerWork(String userInput){
 		String[] userInputs=Util.splitString(userInput);
@@ -210,11 +222,49 @@ public class UIHandler extends Observable  {
 			error(e.getMessage());
 		}
 	}
-	private void registerSickness(String userInput){
+	private void registerSickness(){
+		try {
+			succes(sysApp.registerSickness());
+			subState=0;
+		} catch (WrongInputException e){
+			error(e.getMessage());
+		}
 	}
 	private void registerVacation(String userInput){
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=6) {
+			wrongInputFormat();
+			return;
+		}
+		int startYear=Integer.parseInt(userInputs[0]);
+		int startWeek=Integer.parseInt(userInputs[1]);
+		int startDay=Integer.parseInt(userInputs[2]);
+		int endYear=Integer.parseInt(userInputs[3]);
+		int endWeek=Integer.parseInt(userInputs[4]);
+		int endDay=Integer.parseInt(userInputs[5]);
+		try {
+			succes(sysApp.registerVacation(startYear, startWeek, startDay, endYear, endWeek, endDay));
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void registerCourse (String userInput){
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=6) {
+			wrongInputFormat();
+			return;
+		}
+		int startYear=Integer.parseInt(userInputs[0]);
+		int startWeek=Integer.parseInt(userInputs[1]);
+		int startDay=Integer.parseInt(userInputs[2]);
+		int endYear=Integer.parseInt(userInputs[3]);
+		int endWeek=Integer.parseInt(userInputs[4]);
+		int endDay=Integer.parseInt(userInputs[5]);
+		try {
+			succes(sysApp.registerCourse(startYear, startWeek, startDay, endYear, endWeek, endDay));
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void createProject(String userInput){		
 		try {
@@ -306,10 +356,36 @@ public class UIHandler extends Observable  {
 		}
 	}
 	private void setProjectStart (String userInput) {
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=3) {
+			wrongInputFormat();
+			return;
+		}
+		int projectID=Integer.parseInt(userInputs[0]);
+		int year=Integer.parseInt(userInputs[1]);
+		int week=Integer.parseInt(userInputs[2]);
 		
+		try {
+			succes(sysApp.setProjectStart(projectID, year, week));
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void setProjectEnd (String userInput) {
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=3) {
+			wrongInputFormat();
+			return;
+		}
+		int projectID=Integer.parseInt(userInputs[0]);
+		int year=Integer.parseInt(userInputs[1]);
+		int week=Integer.parseInt(userInputs[2]);
 		
+		try {
+			succes(sysApp.setProjectEnd(projectID, year, week));
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void removeProject (String userInput) {
 		int projectID=Integer.parseInt(userInput);
@@ -420,14 +496,23 @@ public class UIHandler extends Observable  {
 		int taskID=Integer.parseInt(userInput);
 		try {
 			succes(sysApp.employeesForTask(taskID));
-			
-			
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
 	}
 	private void renameTask (String userInput) {
-		
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=2) {
+			wrongInputFormat();
+			return;
+		}
+		int taskID=Integer.parseInt(userInputs[0]);
+		String name = userInputs[1];
+		try {
+			succes(sysApp.renameTask(taskID, name));
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void manTask(String userInput) {
 		String[] userInputs=Util.splitString(userInput);
@@ -446,10 +531,44 @@ public class UIHandler extends Observable  {
 		}
 	}
 	private void createBooking (String userInput) {
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=7) {
+			wrongInputFormat();
+			return;
+		}
+		int empID=Integer.parseInt(userInputs[0]);
+		int taskID=Integer.parseInt(userInputs[1]);
+		int year=Integer.parseInt(userInputs[2]);
+		int week=Integer.parseInt(userInputs[3]);
+		int day=Integer.parseInt(userInputs[4]);
+		double start=Double.parseDouble(userInputs[5]);
+		double end=Double.parseDouble(userInputs[6]);
 		
+		try {
+			succes(sysApp.createBooking(empID, taskID, year, week, day, start, end));
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void removeBooking (String userInput) {
+		String[] userInputs=Util.splitString(userInput);
+		if (userInputs.length!=7) {
+			wrongInputFormat();
+			return;
+		}
+		int empID=Integer.parseInt(userInputs[0]);
+		int taskID=Integer.parseInt(userInputs[1]);
+		int year=Integer.parseInt(userInputs[2]);
+		int week=Integer.parseInt(userInputs[3]);
+		int day=Integer.parseInt(userInputs[4]);
+		double start=Double.parseDouble(userInputs[5]);
+		double end=Double.parseDouble(userInputs[6]);
 		
+		try {
+			succes(sysApp.removeBooking(empID, taskID, year, week, day, start, end));
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	private void createProjectReport (String userInput) {
 		int projectID=Integer.parseInt(userInput);
@@ -460,6 +579,12 @@ public class UIHandler extends Observable  {
 		}
 	}
 	private void createTaskReport (String userInput) {
+		int taskID=Integer.parseInt(userInput);
+		try {
+			succes(sysApp.createTaskReport(taskID));
+		} catch (WrongInputException e) {
+			error(e.getMessage());
+		}
 	}
 	
 	private void logOff() {

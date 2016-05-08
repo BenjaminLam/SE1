@@ -29,14 +29,19 @@ public class SysApp {
 		database.initDatabase();
 	}
 	
-	public Employee logIn(int EmpID) throws WrongInputException {
+	public String[] logIn(int EmpID) throws WrongInputException {
 		Employee employee=database.getEmployee(EmpID);
-		//if (employee==null) throw new WrongInputException ("Employee doesn't excist");
+		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
 		currentEmp=employee;
-		//isProjectLeader=employee.isProjectLeader(database);
-		return employee;
+		isProjectLeader=employee.isProjectLeader(database);
+		return new String[] {
+			"Logged in as " + employee.name + " with id " + employee.ID	
+		};
 	}
 	
+	public boolean noEmployeesExcists() {
+		return database.noEmployeeExcists();
+	}
 	
 	//nedenstående er brugt af UI Employee state
 	public String[] copyBookingToTimeRegister(WorkPeriod booking, Assignment assignment) throws WrongInputException{
@@ -85,7 +90,10 @@ public class SysApp {
 		};
 	}
 	
-	public String[] registerVacation (CalDay start, CalDay end) throws WrongInputException {
+	public String[] registerVacation (int startYear, int startWeek, int startDay, int endYear, int endWeek, int endDay) throws WrongInputException {
+		CalDay start=new CalDay(new CalWeek(startYear,startWeek),startDay);
+		CalDay end=new CalDay(new CalWeek(endYear,endWeek),endDay);
+		
 		currentEmp.setVacation(database, start, end);
 		return new String[] {
 				"Succesfully set you on vacation from year: " + start.week.year + " week: " + start.week + " weekday " + start.day,
@@ -93,7 +101,10 @@ public class SysApp {
 		};
 	}
 	
-	public String[] registerCourse (CalDay start, CalDay end) throws WrongInputException {
+	public String[] registerCourse (int startYear, int startWeek, int startDay, int endYear, int endWeek, int endDay) throws WrongInputException {
+		CalDay start=new CalDay(new CalWeek(startYear,startWeek),startDay);
+		CalDay end=new CalDay(new CalWeek(endYear,endWeek),endDay);
+		
 		currentEmp.setCourse(database, start, end);
 		return new String[] {
 				"Succesfully registered your course from year: " + start.week.year + " week: " + start.week + " weekday " + start.day,
@@ -130,7 +141,7 @@ public class SysApp {
 		Employee employee=new Employee (name);
 		database.addEmployee(employee);
 		return new String[] {
-				"Succesfully created employee " + employee.name + "with employee ID " + employee.ID
+				"Succesfully created employee " + employee.name + " with employee ID " + employee.ID
 		};
 	}
 	
