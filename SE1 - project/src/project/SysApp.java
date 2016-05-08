@@ -79,7 +79,6 @@ public class SysApp {
 	}
 	
 	public void registerSickness () throws WrongInputException {
-		CalDay today = Util.getCurrentDay();
 		currentEmp.setSickness(database);
 	}
 	
