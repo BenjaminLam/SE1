@@ -78,24 +78,27 @@ public class SysApp {
 		};
 	}
 	
-	public void registerSickness () throws WrongInputException {
+	public String[] registerSickness () throws WrongInputException {
 		currentEmp.setSickness(database);
+		return new String[]{
+				"Succesfully registered as sick for rest of day"
+		};
 	}
 	
-	public void registerVacation (CalDay start, CalDay end) throws WrongInputException {
-		List<CalDay> daysBetween = start.getDaysBetween(end);
-		
-		for(CalDay day: daysBetween){
-			currentEmp.setVacation(database, day);
-		}
+	public String[] registerVacation (CalDay start, CalDay end) throws WrongInputException {
+		currentEmp.setVacation(database, start, end);
+		return new String[] {
+				"Succesfully set you on vacation from year: " + start.week.year + " week: " + start.week + " weekday " + start.day,
+				"to year: " + end.week.year + " week: " + end.week + " weekday " + end.day
+		};
 	}
 	
-	public void registerCourse (CalDay start, CalDay end) throws WrongInputException {
-		List<CalDay> daysBetween = start.getDaysBetween(end);
-		
-		for(CalDay day: daysBetween){
-			currentEmp.setCourse(database, day);
-		}
+	public String[] registerCourse (CalDay start, CalDay end) throws WrongInputException {
+		currentEmp.setCourse(database, start, end);
+		return new String[] {
+				"Succesfully registered your course from year: " + start.week.year + " week: " + start.week + " weekday " + start.day,
+				"to year: " + end.week.year + " week: " + end.week + " weekday " + end.day
+		};
 	}
 	
 	public String[] createProject (String name) throws WrongInputException {
