@@ -139,11 +139,9 @@ public class SysApp {
 	}
 	
 	public Project removeProject (int projectID) throws WrongInputException {
-		try {
-			if (!database.getProject(projectID).projectLeader.equals(currentEmp)) throw new WrongInputException("You are not the project leader of this project");
-		} catch (NullPointerException e) {
-			throw new WrongInputException ("Project doesn't excist");
-		}
+		Project project = database.getProject(projectID);
+		if(project == null) throw new WrongInputException ("Project doesn't exist");
+		if(!project.projectLeader.equals(currentEmp)) throw new WrongInputException("You are not the project leader of this project");
 		return database.removeProject(database.getProject(projectID));
 	}
 	

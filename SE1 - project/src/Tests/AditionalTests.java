@@ -250,7 +250,6 @@ public class AditionalTests extends SampleDataSetupTest {
 		} catch (WrongInputException e) {
 		}
 		assertEquals(size1, database.projects.size());
-		
 	}
 }
 
