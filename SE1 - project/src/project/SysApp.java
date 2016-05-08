@@ -46,6 +46,7 @@ public class SysApp {
 		if(assignment==null){
 			throw new WrongInputException("The assignment doesn't exist");
 		}
+		
 		return assignment.addTimeRegister(booking);
 	}
 
@@ -246,11 +247,14 @@ public class SysApp {
 		
 		List<Employee> taskEmployees=database.getEmployeesForTask(task);
 		
-		taskReport.add("This task has)
+		taskReport.add("This task has" + taskEmployees.size() + " employees:");
 		for(Employee employee:taskEmployees){
-			
+			taskReport.add("ID: " + employee.ID+ " Name: " + employee.name);
 		}
 		
+		taskReport.add("Time budget for this task:" + task.timeBudget);
+		
+		taskReport.add("Total time spent on this project: " + task.hoursSpent(database));
 		return taskReport;
 	}
 	
@@ -280,21 +284,6 @@ public class SysApp {
 	
 	
 	
-	//ikke tjekket endnu:
-	public void initDatabase () {
-		//creates the powerful secret project
-		Project project = new Project("project0",0);
-		this.projects.add(project);
-		
-		Task sickness = new Task(project, "Sickness");
-		this.tasks.add(sickness);
-		
-		Task vacation = new Task(project, "Vacation");
-		this.tasks.add(vacation);
-		
-		Task course = new Task(project, "Course");
-		this.tasks.add(course);
-	}
-
+	
 
 }
