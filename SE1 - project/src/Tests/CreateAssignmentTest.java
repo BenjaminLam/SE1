@@ -30,14 +30,14 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		public void testCreateAssignmentMain () throws WrongInputException {
 			int numberOfAssignments = database.numberOfAssignments();
 			Employee leader=super.database.getEmployee(0);
-			Employee worker=super.database.getEmployee(1);
+			Employee worker=super.database.getEmployee(2);
 			Project project=super.database.projects.get(1);
 			
 			sysApp.logIn(leader.ID);
 			
 			assertTrue(project.isProjectLeader(leader));
 			
-			Task task1 = super.database.getTask(2);
+			Task task1 = super.database.getTask(3);
 			
 			assertFalse(worker.isAssigned(database, task1, worker)); 
 			
@@ -46,12 +46,14 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			} catch (WrongInputException e) {
 			}
 			
-			assertEquals(database.numberOfAssignments(), numberOfAssignments); 
+			boolean i = database.numberOfAssignments()== numberOfAssignments;
+			assertFalse(i);
 			
-			Assignment assignment = super.database.assignments.get(numberOfAssignments+1);
+			
+			Assignment assignment = super.database.assignments.get(database.numberOfAssignments()-1);
 			
 			assertNotNull(assignment); 
-			assertEquals(assignment.taskID,task1);
+			assertEquals(assignment.taskID,task1.ID);
 			assertEquals(assignment.employeeID,worker.ID); 
 		}
 		
@@ -74,7 +76,7 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			//checks employee is not project leader
 			assertFalse(project.isProjectLeader(worker));
 			
-			Task task1 = super.database.getTask(0);
+			Task task1 = super.database.getTask(3);
 			
 			try {
 				sysApp.manTask(task1.ID, worker.ID);
@@ -98,16 +100,18 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		public void testCreateAssignmentAlt2() throws WrongInputException{
 			int numberOfAssignments = database.numberOfAssignments();
 			Employee leader=super.database.getEmployee(0);
-			Employee worker=super.database.getEmployee(1);
-			Project project=super.database.projects.get(1);
+			Employee worker=super.database.getEmployee(2);
+			Project project=super.database.getProject(1);
 			
 			sysApp.logIn(leader.ID);
 			
 			assertTrue(project.isProjectLeader(leader));
 			
-			Task task1 = super.database.getTask(0);
+			Task task1 = super.database.getTask(3);
 			
-			assertTrue(leader.isAssigned(database, task1, worker));
+			sysApp.manTask(task1.ID, worker.ID); 
+			
+			assertTrue(worker.isAssigned(database, task1, worker));
 			
 			try {
 				sysApp.manTask(task1.ID, worker.ID);
@@ -115,14 +119,14 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 			} catch (WrongInputException e) {
 			}
 			
-			//checks createTask hasn't created task; 
+			//checks createTask hasn't created assignment; 
 			assertEquals(database.numberOfAssignments(), numberOfAssignments);
 			
 		}
 		
 		/*
 		 *Alternative scenario3:
-		 * employee tries to create assignment for non excisting task (null)
+		 * employee tries to create assignment for non existing task (null)
 		 * method throws exception
 		 * no task has been added
 		 */
@@ -157,19 +161,22 @@ public class CreateAssignmentTest extends SampleDataSetupTest {
 		 * no task has been added
 		 */
 		
-		
 		@Test
-		public void testCreateAssignmentAlt4(){
+		public void testCreateAssignmentAlt4() throws WrongInputException{
 			int numberOfAssignments = database.numberOfAssignments();
+			Employee leader=super.database.getEmployee(0);
 			
-			int employeeID = 100;
+			sysApp.logIn(leader.ID);
+			
+			int employeeID = -1;
 			
 			Employee employee=super.database.getEmployee(employeeID);
-			Task task1 = super.database.getTask(0);
 			assertTrue(employee==null);
 			
+			Task task1 = super.database.getTask(1);
+			
 			try {
-				sysApp.manTask(task1.ID, employeeID);
+				sysApp.manTask(task1.ID, -1);
 				Assert.fail(); //method throws exception
 			} catch (WrongInputException e) { 
 			}
