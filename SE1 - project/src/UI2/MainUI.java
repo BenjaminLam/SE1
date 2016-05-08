@@ -16,7 +16,7 @@ import Exceptions_Enums.WrongInputException;
 
 
 //when user registers work for today print number of hours he has registered
-
+//when user registers work print time bookings for today
 
 
 public class MainUI implements Observer {
@@ -98,7 +98,11 @@ public class MainUI implements Observer {
 		out.println("Register task today: input task id, start time and end time");
 		out.println("Register task anyday: input task id, start time, end time, year, week, day of week"); 
 		out.println("When registereing manually split words with space");
-	
+		
+		List<String> printList=uiHandler.mapToProcess.asList();
+		for (int i=0;i<printList.size();i++)  {
+			out.println("1: " + printList.get(i));
+		}
 	}
 	private void displaySeekAssistance(){
 		out.println("Seek assistance today: input task id, employee id for employee you want help from, start time and end time");

@@ -12,17 +12,17 @@ import project.*;
 
 
 //when creating new employee/project/task: paste the id of the project
-//not use remove employee to remove yourself
 //if set yourself as project leader and you're not project leader already - change your isProjectLeaderStatus in sysApp
 //for stort try catch i handle input?
 //when creating employee - create assignment for sick/vacation/course
 //select employee substate outcommented
+//when registering time, show how many hours registered today
+//look every method through: only using syApp object - parse rest as int/double info
 
 public class UIHandler extends Observable  {
 	public ScreenState currentState;
 	public int subState;
 	private SysApp sysApp;
-	public List<? extends Object> listToProces; //list extracted from database, stored to process
 	public MyMap mapToProcess; //MyMap extracted from database, stored to process
 	public String[] message; //error/succes message, stored to process
 	
@@ -47,21 +47,18 @@ public class UIHandler extends Observable  {
 		}
 		if (userInput.equals("exit")) terminate();
 		
-		try {
-			switch (currentState){
-			case LoginState:
-				logIn(userInput); break;
-			case EmployeeState:
-				handleEmployeeState(userInput); break;
-			case ProjectLeaderState:
-				handleProjectLeaderState(userInput); break;
-			default:
-				terminate();
-			}
-		} catch (NumberFormatException e) {
-			wrongInputFormat();
-		}
 		
+		switch (currentState){
+		case LoginState:
+			logIn(userInput); break;
+		case EmployeeState:
+			handleEmployeeState(userInput); break;
+		case ProjectLeaderState:
+			handleProjectLeaderState(userInput); break;
+		default:
+			terminate();
+		}
+		setTempState(ScreenState.MessageState);
 	}
 	
 	private void logIn(String userInput) {
@@ -106,8 +103,6 @@ public class UIHandler extends Observable  {
 		
 		if (userChoice==1) {
 			this.mapToProcess=sysApp.todaysBookings();
-			this.listToProces=mapToProcess.asList();
-			//setState(ScreenState.DisplayListState);
 		}
 		if (userChoice==8) {
 			try {
@@ -125,23 +120,19 @@ public class UIHandler extends Observable  {
 	private void registerWork(String userInput){
 		String[] userInputs=Util.splitString(userInput);
 		
-		this.mapToProcess=sysApp.todaysBookings();
-	
 		switch (userInputs.length) {
 		case 1: registerWorkExcisting(userInputs); break;
 		case 3: registerWorkToday(userInputs); break;
 		case 6: registerWorkAnyDay(userInputs); break;
 		default: wrongInputFormat(); break;
 		}
-		
 	}
 	private void registerWorkExcisting(String[] userinputs) {
 		int userChoice=Integer.parseInt(userinputs[0]);
 		Assignment assignment=(Assignment) mapToProcess.secondaryInfo.get(userChoice-1);
 		WorkPeriod wp=(WorkPeriod) mapToProcess.mainInfo.get(userChoice-1);
 		try {
-			sysApp.copyBookingToTimeRegister(wp, assignment);
-			this.message=new String[] {"Work registered succesfully"};
+			this.message=sysApp.copyBookingToTimeRegister(wp, assignment);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -152,7 +143,7 @@ public class UIHandler extends Observable  {
 		double end=Double.parseDouble(userInputs[2]);
 		
 		try {
-			sysApp.registerWorkManually(taskID, start, end, Util.getCurrentDay());
+			this.message=sysApp.registerWorkManually(taskID, start, end, Util.getCurrentDay());
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -167,7 +158,7 @@ public class UIHandler extends Observable  {
 		CalDay day=new CalDay(new CalWeek(year,week),weekDay);
 		
 		try {
-			sysApp.registerWorkManually(taskID, start, end, day);
+			this.message=sysApp.registerWorkManually(taskID, start, end, day);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -194,7 +185,7 @@ public class UIHandler extends Observable  {
 		}
 		
 		try {
-			sysApp.seekAssistance(taskID, empID, wp);
+			this.message=sysApp.seekAssistance(taskID, empID, wp);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -215,7 +206,7 @@ public class UIHandler extends Observable  {
 		}
 		
 		try {
-			sysApp.seekAssistance(taskID, empID, wp);
+			this.message=sysApp.seekAssistance(taskID, empID, wp);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -228,7 +219,7 @@ public class UIHandler extends Observable  {
 	}
 	private void createProject(String userInput){		
 		try {
-			sysApp.createProject(userInput);
+			this.message=sysApp.createProject(userInput);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -244,14 +235,14 @@ public class UIHandler extends Observable  {
 		int employeeID=Integer.parseInt(userInputs[1]);		
 		
 		try {
-			sysApp.setProjectLeader(projectID, employeeID);
+			this.message=sysApp.setProjectLeader(projectID, employeeID);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
 	}
 	private void createEmployee (String userInput) {
 		try {
-			sysApp.createEmployee(userInput);
+			this.message=sysApp.createEmployee(userInput);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -259,7 +250,7 @@ public class UIHandler extends Observable  {
 	private void removeEmployee (String userInput) {
 		int empID=Integer.parseInt(userInput);
 		try {
-			sysApp.removeEmployee(empID);
+			this.message=sysApp.removeEmployee(empID);
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -484,7 +475,6 @@ public class UIHandler extends Observable  {
 	private void error (String errorMessage) {
 		if (errorMessage==null) terminate();
 		this.message=new String[]{errorMessage};
-		messageState();
 	}
 	
 	private void wrongInputFormat () {
@@ -515,9 +505,6 @@ public class UIHandler extends Observable  {
 		this.notifyObservers();
 	}
 
-	private void messageState() {
-		setTempState(ScreenState.MessageState);
-	}
 
 		
 }
