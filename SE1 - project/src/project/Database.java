@@ -276,7 +276,6 @@ public class Database {
 		}
 		return employeesAvailable;
 	}
-
 	
 	
 	// methods used only for testing:

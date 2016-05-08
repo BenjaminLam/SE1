@@ -167,6 +167,17 @@ public class Employee {
 		return false;
 	}
 
+	protected double hoursRegisteredToday (Database database) throws WrongInputException {
+		List<Assignment> assignments=database.getEmployeeAssignments(this);
+		double hoursRegistered=0;
+		
+		for (Assignment assignment:assignments) {
+			for (WorkPeriod wp:assignment.timeRegisters) {
+				if (wp.isDay(Util.getCurrentDay())) hoursRegistered+=wp.getLength();
+			}
+		}
+		return hoursRegistered;
+	}
 	
 	
 	

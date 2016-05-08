@@ -12,8 +12,10 @@ public class Util {
 		int year=calendar.get(Calendar.YEAR);
 		int week=calendar.get(Calendar.WEEK_OF_YEAR);
 		int day=calendar.get(Calendar.DAY_OF_WEEK);
-		
-		return new CalDay(new CalWeek(year,week),day);
+		//the gregorian calendars sees sunday as day 1
+		//we've pushed every day 1 time - so day 1 in week is monday
+		if (day==7) return new CalDay(new CalWeek(year,week),1);
+		return new CalDay(new CalWeek(year,week),day+1);
 	}
 	
 	public static int getCurrentYear() {

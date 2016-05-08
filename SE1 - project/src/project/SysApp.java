@@ -51,9 +51,12 @@ public class SysApp {
 		if(assignment==null){
 			throw new WrongInputException("The assignment doesn't exist");
 		}
+		double hoursRegisteredToday=currentEmp.hoursRegisteredToday(database);
 		assignment.addTimeRegister(booking);
+		hoursRegisteredToday+=booking.getLength();
 		return new String[]{
 				"Added time register succesfully to database",
+				"You've registered " + hoursRegisteredToday  + " hours today"
 		};
 	}
 
@@ -62,9 +65,13 @@ public class SysApp {
 		Assignment tempAss=database.getAssignment(taskID,currentEmp.ID);
 		if(tempAss==null)throw new WrongInputException("You do not work on this assignemt");
 		WorkPeriod wp=new WorkPeriod(day,start,end);
+		
+		double hoursRegisteredToday=currentEmp.hoursRegisteredToday(database);
 		tempAss.addTimeRegister(wp);
+		hoursRegisteredToday+=wp.getLength();
 		return new String[]{
-			"Registered work succesfully from " + start + " to " + end + "for task: " + database.getTask(taskID).name	
+			"Registered work succesfully from " + start + " to " + end + "for task: " + database.getTask(taskID).name,
+			"You've registered " + hoursRegisteredToday  + " hours today"
 		};
 	}
 
