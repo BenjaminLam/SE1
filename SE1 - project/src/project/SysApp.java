@@ -25,6 +25,10 @@ public class SysApp {
 		this.database=database;
 	}
 	
+	public void init() throws WrongInputException{
+		database.initDatabase();
+	}
+	
 	public Employee logIn(int EmpID) throws WrongInputException {
 		Employee employee=database.getEmployee(EmpID);
 		//if (employee==null) throw new WrongInputException ("Employee doesn't excist");
