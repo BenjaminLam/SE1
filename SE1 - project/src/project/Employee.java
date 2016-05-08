@@ -77,7 +77,9 @@ public class Employee {
 	
 	protected WorkPeriod createBooking (Database database, Task task, CalDay calDay, double start, double end) throws WrongInputException {
 		WorkPeriod wp=new WorkPeriod(calDay, start, end);
-		database.getAssignment(task.ID, this.ID).addBooking(wp);
+		Assignment assignment=database.getAssignment(task.ID, this.ID);
+		if (assignment==null) throw new WrongInputException ("Employee is not working at selected task");
+		assignment.addBooking(wp);
 		return wp;
 	}
 	

@@ -102,7 +102,7 @@ public class MainUI implements Observer {
 		
 		List<String> printList=uiHandler.mapToProcess.asList();
 		for (int i=0;i<printList.size();i++)  {
-			out.println("1: " + printList.get(i));
+			out.println(i+1 + ": " + printList.get(i));
 		}
 	}
 	private void displaySeekAssistance(){

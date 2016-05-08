@@ -8,7 +8,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 import Exceptions_Enums.*;
-import project.*;
+import project.SysApp;
+import project.MyMap;
+import project.Util;
+import project.Assignment;
+import project.WorkPeriod;
 
 
 //when creating new employee/project/task: paste the id of the project
@@ -66,8 +70,10 @@ public class UIHandler extends Observable  {
 			default:
 				terminate();
 			}
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException|ArrayIndexOutOfBoundsException e) {
 			wrongInputFormat();
+		} catch (WrongInputException e){
+			error(e.getMessage());
 		}
 	}
 	
@@ -84,7 +90,7 @@ public class UIHandler extends Observable  {
 	
 	//Editing any of theese methods should also lead to change
 	//in the options displayed in employee screen in ui
-	private void handleEmployeeState(String userInput)  {
+	private void handleEmployeeState(String userInput) throws WrongInputException  {
 		switch (this.subState) {
 		case 0:  selectEmployeeSubstate(userInput); break; 	
 		case 1:  registerWork(userInput); break; 
@@ -99,7 +105,7 @@ public class UIHandler extends Observable  {
 		}
 		
 	}
-	private void selectEmployeeSubstate (String userInput) {
+	private void selectEmployeeSubstate (String userInput) throws WrongInputException {
 		int userChoice=Integer.parseInt(userInput);
 		
 		if (userChoice<1 || userChoice>11) {
@@ -153,7 +159,7 @@ public class UIHandler extends Observable  {
 		double end=Double.parseDouble(userInputs[2]);
 		
 		try {
-			succes(sysApp.registerWorkManually(taskID, start, end, Util.getCurrentDay()));
+			succes(sysApp.registerWorkManually(taskID, start, end, Util.getCurrentYear(),Util.getCurrentWeek().week,Util.getCurrentDay().day));
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -165,10 +171,9 @@ public class UIHandler extends Observable  {
 		int year = Integer.parseInt(userInputs[3]);
 		int week = Integer.parseInt(userInputs[4]);
 		int weekDay = Integer.parseInt(userInputs[5]);
-		CalDay day=new CalDay(new CalWeek(year,week),weekDay);
 		
 		try {
-			succes(this.message=sysApp.registerWorkManually(taskID, start, end, day));
+			succes(this.message=sysApp.registerWorkManually(taskID, start, end, year, week, weekDay));
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -187,15 +192,9 @@ public class UIHandler extends Observable  {
 		int empID=Integer.parseInt(userInputs[1]);
 		double start=Double.parseDouble(userInputs[2]);
 		double end=Double.parseDouble(userInputs[3]);
-		WorkPeriod wp=null;
-		try {
-			wp = new WorkPeriod(Util.getCurrentDay(),start,end);
-		} catch (WrongInputException e) {
-			error(e.getMessage());
-		}
 		
 		try {
-			succes(sysApp.seekAssistance(taskID, empID, wp));
+			succes(sysApp.seekAssistance(taskID, empID, Util.getCurrentYear(),Util.getCurrentWeek().week,Util.getCurrentDay().day,start,end));
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}
@@ -208,15 +207,9 @@ public class UIHandler extends Observable  {
 		int year=Integer.parseInt(userInputs[4]);
 		int week=Integer.parseInt(userInputs[5]);
 		int weekDay=Integer.parseInt(userInputs[6]);
-		WorkPeriod wp=null;
-		try {
-			wp = new WorkPeriod(new CalDay(new CalWeek(year,week),weekDay),start,end);
-		} catch (WrongInputException e) {
-			error(e.getMessage());
-		}
 		
 		try {
-			succes(sysApp.seekAssistance(taskID, empID, wp));
+			succes(sysApp.seekAssistance(taskID, empID, year, week, weekDay, start, end));
 		} catch (WrongInputException e) {
 			error(e.getMessage());
 		}

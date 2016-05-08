@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import Exceptions_Enums.*;
 
-//unimplemented changed
+
 
 public class SysApp {
 	public Employee currentEmp;
@@ -57,7 +57,8 @@ public class SysApp {
 		};
 	}
 
-	public String[] registerWorkManually(int taskID, double start, double end, CalDay day) throws WrongInputException{
+	public String[] registerWorkManually(int taskID, double start, double end,int year, int week, int weekday ) throws WrongInputException{
+		CalDay day=new CalDay(new CalWeek(year,week),weekday);
 		Assignment tempAss=database.getAssignment(taskID,currentEmp.ID);
 		if(tempAss==null)throw new WrongInputException("You do not work on this assignemt");
 		WorkPeriod wp=new WorkPeriod(day,start,end);
@@ -67,7 +68,9 @@ public class SysApp {
 		};
 	}
 
-	public String[] seekAssistance(int empID,int taskID,WorkPeriod period) throws WrongInputException{
+	public String[] seekAssistance(int empID,int taskID,int year, int week, int weekday, double start, double end) throws WrongInputException{
+		WorkPeriod period=new WorkPeriod(new CalDay(new CalWeek(year,week),weekday),start,end);
+		
 		Employee coWorker=database.getEmployee(empID);
 		if (coWorker==null) throw new WrongInputException("No employee exist with that ID");
 		if(!coWorker.isAvailable(period, database)){
@@ -355,7 +358,7 @@ public class SysApp {
 	
 	
 	//help method for register work in uihandler
-	public MyMap todaysBookings() {
+	public MyMap todaysBookings() throws WrongInputException {
 		return currentEmp.dayBookings(Util.getCurrentDay(),database);
 	}
 

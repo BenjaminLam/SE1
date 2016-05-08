@@ -1,12 +1,17 @@
 package project;
 
+import Exceptions_Enums.WrongInputException;
+
 public class CalWeek {
 	public int year;
 	public int week;
 	
-	public CalWeek(int year, int week){
+	public CalWeek(int year, int week) throws WrongInputException{
 		this.year=year;
 		this.week=week;
+		
+		if (week<0 || week>53) throw new WrongInputException ("Week has to be a number between 0 and 53");
+		if (year<0 || week>2050) throw new WrongInputException("Year has to be a number between 0 and 2050");
 	}
 	
 	

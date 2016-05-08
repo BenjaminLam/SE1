@@ -4,8 +4,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import Exceptions_Enums.WrongInputException;
+
 public class Util {
-	public static CalDay getCurrentDay () {
+	public static CalDay getCurrentDay () throws WrongInputException {
 		Calendar calendar=new GregorianCalendar();
 		int year=calendar.get(Calendar.YEAR);
 		int week=calendar.get(Calendar.WEEK_OF_YEAR);
@@ -19,7 +21,7 @@ public class Util {
 		return calendar.get(Calendar.YEAR);
 	}
 	
-	public static CalWeek getCurrentWeek() {
+	public static CalWeek getCurrentWeek() throws WrongInputException {
 		Calendar calendar = new GregorianCalendar();
 		int year = calendar.get(Calendar.YEAR);
 		int week = calendar.get(Calendar.WEEK_OF_YEAR);
