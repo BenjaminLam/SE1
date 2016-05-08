@@ -104,8 +104,9 @@ public class SysApp {
 	}
 	
 	public Employee removeEmployee (int empID) throws WrongInputException {
-		changed(database.removeEmployee(database.getEmployee(empID)),Operation.RemoveEmployee);
-		return null;
+		Employee employee=database.getEmployee(empID);
+		if (employee.equals(currentEmp)) throw new WrongInputException("You can't remove yourself from the database");
+		return database.removeEmployee(employee);
 	}
 	
 

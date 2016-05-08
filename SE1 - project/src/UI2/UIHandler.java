@@ -15,6 +15,8 @@ import project.*;
 //not use remove employee to remove yourself
 //if set yourself as project leader and you're not project leader already - change your isProjectLeaderStatus in sysApp
 //for stort try catch i handle input?
+//when creating employee - create assignment for sick/vacation/course
+
 
 public class UIHandler extends Observable implements Observer {
 	public ScreenState currentState;
