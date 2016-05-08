@@ -95,6 +95,54 @@ public class AditionalTests extends SampleDataSetupTest {
 		assertEquals(size, assignment1.timeRegisters.size());
 	}
 	
+	/*
+	 * Test for setProjectLeader
+	 */
+	@Test
+	public void setProjectLeaderTest(){
+		Project project = super.database.getProject(2);
+		Employee employee = super.database.getEmployee(3);
+		try {
+			sysApp.logIn(employee.ID);
+		} catch (WrongInputException e1) {
+			Assert.fail();
+		}
+		Employee employee2 = database.getEmployee(7);
+		assertFalse(project.isProjectLeader(employee));
+		
+		try {
+			sysApp.setProjectLeader(project.ID, employee.ID);
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+		
+		assertTrue(project.isProjectLeader(employee));
+		
+		try {
+			sysApp.setProjectLeader(-1, employee2.ID);
+			Assert.fail();
+		} catch (WrongInputException e) {}
+		assertFalse(project.isProjectLeader(employee2));
+		
+		try {
+			sysApp.setProjectLeader(project.ID, -1);
+			Assert.fail();
+		} catch (WrongInputException e){}
+		assertTrue(project.isProjectLeader(employee));
+		
+		try {
+			sysApp.setProjectLeader(project.ID, employee2.ID);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		assertTrue(project.isProjectLeader(employee2));
+		try {
+			sysApp.setProjectLeader(project.ID, employee.ID);
+				Assert.fail();
+			} catch (WrongInputException e){}
+		assertFalse(project.isProjectLeader(employee));
+		}
 	
 	
 }
+
