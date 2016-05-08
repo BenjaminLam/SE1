@@ -334,13 +334,5 @@ public class SysApp {
 	public MyMap todaysBookings() {
 		return currentEmp.dayBookings(Util.getCurrentDay(),database);
 	}
-	
-	
-	//Er under process:
-	public boolean isSick (Database database, int employeeID) throws WrongInputException{
-		Employee employee=database.getEmployee(employeeID);
-		if (employee==null) throw new WrongInputException("Employee doesn't exist.");
-		return currentEmp.isSick(database, employee);
-	}
-	
+
 }
