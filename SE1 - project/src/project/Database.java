@@ -246,9 +246,9 @@ public class Database {
 	}
 	
 	protected Task removeTask (Task task) throws WrongInputException {
-		if (task==null) throw new WrongInputException ("Task doesn't excist");
+		if (task==null) throw new WrongInputException ("Task doesn't exist");
 		if (!tasks.remove(task)){
-			throw new WrongInputException ("Task doesn't excist");
+			throw new WrongInputException ("Task doesn't exist");
 		}
 		return task;
 	}

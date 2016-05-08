@@ -53,6 +53,8 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 
 		Project project=database.getProject(projectID);
 		
+		project.projectLeader=employee;
+		
 		assertTrue(project.isProjectLeader(employee));
 		
 		List<String> employeesAvailable=null;
@@ -90,9 +92,15 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 		assertFalse(project.isProjectLeader(employee));
 		
 		
-		List<String> employeesAvailable=null;
-		employeesAvailable=database.getAvailableEmployees(task.start, task.end);
-	
+		String[] employeesAvailable=null;
+		
+		try {
+			employeesAvailable=sysApp.employeesForTask(task.ID);
+			Assert.fail();
+		} catch (WrongInputException e) {
+			
+		}
+		
 		assertNull(employeesAvailable);	
 	}
 	
@@ -106,14 +114,18 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	@Test
 	public void getAvailableEmployeesAlt2() throws WrongInputException {
 		Employee employee=database.employees.get(0);
-		Task task=null;
+		int taskID = -1;
 		
+		Task task = database.getTask(taskID);
 		assertNull(task);
 			
-		List<String> employeesAvailable=null;
-		employeesAvailable=database.getAvailableEmployees(task.start, task.end);
-	
-		assertNull(employeesAvailable);
+		String[] employeesAvailable=null;
+		try {
+			employeesAvailable=sysApp.employeesForTask(taskID);
+			Assert.fail();
+		} catch (WrongInputException e) {
+			
+		}
 	}
 	
 	/* 
@@ -128,7 +140,7 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 	@Test
 	public void getAvailableEmployeesAlt3() throws WrongInputException {
 		Employee employee=database.employees.get(0);
-		Task task=database.getTask(0);
+		Task task=database.getTask(1);
 		
 		assertNotNull(task);
 		
@@ -141,12 +153,18 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 
 		Project project=database.getProject(projectID);
 		
+		project.projectLeader=employee;
+		
 		assertTrue(project.isProjectLeader(employee));
 		
-		List<String> employeesAvailable=null;
-		employeesAvailable = database.getAvailableEmployees(task.start, task.end);
+		String [] employeesAvailable=null;
+		try {
+			employeesAvailable=sysApp.employeesForTask(task.ID);
+			Assert.fail();
+		} catch (WrongInputException e) {
+			
+		}
 	
-		assertNull(employeesAvailable);	
 	}
 
 	/* 
@@ -174,11 +192,17 @@ public class getAvailableEmployeesTest extends SampleDataSetupTest {
 
 		Project project=database.getProject(projectID);
 		
+		project.projectLeader=employee;
+		
 		assertTrue(project.isProjectLeader(employee));
 		
-		List<String> employeesAvailable=null;
-		employeesAvailable = database.getAvailableEmployees(task.start, task.end);
+		String [] employeesAvailable=null;
+		try {
+			employeesAvailable=sysApp.employeesForTask(task.ID);
+			Assert.fail();
+		} catch (WrongInputException e) {
 	
 		assertNull(employeesAvailable);	
+	}
 	}
 }
