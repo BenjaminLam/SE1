@@ -259,9 +259,9 @@ public class SysApp {
 		};
 	}
 	
-	public void removeBooking (int empID, ) {
-		
-	}
+//	public void removeBooking (int empID, ) {
+//		
+//	}
 	
 	public String[] createProjectReport(int projectID) throws WrongInputException {
 		Project project=database.getProject(projectID);
