@@ -68,8 +68,8 @@ public class createTaskTest extends SampleDataSetupTest {
 		@Test
 		public void testCreateTaskAlt1(){
 			int numberOfTasks = database.numberOfTasks();
-			Employee employee=super.database.employees.get(1);
-			Project project=super.database.projects.get(1);
+			Employee employee=database.getEmployee(1);
+			Project project=database.getProject(1);
 			try {
 				sysApp.logIn(employee.ID);
 			} catch (WrongInputException e1) {
@@ -101,6 +101,11 @@ public class createTaskTest extends SampleDataSetupTest {
 		public void testCreateTaskAlt2(){
 			int numberOfTasks = database.numberOfTasks();
 			Employee employee=super.database.employees.get(0);
+			try {
+				sysApp.logIn(employee.ID);
+			} catch (WrongInputException e1) {
+				Assert.fail();
+			}
 			Project project=null;
 			
 			String taskName="Task01";
@@ -129,17 +134,18 @@ public class createTaskTest extends SampleDataSetupTest {
 		public void testCreateTaskAlt3() throws WrongInputException{
 			Employee employee=database.getEmployee(0);
 			Project project=database.getProject(1);
+			sysApp.logIn(employee.ID);
 			
 			assertTrue(project.isProjectLeader(employee));
 			
 			//add task to secondary project
-			database.addTask(new Task(super.database.projects.get(1),"Task"));
+			database.addTask(new Task(project,"Task"));
 			
 			//adding task with same name^ to main project
 			try {
-				employee.createTask(database, project.ID, "Task");
-			} catch (WrongInputException e) {
+				sysApp.createTask(project.ID, "Task");
 				Assert.fail();
+			} catch (WrongInputException e) {		
 			}
 			
 			//adding task with new name to main project
