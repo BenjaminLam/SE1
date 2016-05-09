@@ -2,6 +2,11 @@ package project;
 
 import Exceptions_Enums.WrongInputException;
 
+/*
+ * Authors: Benjamin, Christian, Asbjørn, Martin
+ * 
+ */
+
 public class CalWeek {
 	public int year;
 	public int week;

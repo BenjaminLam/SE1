@@ -2,8 +2,10 @@ package project;
 
 import Exceptions_Enums.WrongInputException;
 
-//where should private getCurrentDay be placed?
-// Test if end is less than start in constructor
+/*
+ * Authors: Benjamin, Christian, Asbjørn, Martin
+ * 
+ */
 
 public class WorkPeriod extends Object {
 	public CalDay day;

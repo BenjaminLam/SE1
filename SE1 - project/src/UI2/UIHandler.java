@@ -14,6 +14,10 @@ import project.Util;
 import project.Assignment;
 import project.WorkPeriod;
 
+/*
+ * Author: Martin
+ */
+
 public class UIHandler extends Observable  {
 	public ScreenState currentState;
 	public int subState;
@@ -256,7 +260,6 @@ public class UIHandler extends Observable  {
 			error(e.getMessage());
 		}
 	}
-	
 	private void setProjectLeader(String userInput){
 		String[] userInputs=Util.splitString(userInput);
 		if (userInputs.length!=2) {

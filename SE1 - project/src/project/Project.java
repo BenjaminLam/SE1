@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Exceptions_Enums.WrongInputException;
-
+/*
+ * Authors:Martin, Benjamin
+ */
 public class Project {
 	public String name;
 	public int ID;

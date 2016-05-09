@@ -5,6 +5,11 @@ import java.util.List;
 
 import Exceptions_Enums.*;
 
+/*
+ * Authors: Benjamin, Christian, Asbjørn, Martin
+ * 
+ */
+
 public class Employee {
 	public String name;
 	public int ID;

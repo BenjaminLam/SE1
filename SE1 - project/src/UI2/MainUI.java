@@ -14,6 +14,9 @@ import java.util.Observer;
 import Exceptions_Enums.ScreenState;
 import Exceptions_Enums.WrongInputException;
 
+/*
+ * Author: Benjamin
+ */
 
 public class MainUI implements Observer {
 	private UIHandler uiHandler;
