@@ -66,7 +66,7 @@ public class RegisterDailyTimeTest extends SampleDataSetupTest{
 		assertNotNull(day);
 		
 		try {
-			sysApp.registerWorkManually(3, 9, 11, day);
+			sysApp.registerWorkManually(3, 9, 11, 2000,2,1);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		};

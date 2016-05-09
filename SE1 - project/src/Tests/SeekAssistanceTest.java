@@ -44,7 +44,7 @@ public class SeekAssistanceTest extends SampleDataSetupTest{
 		//since employee 2 doesn't have any booking between 13 and 15 he should be available.
 		assertTrue(coWorker.isAvailable(period, database));
 		
-		sysApp.seekAssistance(coWorker.ID,1, period);
+		sysApp.seekAssistance(coWorker.ID,1, 2000, 2, 1,13,15);
 		
 		//checks that the booking is created.
 		assertNotNull(database.assignments.get(database.assignments.size()-1));
@@ -70,7 +70,7 @@ public class SeekAssistanceTest extends SampleDataSetupTest{
 		
 		
 		try{
-			sysApp.seekAssistance(-1,3,period);
+			sysApp.seekAssistance(-1,3,2000,2,1,9,11);
 			Assert.fail();
 		} catch(WrongInputException e){
 			
@@ -99,7 +99,7 @@ public class SeekAssistanceTest extends SampleDataSetupTest{
 		assertFalse(coWorker.isAvailable(period, database));
 		
 		try{
-			sysApp.seekAssistance(coWorker.ID,3,period);
+			sysApp.seekAssistance(coWorker.ID,3,2000,2,1,13,15);
 			Assert.fail();
 		} catch(WrongInputException e){
 		}

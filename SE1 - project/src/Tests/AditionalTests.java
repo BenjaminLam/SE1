@@ -326,13 +326,13 @@ public class AditionalTests extends SampleDataSetupTest {
 		sysApp.currentEmp = employee;
 		
 		try {
-			sysApp.registerVacation(day1, day2);
+			sysApp.registerVacation(2016, 31 ,3 , 2016, 33, 3);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
 		
 		try {
-			sysApp.registerVacation(day1, day2);
+			sysApp.registerVacation(2016, 31, 3, 2016, 33, 3);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
@@ -344,7 +344,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		}
 		
 		try {
-			sysApp.registerVacation(day2, day1);
+			sysApp.registerVacation(2016, 33, 3, 2016, 31, 3);
 			Assert.fail();
 		} catch (WrongInputException e){}
 	}
@@ -362,13 +362,13 @@ public class AditionalTests extends SampleDataSetupTest {
 		sysApp.currentEmp = employee;
 		
 		try {
-			sysApp.registerCourse(day1, day2);
+			sysApp.registerCourse(2016, 31, 3, 2016, 33, 5);
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
 		
 		try {
-			sysApp.registerCourse(day2, day1);
+			sysApp.registerCourse(2016, 33, 5, 2016, 31, 3);
 			Assert.fail();
 		} catch (WrongInputException e) {
 			
@@ -1097,7 +1097,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		sysApp.manTask(task.ID, employee3.ID);
 		
 		try {
-		sysApp.registerWorkManually(task.ID, 9.5, 13.5, day);
+		sysApp.registerWorkManually(task.ID, 9.5, 13.5, 2016, 44, 4);
 		} catch (WrongInputException e){
 		Assert.fail();
 		}
@@ -1106,7 +1106,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		sysApp.currentEmp = employee1;
 		
 		try {
-		sysApp.registerWorkManually(task.ID, 9.5 , 13.5, day);
+		sysApp.registerWorkManually(task.ID, 9.5 , 13.5, 2016, 44, 4);
 		Assert.fail();
 		} catch (WrongInputException e){}
 		
