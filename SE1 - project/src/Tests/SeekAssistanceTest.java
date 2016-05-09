@@ -17,7 +17,7 @@ import project.*;
 
 /**
  * Test for user case Seek Assistance
- * @author BenjaminWrist
+ * @author Benjamin
  * All alternative scenarios is tested
  */
 

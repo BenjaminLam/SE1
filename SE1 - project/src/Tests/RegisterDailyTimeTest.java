@@ -18,7 +18,7 @@ import project.*;
 
 /**
  * Test for user case RegisterDailyTime
- * @author BenjaminWrist
+ * @author Benjamin
  * Only one alternative scenario. For further info read rapport. 
  */
 

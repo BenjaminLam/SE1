@@ -5,6 +5,11 @@ import java.util.List;
 
 import Exceptions_Enums.WrongInputException;
 
+/*
+ * Authors: Benjamin, Christian, Asbjørn, Martin
+ * 
+ */
+
 public class Database {
 	public List<Employee> employees;
 	public List<Project> projects;

@@ -1,4 +1,8 @@
 package project;
+/*
+ * Authors: Benjamin, Christian, Asbjørn, Martin
+ * 
+ */
 
 import java.util.ArrayList;
 import java.util.List;

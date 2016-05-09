@@ -3,6 +3,10 @@ package project;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Author: Martin
+ */
+
 public class MyMap {
 	public List<? extends Object> mainInfo=new ArrayList<Object>();
 	public List<? extends Object> secondaryInfo;

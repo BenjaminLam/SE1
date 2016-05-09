@@ -13,6 +13,10 @@ import project.SysApp;
 import project.Task;
 import project.WorkPeriod;
 
+/*
+ * Authors: Christian, Benjamin, Asbjørn, Martin
+ */
+
 public class SampleDataSetupTest {
 	protected Database database=new Database();
 	protected SysApp sysApp=new SysApp(database);

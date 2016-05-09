@@ -76,7 +76,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	}
 	/*
 	 * Test for copyBookingTimeRegister
-	 * 
+	 * Author Asbjørn
 	 */
 	@Test
 	public void copyBookingToTimeRegisterTest() throws WrongInputException {
@@ -112,6 +112,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for setProjectLeader
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void setProjectLeaderTest(){
@@ -167,6 +168,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for removeEmployee
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void removeEmployeeTest() {
@@ -194,6 +196,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for renameProject
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void renameProjectTest(){
@@ -225,6 +228,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for removeProject
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void removeProject() {
@@ -268,6 +272,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for removeTask
+	 * Author: Asbjærn
 	 */
 	@Test
 	public void removeTaskTest(){
@@ -291,6 +296,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for register sickness
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void registerSicknessTest(){
@@ -314,6 +320,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	}
 	/*
 	 * Test for register vacation
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void registerVacationTest() throws WrongInputException{
@@ -350,6 +357,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	}
 	/*
 	 * Test for register course
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void registerCourseTest() throws WrongInputException{
@@ -380,6 +388,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	}
 	/*
 	 * Test for setTaskBudgetTime
+	 * Author: Asbjørn
 	 */
 	
 	@Test
@@ -413,6 +422,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for renameTask
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void renameTaskTest(){
@@ -449,6 +459,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for createBooking
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void createBookingTest(){
@@ -494,6 +505,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for removeBooking
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void removeBookingTest() {
@@ -551,6 +563,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for setProjectStart
+	 * Author Christian og Asbjørn
 	 */
 	
 	@Test
@@ -577,6 +590,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 1
 	 * Employee is not projectleader
 	 * Task start date is not changed
+	 * Author Christian og Asbjørn
 	 */
 	@Test
 	public void setProjectStartAlt1Test() throws WrongInputException{
@@ -597,6 +611,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 2a
 	 * The selected date is in the past
 	 * Method returns error
+	 * Author Christian og Asbjørn
 	 */
 	@Test
 	public void setProjectStartAlt2aTest() throws WrongInputException{
@@ -625,6 +640,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	/*
 	 * Alternative scenario 2b
 	 * Selected date is before start date of a task
+	 * Author Christian og Asbjørn
 	 */
 	/*
 	@Test
@@ -656,6 +672,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	/*
 	 * Alternative scenario 2c
 	 * Selected date is after project end date
+	 * Author Christian og Asbjørn
 	 */
 	@Test
 	public void setProjectStartAlt2cTest() throws WrongInputException{
@@ -692,6 +709,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	/*
 	 * Alternative scenario 2d
 	 * The selected date is after task end date
+	 * Author Christian og Asbjørn
 	 */
 	@Test
 	public void setProjectStartAlt2dTest() throws WrongInputException{
@@ -726,6 +744,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	}
 	/*
 	 * Alternative 3 - Project is null
+	 * Author Christian og Asbjørn
 	 */
 	@Test
 	public void setProjectStartAlt3Test(){
@@ -750,6 +769,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Tests for setProjectEnd
+	 * Author Christian og Asbjørn
 	 */
 	@Test
 	public void setProjectEndMainTest() throws WrongInputException{
@@ -775,6 +795,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 1
 	 * Employee is not projectleader
 	 * The project end date is not changed 
+	 * Author Christian og Asbjørn
 	 */	
 	@Test
 	public void setProjectEndAlt1Test() throws WrongInputException{
@@ -795,6 +816,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 2a
 	 * The selected date is before Project start
 	 * End date of project is not changed
+	 * Author Christian og Asbjørn
 	 */
 	
 	@Test
@@ -832,6 +854,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 2b
 	 * Selected date is before a tasks end week
 	 * project end date is not changed
+	 * Author Christian og Asbjørn
 	 *
 	@Test
 	public void setProjectEndAlt2bTest() throws WrongInputException{
@@ -869,6 +892,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 2c
 	 * The selected date is before current date
 	 * Task end date is not changed
+	 * Author Christian og Asbjørn
 	 */
 	
 	@Test
@@ -902,6 +926,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * Alternative scenario 2d
 	 * Selected date is before start date of of a task
 	 * Project end date is not changed
+	 * Author Christian og Asbjørn
 	 */
 	/*
 	@Test
@@ -936,6 +961,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	*/
 	/*
 	 * Alternative 3 - Task is null
+	 * Author Christian og Asbjørn
 	 */
 	@Test
 	public void setTaskEndAlt3() {
@@ -958,7 +984,8 @@ public class AditionalTests extends SampleDataSetupTest {
 	}
 	
 	/*
-	 *Test for EmployeesForTask 
+	 *Test for EmployeesForTask
+	 *Author Christian og Asbjørn 
 	 */
 	@Test
 	public void employeesForTaskTest() throws WrongInputException{
@@ -980,6 +1007,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	}
 	/*
 	 * taskReport Tests
+	 * Author: Christian
 	 */
 	
 	@Test
@@ -1012,6 +1040,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * employee tries to create report
 	 * exception is thrown
 	 * report is not created
+	 * Author: Christian
 	 */
 	
 	@Test
@@ -1042,6 +1071,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	 * employee tries to create report
 	 * exception is thrown
 	 * report is not created
+	 * Author: Christian
 	 */
 	
 	@Test
@@ -1067,6 +1097,9 @@ public class AditionalTests extends SampleDataSetupTest {
 		}
 		assertNull(taskReport);	
 	}
+	/*
+	 * Author: Christian
+	 */
 	@Test
 	public void isProjectLeader1Test(){
 		Employee employee = database.getEmployee(0);
@@ -1075,7 +1108,9 @@ public class AditionalTests extends SampleDataSetupTest {
 		database.isProjectLeader(employee);	
 		assertEquals(project.projectLeader, employee);
 	}
-	
+	/*
+	 * Author: Christian
+	 */
 	@Test
 	public void isProjectLeader2Test(){
 		Employee employee = database.getEmployee(1);
@@ -1084,7 +1119,9 @@ public class AditionalTests extends SampleDataSetupTest {
 		database.isProjectLeader(employee);	
 		assertNotEquals(project.projectLeader, employee);
 	}
-	
+	/*
+	 * Author: Asbjørn
+	 */
 	@Test
 	public void registerWorkManuallyTest() throws WrongInputException{
 		Task task = database.getTask(4);
@@ -1111,7 +1148,9 @@ public class AditionalTests extends SampleDataSetupTest {
 		} catch (WrongInputException e){}
 		
 	}
-	
+	/*
+	 * Author: Christian
+	 */
 	@Test
 	public void WorkPeriodTests() throws WrongInputException {
 		CalDay day = new CalDay(new CalWeek(2000,2),1);		
@@ -1157,6 +1196,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * Test for todaysBookings
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void todaysBookings(){
@@ -1169,11 +1209,17 @@ public class AditionalTests extends SampleDataSetupTest {
 		}
 	}
 	
+	/*
+	 * Author: Asbjørn
+	 */
 	@Test
 	public void sysAppTest(){
 		SysApp sysapp = new SysApp();
 	}
 	
+	/*
+	 * Author Asbjørn
+	 */
 	@Test
 	public void createProjectTest(){
 		Project project = database.getProject(1);
@@ -1188,6 +1234,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * employees.hoursRegistredToday
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void hoursRegistredTodayTest(){
@@ -1201,6 +1248,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	
 	/*
 	 * CreateBookingForCoWorkerTest
+	 * Author: Asbjørn
 	 */
 	@Test
 	public void createBookingForCoWorkerTest() throws WrongInputException{

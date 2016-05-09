@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.Observable;
 
 import Exceptions_Enums.WrongInputException;
+/*
+ * Authors: Benjamin, Christian, Asbjørn, Martin
+ * 
+ */
+
 
 public class Assignment {
 	public int taskID;

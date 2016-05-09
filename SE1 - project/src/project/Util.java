@@ -6,6 +6,10 @@ import java.util.List;
 
 import Exceptions_Enums.WrongInputException;
 
+/*
+ * Authors: Martin, Benjamin
+ */
+
 public class Util {
 	public static CalDay getCurrentDay () throws WrongInputException {
 		Calendar calendar=new GregorianCalendar();

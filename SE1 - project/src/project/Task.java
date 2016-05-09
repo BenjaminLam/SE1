@@ -7,7 +7,9 @@ import java.util.List;
 
 import Exceptions_Enums.WrongInputException;
 
-//set task start/task end hvorfor getProject(0) og ikke getProject(task.projectID)
+/*
+ * Authors: Martin, Asbjørn
+ */
 
 public class Task {
 	public String name;
