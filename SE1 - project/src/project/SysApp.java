@@ -137,6 +137,9 @@ public class SysApp {
 			}
 		}
 		project.projectLeader=emp;
+		if (emp.equals(currentEmp)) this.isProjectLeader=true;
+		else this.isProjectLeader=database.isProjectLeader(currentEmp);
+	
 		return new String[] {
 			"Succesfully assigned " + emp.name	+ " as project leader for " + project.name
 		};

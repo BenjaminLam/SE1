@@ -78,8 +78,8 @@ public class MainUI implements Observer {
 	private void displayEmployeeScreen () {
 		out.println("	1) Register work");
 		out.println("	2) Seek assistance");
-		out.println("	3) Register vacation");
-		out.println("	4) Register sickness");
+		out.println("	3) Register sickness");
+		out.println("	4) Register vacation");
 		out.println("	5) Register course");
 		out.println("	6) Create new project");
 		out.println("	7) Set project leader");
