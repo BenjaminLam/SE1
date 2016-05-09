@@ -28,7 +28,7 @@ public class SysApp {
 	public void init() throws WrongInputException{
 		database.initDatabase();
 	}
-	//Author:
+	//Author: Martin
 	public String[] logIn(int EmpID) throws WrongInputException {
 		Employee employee=database.getEmployee(EmpID);
 		if (employee==null) throw new WrongInputException ("Employee doesn't excist");
@@ -38,7 +38,7 @@ public class SysApp {
 			"Succesfully logged in as " + employee.name	+ " with id: " + employee.ID
 		};
 	}
-	//Author:
+	//Author: Martin
 	public boolean noEmployeesExcists() {
 		return database.noEmployeeExcists();
 	}
