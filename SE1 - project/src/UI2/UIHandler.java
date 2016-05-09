@@ -256,6 +256,7 @@ public class UIHandler extends Observable  {
 			error(e.getMessage());
 		}
 	}
+	
 	private void setProjectLeader(String userInput){
 		String[] userInputs=Util.splitString(userInput);
 		if (userInputs.length!=2) {

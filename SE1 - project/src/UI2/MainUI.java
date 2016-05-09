@@ -15,10 +15,6 @@ import Exceptions_Enums.ScreenState;
 import Exceptions_Enums.WrongInputException;
 
 
-//when user registers work for today print number of hours he has registered
-//when user registers work print time bookings for today
-
-
 public class MainUI implements Observer {
 	private UIHandler uiHandler;
 	private PrintStream out;
@@ -82,8 +78,8 @@ public class MainUI implements Observer {
 	private void displayEmployeeScreen () {
 		out.println("	1) Register work");
 		out.println("	2) Seek assistance");
-		out.println("	3) Register sickness");
-		out.println("	4) Register vacation");
+		out.println("	3) Register vacation");
+		out.println("	4) Register sickness");
 		out.println("	5) Register course");
 		out.println("	6) Create new project");
 		out.println("	7) Set project leader");
