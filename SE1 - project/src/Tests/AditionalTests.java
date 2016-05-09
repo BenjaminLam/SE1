@@ -330,11 +330,23 @@ public class AditionalTests extends SampleDataSetupTest {
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
+		
+		try {
+			sysApp.registerVacation(day1, day2);
+			Assert.fail();
+		} catch (WrongInputException e) {
+		}
+		
 		try {
 			assertTrue(employee.isOnVacation(database, employee, day1));
 		} catch (WrongInputException e) {
 			Assert.fail();		
 		}
+		
+		try {
+			sysApp.registerVacation(day2, day1);
+			Assert.fail();
+		} catch (WrongInputException e){}
 	}
 	/*
 	 * Test for register course
@@ -343,7 +355,7 @@ public class AditionalTests extends SampleDataSetupTest {
 	public void registerCourseTest() throws WrongInputException{
 		Employee employee = database.getEmployee(1);
 		CalWeek week1 = new CalWeek(2016,31);
-		CalWeek week2 = new CalWeek(2016,31);
+		CalWeek week2 = new CalWeek(2016,33);
 		CalDay day1 = new CalDay(week1, 3);
 		CalDay day2 = new CalDay(week2, 5);
 		
@@ -354,11 +366,17 @@ public class AditionalTests extends SampleDataSetupTest {
 		} catch (WrongInputException e) {
 			Assert.fail();
 		}
+		
 		try {
-			assertTrue(employee.isOnCourse(database, employee, day1));
+			sysApp.registerCourse(day2, day1);
+			Assert.fail();
 		} catch (WrongInputException e) {
-			Assert.fail();		
+			
 		}
+		
+		
+		assertTrue(employee.isOnCourse(database, employee, day1));
+
 	}
 	/*
 	 * Test for setTaskBudgetTime
@@ -724,7 +742,7 @@ public class AditionalTests extends SampleDataSetupTest {
 		assertEquals(database.getProject(task.projectID), project);
 		
 		try {
-			sysApp.setTaskStart(-1, 2016, 44);
+			sysApp.setTaskStart(-2, 2016, 44);
 			Assert.fail();
 		} catch (WrongInputException e) {
 		}
@@ -950,8 +968,10 @@ public class AditionalTests extends SampleDataSetupTest {
 		sysApp.currentEmp = employee;
 		project.projectLeader = employee;
 		assertTrue(project.isProjectLeader(employee));
+		task.start = new CalWeek(2016,43);
+		task.end = new CalWeek(2016,45);
 		try {
-			sysApp.employeesForTask(-1);
+			sysApp.employeesForTask(task.ID);
 		} catch (WrongInputException e){
 			Assert.fail();
 		}
@@ -1090,6 +1110,129 @@ public class AditionalTests extends SampleDataSetupTest {
 		Assert.fail();
 		} catch (WrongInputException e){}
 		
+	}
+	
+	@Test
+	public void WorkPeriodTests() throws WrongInputException {
+		CalDay day = new CalDay(new CalWeek(2000,2),1);		
+
+		try{
+			WorkPeriod period1 = new WorkPeriod(day,-1,3);
+			Assert.fail();
+		} catch (WrongInputException e){
+		} 
+		
+		try{
+			WorkPeriod period2 = new WorkPeriod(day,1,0);
+			Assert.fail();
+		} catch (WrongInputException e){
+	
+		} 		
+
+		try{
+			WorkPeriod period3 = new WorkPeriod(day,24,1);
+			Assert.fail();	
+		} catch (WrongInputException e){
+		} 
+		
+		try{
+			WorkPeriod period5 = new WorkPeriod(day,24,-1);
+			Assert.fail();	
+		} catch (WrongInputException e){
+		} 
+		
+		try{
+			WorkPeriod period6 = new WorkPeriod(day,25,1);
+			Assert.fail();	
+		} catch (WrongInputException e){
+		} 
+		
+		try{
+			WorkPeriod period4 = new WorkPeriod(day,1,25);
+			Assert.fail();	
+		} catch (WrongInputException e){
+		} 
+
+	}
+	
+	/*
+	 * Test for todaysBookings
+	 */
+	@Test
+	public void todaysBookings(){
+		Employee employee = database.getEmployee(1);
+		sysApp.currentEmp = employee;
+		try {
+			sysApp.todaysBookings();
+		} catch (WrongInputException e) {
+			Assert.fail();
+		}
+	}
+	
+	@Test
+	public void sysAppTest(){
+		SysApp sysapp = new SysApp();
+	}
+	
+	@Test
+	public void createProjectTest(){
+		Project project = database.getProject(1);
+		project.name = "project";
+		
+		try {
+			sysApp.createProject("project");
+			Assert.fail();
+		} catch (WrongInputException e){}
+	}
+	
+	
+	/*
+	 * employees.hoursRegistredToday
+	 */
+	@Test
+	public void hoursRegistredTodayTest(){
+		Employee employee = database.getEmployee(1);
+		try {
+			employee.hoursRegisteredToday(database);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+	}
+	
+	/*
+	 * CreateBookingForCoWorkerTest
+	 */
+	@Test
+	public void createBookingForCoWorkerTest() throws WrongInputException{
+		Task task = database.getTask(1);
+		Project project = database.getProject(task.projectID);
+		Employee employee = database.getEmployee(1);
+		Employee coWorker = database.getEmployee(2);
+		project.projectLeader = employee;
+		sysApp.currentEmp = employee;
+		CalWeek week = new CalWeek(2016,44);
+		CalDay day = new CalDay(week, 4);
+		WorkPeriod period = new WorkPeriod(day, 10, 12);
+		try {
+		database.createBookingForCoWorker(coWorker, task, period);
+		} catch (WrongInputException e){
+			Assert.fail();
+		}
+		task = null;
+		assertNull(task);
+		try {
+		database.createBookingForCoWorker(coWorker, task, period);
+		Assert.fail();
+		} catch (WrongInputException e){}
+		
+		task = database.getTask(1);
+		assertNotNull(task);
+		coWorker = null;
+		assertNull(coWorker);
+		try {
+		database.createBookingForCoWorker(coWorker, task, period);
+		Assert.fail();
+		} catch (WrongInputException e){}
 	}
 }
 

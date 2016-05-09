@@ -112,7 +112,7 @@ public class Database {
 		return dayBookings;
 	}
 
-	protected boolean createBookingForCoWorker(Employee coWorker,Task task, WorkPeriod period) throws WrongInputException{
+	public boolean createBookingForCoWorker(Employee coWorker,Task task, WorkPeriod period) throws WrongInputException{
 		if(coWorker==null)throw new WrongInputException("Employee doesn't excist");
 		if (task==null) throw new WrongInputException("Task doesn't excist");
 		

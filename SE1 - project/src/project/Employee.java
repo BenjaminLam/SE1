@@ -174,7 +174,7 @@ public class Employee {
 		return false;
 	}
 
-	protected double hoursRegisteredToday (Database database) throws WrongInputException {
+	public double hoursRegisteredToday (Database database) throws WrongInputException {
 		List<Assignment> assignments=database.getEmployeeAssignments(this);
 		double hoursRegistered=0;
 		

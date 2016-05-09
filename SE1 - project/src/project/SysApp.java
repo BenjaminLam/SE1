@@ -339,8 +339,7 @@ public class SysApp {
 		taskReport.add("Time budget for this task:" + task.timeBudget);
 		
 		taskReport.add("Total time spent on this project: " + task.hoursSpent(database));
-		return Util.stringListToArray(taskReport);
-				
+		return (String[]) taskReport.toArray();
 	}
 	
 	
